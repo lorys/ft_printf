@@ -6,7 +6,7 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/18 06:30:23 by llopez            #+#    #+#              #
-#    Updated: 2017/12/18 07:52:24 by llopez           ###   ########.fr        #
+#    Updated: 2017/12/18 18:08:35 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,10 @@ $(NAME):
 	@ranlib $(NAME)
 
 all: $(NAME)
+
+test:
+	make
+	gcc main.c $(NAME)
 
 clean:
 	@make -C libft clean

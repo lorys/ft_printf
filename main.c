@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:51:44 by llopez            #+#    #+#             */
-/*   Updated: 2017/12/18 08:01:19 by llopez           ###   ########.fr       */
+/*   Updated: 2017/12/18 19:08:19 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 
 int		main(void)
 {
-	ft_printf("%s %d\n", "mdr", 42);
-	printf("%s %d", "mdr", 42);
+	int machin[3];
+
+	machin[0] = 100;
+
+	ft_printf("----------------\nma fonction\n%s %d %c\n", "mdr", 42, 'y');
+	printf("-----------------\nvraie fonction\n%s %d %c\n", "mdr", 42, 'y');
 	return (0);
 }
