@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:51:44 by llopez            #+#    #+#             */
-/*   Updated: 2017/12/18 19:08:19 by llopez           ###   ########.fr       */
+/*   Updated: 2017/12/20 16:09:10 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,15 @@
 
 int		main(void)
 {
-	int machin[3];
+	char	c;
+	int		ret;
+	int		ret2;
+	char	str[] = "%s";
 
-	machin[0] = 100;
-
-	ft_printf("----------------\nma fonction\n%s %d %c\n", "mdr", 42, 'y');
-	printf("-----------------\nvraie fonction\n%s %d %c\n", "mdr", 42, 'y');
+	c = 'y';
+	ret = ft_printf(str, "mdr");
+	printf("\n=== %d chars written. ===\n", ret);
+	ret2 = printf(str, "mdr");
+	printf("\n=== %d chars written. ===\n", ret2);
 	return (0);
 }
