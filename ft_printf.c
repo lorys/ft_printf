@@ -10,10 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdarg.h>
-#include <stdio.h>
-#include "libft.h"
+#include "ft_printf.h"
+
+int			ft_printf_putlstr(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[i])
+		str[i++];
+	return (i);
+}
 
 static int		ft_format(const char *str, va_list ap, int lenght)
 {
@@ -24,16 +31,16 @@ static int		ft_format(const char *str, va_list ap, int lenght)
 	bfore = lenght;
 	if (str[i] == '%')
 	{
-		if (str[i + 1] == 's' && (lenght = ft_strlen()))
-			ft_putstr(va_arg(ap, char *));
+		if (str[i + 1] == 's')
+			lenght += ft_printf_putlstr(va_arg(ap, char *));
 		if (str[i + 1] == 'd' && ++lenght)
-			ft_putstr(ft_itoa(va_arg(ap, int)));
+			lenght += ft_printf_putlstr(ft_itoa(va_arg(ap, int)));
 		if (str[i + 1] == '%' && ++lenght)
 			ft_putchar(str[i + 1]);
 		if (str[i + 1] == 'c' && ++lenght)
 			ft_putchar(va_arg(ap, int));
 		if (str[i + 1] == 'p' && ++lenght)
-			ft_putstr((char *)va_arg(ap, void *));
+			ft_printf_putlstr((char *)va_arg(ap, void *));
 	}
 	return (lenght - bfore);
 }
