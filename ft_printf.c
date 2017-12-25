@@ -16,39 +16,46 @@ int			ft_printf_putlstr(char *str)
 {
 	int	i;
 
-	i = -1;
+	i = 0;
 	while (str[i])
-		str[i++];
-	return (i);
+		write(1, &str[i++], 1);
+	return (i - 1);
 }
 
-static int		ft_format(const char *str, va_list ap, int lenght)
+char			*ft_printf_dec_to_hex(int dec)
+{
+	char	*str;
+
+	str = 
+	return (str);
+}
+
+static int		ft_format(const char *str, va_list ap, int *lenght)
 {
 	int		i;
 	int		bfore;
 
 	i = 0;
-	bfore = lenght;
+	bfore = *lenght;
 	if (str[i] == '%')
 	{
 		if (str[i + 1] == 's')
-			lenght += ft_printf_putlstr(va_arg(ap, char *));
-		if (str[i + 1] == 'd' && ++lenght)
-			lenght += ft_printf_putlstr(ft_itoa(va_arg(ap, int)));
-		if (str[i + 1] == '%' && ++lenght)
-			ft_putchar(str[i + 1]);
-		if (str[i + 1] == 'c' && ++lenght)
+			*lenght += ft_printf_putlstr(va_arg(ap, char *));
+		if (str[i + 1] == 'd' && ++*lenght)
+			*lenght += ft_printf_putlstr(ft_itoa(va_arg(ap, int)));
+		if (str[i + 1] == 'c' && ++*lenght)
 			ft_putchar(va_arg(ap, int));
-		if (str[i + 1] == 'p' && ++lenght)
-			ft_printf_putlstr((char *)va_arg(ap, void *));
+		if (str[i + 1] == 'p' && ++*lenght)
+			lenght += ft_printf_putlstr(va_arg(ap, char *));
+		if (str[i + 1] == '%' && ++*lenght)
+			ft_putchar(str[i + 1]);
 	}
-	return (lenght - bfore);
+	return (*lenght - bfore);
 }
 
 int		ft_printf(const char * restrict format, ...)
 {
 	va_list	ap;
-	char	*s;
 	int		i;
 	int		lenght;
 
@@ -56,7 +63,7 @@ int		ft_printf(const char * restrict format, ...)
 	lenght = 0;
 	va_start(ap, format);
 	while (format[i])
-		if (ft_format(&format[i], ap, lenght) == 0 && ++lenght)
+		if (ft_format(&format[i], ap, &lenght) == 0 && ++lenght)
 			ft_putchar(format[i++]);
 		else
 			i = i + 2;

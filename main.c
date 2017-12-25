@@ -15,15 +15,14 @@
 
 int		main(void)
 {
-	char	c;
 	int		ret;
 	int		ret2;
-	char	str[] = "%s";
+	int		just_address;
+	char	str[] = "%zu - %p";
 
-	c = 'y';
-	ret = ft_printf(str, "mdr");
+	ret = ft_printf(str, &just_address, &just_address);
 	printf("\n=== %d chars written. ===\n", ret);
-	ret2 = printf(str, "mdr");
+	ret2 = printf(str, &just_address, &just_address);
 	printf("\n=== %d chars written. ===\n", ret2);
 	return (0);
 }

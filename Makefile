@@ -14,15 +14,16 @@ NAME = libftprintf.a
 
 $(NAME):
 	@make -C libft/
-	@gcc -o ft_printf.o -c ft_printf.c -I libft/
-	@ar rc $(NAME) ft_printf.o libft/obj/*.o
+	@gcc -o ft_printf.o -c ft_printf.c -I libft/ -Llibft/ -lft -Wall -Wextra -Werror
+	@ar rc $(NAME) ft_printf.o libft/libft.a
 	@ranlib $(NAME)
 
 all: $(NAME)
 
 test:
 	make re
-	gcc main.c $(NAME)
+	gcc main.c $(NAME) -I libft/ -Llibft/ -lft -Wall -Werror -Wextra
+	clear
 
 clean:
 	@make -C libft clean

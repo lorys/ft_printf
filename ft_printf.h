@@ -18,5 +18,6 @@
 # include "libft.h"
 
 int		ft_printf(const char * restrict format, ...);
+int		ft_printf_putlstr(char *str);
 
 #endif
