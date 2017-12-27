@@ -22,11 +22,46 @@ int			ft_printf_putlstr(char *str)
 	return (i - 1);
 }
 
+int			ft_printf_getnb(int nb, int n)
+{
+	int	tmp;
+	int	tmp_n;
+
+	tmp = nb;
+	tmp_n = n;
+	while (tmp_n-- > 0)
+	{
+		if (tmp > 9)
+		{
+			tmp /= 10;
+			tmp *= ;
+		}
+	}
+	nb = nb - tmp;
+	printf("\nnb = %d\n", nb);
+	return (nb);
+}
+
 char			*ft_printf_dec_to_hex(int dec)
 {
 	char	*str;
+	int	nb_len;
+	int	tmp_nb;
+	int	i;
 
-	str = 
+	i = 0;
+	nb_len = 1;
+	tmp_nb = dec;
+	while ((tmp_nb = (tmp_nb / 10)) > 0)
+		nb_len++;
+	printf("\n%d\n", nb_len);
+	str = (char *)malloc(sizeof(char) * nb_len + 1);
+	str[nb_len] = '\0';
+	while (nb_len--)
+	{
+		str[i] = ft_printf_getnb(dec, nb_len);
+		i++;
+	}
 	return (str);
 }
 
@@ -46,7 +81,7 @@ static int		ft_format(const char *str, va_list ap, int *lenght)
 		if (str[i + 1] == 'c' && ++*lenght)
 			ft_putchar(va_arg(ap, int));
 		if (str[i + 1] == 'p' && ++*lenght)
-			lenght += ft_printf_putlstr(va_arg(ap, char *));
+			ft_printf_dec_to_hex(7654); /* lenght += ft_printf_putlstr(va_arg(ap, char *)); */
 		if (str[i + 1] == '%' && ++*lenght)
 			ft_putchar(str[i + 1]);
 	}
@@ -55,7 +90,7 @@ static int		ft_format(const char *str, va_list ap, int *lenght)
 
 int		ft_printf(const char * restrict format, ...)
 {
-	va_list	ap;
+	va_list		ap;
 	int		i;
 	int		lenght;
 
