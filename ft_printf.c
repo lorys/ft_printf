@@ -24,21 +24,10 @@ int			ft_printf_putlstr(char *str)
 
 int			ft_printf_getnb(int nb, int n)
 {
-	int	tmp;
-	int	tmp_n;
-
-	tmp = nb;
-	tmp_n = n;
-	while (tmp_n-- > 0)
-	{
-		if (tmp > 9)
-		{
-			tmp /= 10;
-			tmp *= ;
-		}
-	}
-	nb = nb - tmp;
-	printf("\nnb = %d\n", nb);
+	while (n-- > 0)
+		if (nb >= 10)
+			nb /= 10;
+	nb %= 10;
 	return (nb);
 }
 
@@ -47,21 +36,29 @@ char			*ft_printf_dec_to_hex(int dec)
 	char	*str;
 	int	nb_len;
 	int	tmp_nb;
-	int	i;
+	char	hexa[] = "0123456789ABCDEF";
+	int	calc;
 
-	i = 0;
 	nb_len = 1;
 	tmp_nb = dec;
 	while ((tmp_nb = (tmp_nb / 10)) > 0)
 		nb_len++;
-	printf("\n%d\n", nb_len);
 	str = (char *)malloc(sizeof(char) * nb_len + 1);
-	str[nb_len] = '\0';
+	str[nb_len + 1] = '\0';
 	while (nb_len--)
 	{
-		str[i] = ft_printf_getnb(dec, nb_len);
-		i++;
+		if (nb_len > 1)
+		{
+			calc = ft_printf_getnb(dec, nb_len) * 10 + \
+				ft_printf_getnb(dec, nb_len - 1);
+			if (calc > 15)
+				str[nb_len] = hexa[calc];
+			printf("\n%d = %c\n", calc, hexa[calc]);
+		}
+		else
+			str[nb_len] = hexa[ft_printf_getnb(dec, nb_len)];
 	}
+	printf("hexa : %s\n", str);
 	return (str);
 }
 
