@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 04:20:35 by llopez            #+#    #+#             */
-/*   Updated: 2017/12/20 16:09:09 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/07 00:47:42 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,37 +31,6 @@ int			ft_printf_getnb(int nb, int n)
 	return (nb);
 }
 
-char			*ft_printf_dec_to_hex(int dec)
-{
-	char	*str;
-	int	nb_len;
-	int	tmp_nb;
-	char	hexa[] = "0123456789ABCDEF";
-	int	calc;
-
-	nb_len = 1;
-	tmp_nb = dec;
-	while ((tmp_nb = (tmp_nb / 10)) > 0)
-		nb_len++;
-	str = (char *)malloc(sizeof(char) * nb_len + 1);
-	str[nb_len + 1] = '\0';
-	while (nb_len--)
-	{
-		if (nb_len > 1)
-		{
-			calc = ft_printf_getnb(dec, nb_len) * 10 + \
-				ft_printf_getnb(dec, nb_len - 1);
-			if (calc > 15)
-				str[nb_len] = hexa[calc];
-			printf("\n%d = %c\n", calc, hexa[calc]);
-		}
-		else
-			str[nb_len] = hexa[ft_printf_getnb(dec, nb_len)];
-	}
-	printf("hexa : %s\n", str);
-	return (str);
-}
-
 static int		ft_format(const char *str, va_list ap, int *lenght)
 {
 	int		i;
@@ -78,7 +47,7 @@ static int		ft_format(const char *str, va_list ap, int *lenght)
 		if (str[i + 1] == 'c' && ++*lenght)
 			ft_putchar(va_arg(ap, int));
 		if (str[i + 1] == 'p' && ++*lenght)
-			ft_printf_dec_to_hex(7654); /* lenght += ft_printf_putlstr(va_arg(ap, char *)); */
+			lenght += ft_printf_puthexa(va_arg(ap, unsigned int), 16); 
 		if (str[i + 1] == '%' && ++*lenght)
 			ft_putchar(str[i + 1]);
 	}

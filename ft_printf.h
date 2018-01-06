@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:39:39 by llopez            #+#    #+#             */
-/*   Updated: 2017/12/18 06:41:20 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/07 00:47:37 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,7 @@
 
 int		ft_printf(const char * restrict format, ...);
 int		ft_printf_putlstr(char *str);
+char	*ft_printf_itoa_base(unsigned int nb, unsigned int base);
+int		ft_printf_puthexa(unsigned int nb, unsigned int base);
 
 #endif

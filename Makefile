@@ -6,24 +6,26 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/18 06:30:23 by llopez            #+#    #+#              #
-#    Updated: 2017/12/20 15:26:01 by llopez           ###   ########.fr        #
+#    Updated: 2018/01/07 00:55:56 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
-$(NAME):
+CFILES = ft_printf.c tools/dec_to_hex.c
+
+OFILES = ft_printf.o tools/dec_to_hex.o
+
+$(NAME): ft_printf.c
 	@make -C libft/
-	@gcc -o ft_printf.o -c ft_printf.c -I libft/ -Llibft/ -lft -Wall -Wextra -Werror
-	@ar rc $(NAME) ft_printf.o libft/libft.a
+	@gcc -o $(OFILES) -c $(CFILES) -I libft/ -I . -Wall -Wextra -Werror
+	@ar rc $(NAME) $(OFILES) libft/libft.a
 	@ranlib $(NAME)
 
 all: $(NAME)
 
-test:
-	make re
+test: all
 	gcc main.c $(NAME) -I libft/ -Llibft/ -lft -Wall -Werror -Wextra
-	clear
 
 clean:
 	@make -C libft clean
