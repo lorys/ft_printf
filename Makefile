@@ -6,33 +6,46 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/18 06:30:23 by llopez            #+#    #+#              #
-#    Updated: 2018/01/07 00:58:52 by llopez           ###   ########.fr        #
+#    Updated: 2018/01/07 22:42:16 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf.a
 
-CFILES = ft_printf.c tools/dec_to_hexa.c
+FLAGS = -Wall -Werror -Wextra
 
-OFILES = ft_printf.o tools/dec_to_hexa.o
+CFILES = ft_printf.c \
+			dec_to_hexa.c
 
-$(NAME): ft_printf.c
+OBJ = $(CFILES:%.c=$(OBJDIR)%.o)
+
+OBJDIR = obj/
+
+$(OBJDIR)%.o: %.c
+	@mkdir -p $(OBJDIR)
+	@gcc -o $@ $(FLAGS) -c $< -I libft/ -I .
+	@echo "\t\t$@ created."
+
+$(NAME): $(OBJ) ft_printf.c
 	@make -C libft/
-	@gcc -c $(CFILES) -I libft/ -I . -Wall -Wextra -Werror
-	@ar rc $(NAME) $(CFILES) libft/libft.a
+	@ar rc $(NAME) $(OBJ) libft/libft.a
 	@ranlib $(NAME)
 
 all: $(NAME)
 
-test: all
-	gcc main.c $(NAME) -I libft/ -Llibft/ -lft -Wall -Werror -Wextra
-
 clean:
+	@echo "Cleaning libft..."
 	@make -C libft clean
-	@rm -f ft_printf.o
+	@echo "libft cleaned."
+	@rm -rf obj/
+	@echo "objects dir deleted."
 
 fclean: clean
 	@make -C libft fclean
-	@rm libftprintf.a
+	@rm -rf libftprintf.a
 
 re: fclean all
+
+test: all
+	@gcc -o ft_printf_test  main.c $(NAME) -I libft/ -Llibft/ -lft $(FLAGS)
+	@echo "ft_printf_test generated !"
