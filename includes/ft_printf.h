@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/18 06:51:44 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/17 19:00:12 by llopez           ###   ########.fr       */
+/*   Created: 2017/12/18 06:39:39 by llopez            #+#    #+#             */
+/*   Updated: 2018/01/17 19:00:10 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include <stdio.h>
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
+# include <unistd.h>
+# include <stdarg.h>
+# include <stdio.h>
+# include "libft.h"
 
-int		main(void)
-{
-	int		ret;
-	int		ret2;
-	int		just_address;
-	char	str[] = "%zu - %p";
+int		ft_printf(const char*restrict format, ...);
+int		ft_printf_putlstr(char *str);
+char	*ft_printf_itoa_base(unsigned int nb, unsigned int base);
+int		ft_printf_puthexa(unsigned int nb, unsigned int base);
+int		ft_printf_putnbr_base(long nb, unsigned int base);
 
-	ret = ft_printf(str, &just_address, &just_address);
-	printf("\n=== %d chars written. ===\n", ret);
-	ret2 = printf(str, &just_address, &just_address);
-	printf("\n=== %d chars written. ===\n", ret2);
-	return (0);
-}
+#endif

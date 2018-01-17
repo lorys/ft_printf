@@ -1,28 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putlnbr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/18 06:51:44 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/17 19:00:12 by llopez           ###   ########.fr       */
+/*   Created: 2018/01/17 16:02:28 by llopez            #+#    #+#             */
+/*   Updated: 2018/01/17 19:00:15 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 
-int		main(void)
+int		ft_putlnbr(unsigned int n)
 {
-	int		ret;
-	int		ret2;
-	int		just_address;
-	char	str[] = "%zu - %p";
-
-	ret = ft_printf(str, &just_address, &just_address);
-	printf("\n=== %d chars written. ===\n", ret);
-	ret2 = printf(str, &just_address, &just_address);
-	printf("\n=== %d chars written. ===\n", ret2);
-	return (0);
+	if (n == -2147483648)
+	{
+		return ft_putlstr("-2147483648");
+	}
+	if (n < 0)
+	{
+		n *= -1;
+		ft_putchar('-');
+	}
+	if (n >= 10)
+		ft_putlnbr(n / 10);
+	ft_putchar((n % 10) + '0');
 }
