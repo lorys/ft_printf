@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:39:39 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/17 19:00:10 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/18 18:44:00 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 # include <unistd.h>
 # include <stdarg.h>
 # include <stdio.h>
-# include "libft.h"
+# include "../libft/libft.h"
 
 int		ft_printf(const char*restrict format, ...);
 int		ft_printf_putlstr(char *str);
-char	*ft_printf_itoa_base(unsigned int nb, unsigned int base);
-int		ft_printf_puthexa(unsigned int nb, unsigned int base);
+char	*ft_printf_itoa_base(long nb, unsigned int base);
+int		ft_printf_puthexa(unsigned long nb, unsigned int base);
 int		ft_printf_putnbr_base(long nb, unsigned int base);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 04:20:35 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/17 19:00:11 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/18 16:02:09 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,11 @@ static int		*ft_format(const char *str, va_list ap, int *lenght)
 		if (str[i + 1] == 'c' && ++*lenght && ft_addc(&skip[1], 2))
 			ft_putchar(va_arg(ap, int));
 		if (str[i + 1] == 'p' && ft_addc(&skip[1], 2))
-			lenght += ft_printf_puthexa(va_arg(ap, unsigned int), 16);
+			*lenght += ft_printf_puthexa(va_arg(ap, unsigned int), 16);
 		if (str[i + 1] == 'z' && str[i + 2] == 'u' && ft_addc(&skip[1], 3))
-			lenght += ft_printf_putnbr_base(va_arg(ap, unsigned int), 10);
+			*lenght += ft_printf_putnbr_base(va_arg(ap, unsigned int), 10);
+		if (str[i + 1] == 'l' && str[i + 2] == 'u' && ft_addc(&skip[1], 3))
+			*lenght += ft_printf_putnbr_base(va_arg(ap, long), 10);
 		if (str[i + 1] == '%' && ++*lenght && ft_addc(&skip[1], 2))
 			ft_putchar(str[i + 1]);
 	}

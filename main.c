@@ -6,23 +6,28 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:51:44 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/17 19:00:12 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/18 16:22:31 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "includes/ft_printf.h"
 #include <stdio.h>
 
 int		main(void)
 {
 	int		ret;
 	int		ret2;
-	int		just_address;
-	char	str[] = "%zu - %p";
 
-	ret = ft_printf(str, &just_address, &just_address);
+	ret = ft_printf("%lu", 9223372036854775807);
 	printf("\n=== %d chars written. ===\n", ret);
-	ret2 = printf(str, &just_address, &just_address);
+	ret2 = printf("%lu", 9223372036854775807);
+	printf("\n=== %d chars written. ===\n", ret2);
+
+	ft_printf("\n===============================\n\n");
+
+	ret = ft_printf("%p", &ret);
+	printf("\n=== %d chars written. ===\n", ret);
+	ret2 = printf("%p", &ret);
 	printf("\n=== %d chars written. ===\n", ret2);
 	return (0);
 }
