@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 04:20:35 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/18 16:02:09 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/19 18:47:41 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int				ft_printf_getnb(int nb, int n)
 	return (nb);
 }
 
-static int		ft_addc(int *skip, int add)
+int				ft_addc(int *skip, int add)
 {
 	*skip += add;
 	return (1);
@@ -41,6 +41,7 @@ static int		*ft_format(const char *str, va_list ap, int *lenght)
 	int		i;
 	int		bfore;
 	int		*skip;
+	//t_arg	handle;
 
 	skip = (int *)malloc(sizeof(int) * 2);
 	i = 0;
@@ -48,20 +49,10 @@ static int		*ft_format(const char *str, va_list ap, int *lenght)
 	bfore = *lenght;
 	if (str[i] == '%')
 	{
-		if (str[i + 1] == 's' && ft_addc(&skip[1], 2))
-			*lenght += ft_printf_putlstr(va_arg(ap, char *));
-		if (str[i + 1] == 'd' && ++*lenght && ft_addc(&skip[1], 2))
-			*lenght += ft_printf_putlstr(ft_itoa(va_arg(ap, int)));
-		if (str[i + 1] == 'c' && ++*lenght && ft_addc(&skip[1], 2))
-			ft_putchar(va_arg(ap, int));
-		if (str[i + 1] == 'p' && ft_addc(&skip[1], 2))
-			*lenght += ft_printf_puthexa(va_arg(ap, unsigned int), 16);
-		if (str[i + 1] == 'z' && str[i + 2] == 'u' && ft_addc(&skip[1], 3))
-			*lenght += ft_printf_putnbr_base(va_arg(ap, unsigned int), 10);
-		if (str[i + 1] == 'l' && str[i + 2] == 'u' && ft_addc(&skip[1], 3))
-			*lenght += ft_printf_putnbr_base(va_arg(ap, long), 10);
-		if (str[i + 1] == '%' && ++*lenght && ft_addc(&skip[1], 2))
-			ft_putchar(str[i + 1]);
+		while (ft_isdigit(str[i + 1]) && str[i + 1])
+			i++;
+		*lenght += ft_printf_s(&str[i], va_arg(ap, char *), &skip[1]);
+		*lenght += ft_printf_p(&str[i], va_arg(ap, uintmax_t), &skip[1]);
 	}
 	skip[0] = (*lenght - bfore);
 	return (skip);

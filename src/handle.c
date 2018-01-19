@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   handle.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/18 06:51:44 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/19 18:47:39 by llopez           ###   ########.fr       */
+/*   Created: 2018/01/19 10:52:06 by llopez            #+#    #+#             */
+/*   Updated: 2018/01/19 18:47:40 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
-#include <stdio.h>
+#include "ft_printf.h"
 
-int		main(void)
+int			ft_printf_s(char const*restrict format, char *str, int *skip)
 {
-	int		ret;
-	int		ret2;
-
-	ret = ft_printf("petit test : %p", &ret);
-	printf("\nreturn %d\n", ret);
-
-	ret2 = printf("petit test : %p", &ret);
-	printf("\nreturn %d\n", ret2);
+	if (format[1] == (char)'s')
+	{
+		*skip += 2;
+		ft_putstr(str);
+		return (ft_strlen(str));
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/18 06:30:23 by llopez            #+#    #+#              #
-#    Updated: 2018/01/18 18:43:45 by llopez           ###   ########.fr        #
+#    Updated: 2018/01/19 16:55:29 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,9 +33,8 @@ $(OBJDIR)%.o: %.c
 
 $(NAME): $(OBJ) ft_printf.c
 	@echo "libft made."
-	@ar rc printf.a $(OBJ)
+	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
-	$(shell lipo -create printf.a libft/libft.a -output $(NAME))
 	@echo "$(NAME) created !"
 
 all: $(NAME)
@@ -53,6 +52,6 @@ fclean: clean
 
 re: fclean all
 
-test: all
-	@gcc -o ft_printf_test  main.c $(NAME) $(FLAGS) -L. -lftprintf -fsanitize=address
+test:
+	@gcc  main.c src/dec_to_hexa.c src/ft_printf.c src/handle.c -I includes -Llibft -lft -fsanitize=address
 	@echo "ft_printf_test generated !"

@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:39:39 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/18 18:44:00 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/19 18:47:38 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,24 @@
 # include <stdio.h>
 # include "../libft/libft.h"
 
-int		ft_printf(const char*restrict format, ...);
-int		ft_printf_putlstr(char *str);
-char	*ft_printf_itoa_base(long nb, unsigned int base);
-int		ft_printf_puthexa(unsigned long nb, unsigned int base);
-int		ft_printf_putnbr_base(long nb, unsigned int base);
+typedef struct		s_arg
+{
+	int				hh;
+	int				h;
+	int				l;
+	int				ll;
+	int				j;
+	int				z;
+	int				width;
+	int				precision;
+	int				min;
+	int				max;
+}					t_arg;
+
+int					ft_printf(const char*restrict format, ...);
+int					ft_printf_s(const char*format, char *str, int *skip);
+int					ft_printf_putlstr(char *str);
+int					ft_printf_p(const char *format, uintmax_t nb,\
+		int *skip);
 
 #endif
