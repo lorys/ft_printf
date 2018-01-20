@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 04:20:35 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/19 18:47:41 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/20 19:13:23 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int		*ft_format(const char *str, va_list ap, int *lenght)
 		while (ft_isdigit(str[i + 1]) && str[i + 1])
 			i++;
 		*lenght += ft_printf_s(&str[i], va_arg(ap, char *), &skip[1]);
-		*lenght += ft_printf_p(&str[i], va_arg(ap, uintmax_t), &skip[1]);
+		*lenght += ft_printf_p(&str[i], va_arg(ap, int *), &skip[1]);
 	}
 	skip[0] = (*lenght - bfore);
 	return (skip);

@@ -6,13 +6,14 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 21:40:01 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/19 18:47:40 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/20 19:13:21 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char			*ft_printf_itoa_base(long nb, uintmax_t base, int type)
+static char			*ft_printf_itoa_base(uintmax_t nb, unsigned int base,\
+		int type)
 {
 	int				i;
 	static char		str[32];
@@ -27,20 +28,18 @@ static char			*ft_printf_itoa_base(long nb, uintmax_t base, int type)
 		nb /= base;
 		--i;
 	}
-	printf("\nhexa : %s\n", str);
 	return (str + i + 1);
 }
 
-int					ft_printf_p(const char* format, uintmax_t nb, int *skip)
+int					ft_printf_p(const char* format, int *nb, int *skip)
 {
 	int		i;
 
 	if (format[1] == 'p')
 	{
-		printf("decimal : %d\n", nb);
 		*skip += 2;
-		i = ft_printf_putlstr("0x7fff");
-		i += ft_printf_putlstr(ft_printf_itoa_base(nb, 16, 'a'));
+		i = ft_printf_putlstr("0x");
+		i += ft_printf_putlstr(ft_printf_itoa_base((uintmax_t)nb, 16, 'a'));
 		return (0);
 	}
 	return (0);

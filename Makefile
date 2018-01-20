@@ -6,7 +6,7 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/18 06:30:23 by llopez            #+#    #+#              #
-#    Updated: 2018/01/19 16:55:29 by llopez           ###   ########.fr        #
+#    Updated: 2018/01/20 19:13:29 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ NAMES = ft_printf.c \
 
 CFILES = $(addprefix src/, $(NAMES))
 
-OBJ = $(patsubst %.c, %.o, $(addprefix $(OBJDIR), $(notdir $(CFILES))))
+OBJ = $(patsubst %.c, %.o, $(addprefix $(OBJDIR), $(NAMES)))
 
 VPATH = $(shell find src -type d)
 
@@ -33,7 +33,7 @@ $(OBJDIR)%.o: %.c
 
 $(NAME): $(OBJ) ft_printf.c
 	@echo "libft made."
-	@ar rc $(NAME) $(OBJ)
+	@ar rc $(NAME) $(OBJ) libft/libft.a
 	@ranlib $(NAME)
 	@echo "$(NAME) created !"
 
