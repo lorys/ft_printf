@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:39:39 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/22 16:20:59 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/22 17:27:52 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 # include <unistd.h>
 # include <stdarg.h>
 # include <stdio.h>
-# include "../libft/libft.h"
+# include "libft.h"
 
 typedef struct		s_arg
 {
@@ -38,5 +38,6 @@ int					ft_printf_p(const char *format, va_list ap,\
 		int *skip);
 int					ft_printf_d(const char *format, va_list ap,\
 		int *skip);
+int			ft_printf_c(char const*restrict format, va_list ap, int *skip);
 
 #endif
