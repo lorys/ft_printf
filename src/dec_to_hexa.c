@@ -6,19 +6,21 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 21:40:01 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/22 16:28:30 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/23 14:36:58 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static char			*ft_printf_itoa_base(uintmax_t nb, unsigned int base,\
+char			*ft_printf_itoa_base(uintmax_t nb, unsigned int base,\
 		int type)
 {
 	int				i;
 	static char		str[64];
 
 	i = 62;
+	if (nb == 0)
+		return (ft_strdup("0"));
 	while (nb > 0 && i > 0)
 	{
 		if (type == 'A')

@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:51:44 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/22 16:28:52 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/23 14:26:11 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 
 int		main(void)
 {
-	int		justaddr = 123456;
 	int		ret;
 	int		ret2;
 
-	ret = ft_printf("petit test : %p", &justaddr);
+	printf("ma fonction: \n");
+	ret = ft_printf("petit test : %p %d %s %#o %o", &ret, 225, "saleeeeeeeeeeet", 100, 100);
 	printf("\nreturn %d\n", ret);
-
-	ret2 = printf("petit test : %p", &justaddr);
+printf("\n\nla vraie: \n");
+	ret2 = printf("petit test : %p %d %s %#o %o", &ret, 225, "saleeeeeeeeeeet", 100, 100);
 	printf("\nreturn %d\n", ret2);
 	return (0);
 }

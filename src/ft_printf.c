@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 04:20:35 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/22 16:48:45 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/23 14:05:02 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,14 @@ static int		*ft_format(const char *str, va_list ap, int *lenght)
 		*lenght += ft_printf_p(&str[i], ap, &skip[1]);
 		*lenght += ft_printf_d(&str[i], ap, &skip[1]);
 		*lenght += ft_printf_c(&str[i], ap, &skip[1]);
+		*lenght += ft_printf_o(&str[i], ap, &skip[1]);
+		*lenght += ft_printf_hashtag(&str[i], ap, &skip[1]);
 	}
 	skip[0] = (*lenght - bfore);
 	return (skip);
 }
 
-int				ft_printf(const char *restrict format, ...)
+int				ft_printf(const char *format, ...)
 {
 	va_list		ap;
 	int			i;
@@ -69,6 +71,8 @@ int				ft_printf(const char *restrict format, ...)
 
 	i = 0;
 	lenght = 0;
+	if (format == NULL)
+		return (0);
 	va_start(ap, format);
 	while (format[i])
 	{
