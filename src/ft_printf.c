@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 04:20:35 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/24 18:27:04 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/26 18:09:40 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,12 @@ int				ft_printf_getnb(int nb, int n)
 	return (nb);
 }
 
-int				ft_addc(int *skip, int add)
-{
-	*skip += add;
-	return (1);
-}
-
 static int		*ft_format(const char *str, va_list ap, int *lenght)
 {
 	int		i;
 	int		bfore;
 	int		*skip;
-	//t_arg	handle;
+	t_arg	fg;
 
 	skip = (int *)malloc(sizeof(int) * 2);
 	i = 0;
@@ -49,15 +43,15 @@ static int		*ft_format(const char *str, va_list ap, int *lenght)
 	bfore = *lenght;
 	if (str[i] == '%')
 	{
-		while (ft_isdigit(str[i + 1]) && str[i + 1])
-			i++;
-		*lenght += ft_printf_s(&str[i], ap, &skip[1]);
-		*lenght += ft_printf_p(&str[i], ap, &skip[1]);
-		*lenght += ft_printf_d(&str[i], ap, &skip[1]);
-		*lenght += ft_printf_c(&str[i], ap, &skip[1]);
-		*lenght += ft_printf_o(&str[i], ap, &skip[1]);
-		*lenght += ft_printf_u(&str[i], ap, &skip[1]);
-		*lenght += ft_printf_hashtag(&str[i], ap, &skip[1]);
+		*lenght += ft_printf_flags(&str[i], ap, &skip[1], &fg);
+		*lenght += ft_printf_s(&str[i], ap, &skip[1], &fg);
+		*lenght += ft_printf_p(&str[i], ap, &skip[1], &fg);
+		*lenght += ft_printf_d(&str[i], ap, &skip[1], &fg);
+		*lenght += ft_printf_c(&str[i], ap, &skip[1], &fg);
+		*lenght += ft_printf_o(&str[i], ap, &skip[1], &fg);
+		*lenght += ft_printf_u(&str[i], ap, &skip[1], &fg);
+		*lenght += ft_printf_i(&str[i], ap, &skip[1], &fg);
+		*lenght += ft_printf_xX(&str[i], ap, &skip[1], &fg);
 	}
 	skip[0] = (*lenght - bfore);
 	return (skip);
