@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 21:40:01 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/26 18:09:38 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/27 12:09:20 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ char			*ft_printf_itoa_base(uintmax_t nb, unsigned int base,\
 }
 
 int					ft_printf_p(const char *format, va_list ap,\
-		int *skip)
+		int *skip, t_arg *fg)
 {
 	int		i;
 
+	(void)fg;
 	if (format[1] == 'p')
 	{
 		*skip += 2;
@@ -64,12 +65,13 @@ int					ft_printf_putnbr_base(long nb, unsigned int base)
 	return (i);
 }
 
-int					ft_printf_d(const char* format, va_list ap, int *skip)
+int					ft_printf_d(const char* format, va_list ap, int *skip, t_arg *fg)
 {
 	int		lenght;
 	int		nb;
 
 	lenght = 0;
+	(void)fg;
 	if (format[1] == 'd')
 	{
 		nb = va_arg(ap, int);

@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:51:44 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/26 18:09:39 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/27 13:16:53 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int		main(void)
 	printf("ma fonction: \n");
 	ret = ft_printf("petit test : %p %d %s %#o %o \n%u\n%x", &ret, 225, "saleeeeeeeeeeet", 100, 100, -525, 525);
 	printf("\nreturn %d\n", ret);
+printf("\n\npetit test : %%p %%d %%s %%#o %%o \n%%u\n%%x\n\n");
 printf("\n\nla vraie: \n");
 	ret2 = printf("petit test : %p %d %s %#o %o \n%u\n%x", &ret, 225, "saleeeeeeeeeeet", 100, 100, -525, 525);
 	printf("\nreturn %d\n", ret2);

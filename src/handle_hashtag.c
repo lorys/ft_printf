@@ -6,19 +6,20 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/23 09:01:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/26 18:09:41 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/27 12:09:46 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int			ft_printf_hashtag_xX(char const*format, va_list ap,\
-		int *skip)
+int			ft_printf_xX(char const*format, va_list ap,\
+		int *skip, t_arg *fg)
 {
 	int		lenght;
 
 	lenght = 0;
-	if ((format[0] == 'x' || format[0] == 'X'))
+	(void)fg;
+	if ((format[0] == 'x' || format[0] == 'X') && fg->hfound == 1)
 		lenght += ft_printf("0%c", format[0]);
 	if (format[0] == 'x')
 		lenght += ft_printf_putlstr(ft_printf_itoa_base(va_arg(ap, uintmax_t),\
@@ -31,11 +32,12 @@ int			ft_printf_hashtag_xX(char const*format, va_list ap,\
 }
 
 int			ft_printf_hashtag_oO(char const*format, va_list ap,\
-		int *skip)
+		int *skip, t_arg *fg)
 {
 	int		lenght;
 
 	lenght = 0;
+	(void)fg;
 	if ((format[0] == 'o' || format[0] == 'O'))
 		lenght += ft_printf("0");
 	if (format[0] == 'o')
