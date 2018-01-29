@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/23 09:01:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/29 16:30:18 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/29 17:44:37 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int			ft_printf_oO(char const*format, va_list ap,\
 		if (format[0] == 'O')
 			lenght += ft_printf_putlstr(ft_printf_itoa_base(\
 						va_arg(ap, uintmax_t), 8, format[0]));
-		*skip = (lenght > 0) ? (*skip + 3) : *skip;
+		*skip += 2;
 	}
 	return (lenght);
 }

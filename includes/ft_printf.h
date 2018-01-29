@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:39:39 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/29 16:20:48 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/29 18:02:35 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int				ft_printf_oO(char const* format, va_list ap,\
 		int *skip, t_arg *fg);
 int				ft_printf_oO(char const*format, va_list ap, int *skip,\
 		t_arg *fg);
-int				ft_printf_u(char const*format, va_list ap, int *skip,\
+int				ft_printf_uU(char const*format, va_list ap, int *skip,\
 		t_arg *fg);
 int				ft_printf_i(char const*format, va_list ap, int *skip,\
 		t_arg *fg);

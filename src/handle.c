@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/19 10:52:06 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/29 16:40:26 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/29 18:04:24 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,21 @@ int			ft_printf_flags(char const*format, int *skip, t_arg *fg)
 		lenght++;
 	}
 	//printf("\n-----------\nhfound = %d\nplus = %d\nmoins = %d\nspace = %d\nzero = %d\n", fg->hfound, fg->plus, fg->moins, fg->space, fg->zero);
-	return (0);
+	return (lenght);
 }
 
-int			ft_printf_u(char const*format, va_list ap, int *skip, t_arg *fg)
+int			ft_printf_uU(char const*format, va_list ap, int *skip, t_arg *fg)
 {
 	(void)fg;
-	if (format[0] == 'u')
+	if (format[0] == 'u' || format[0] == 'U')
 	{
 		*skip += 2;
-		return (ft_printf_putlstr(ft_printf_itoa_base(va_arg(ap, unsigned int),\
-					10, 'a')));
+		if (format[0] == 'u')
+			return (ft_printf_putlstr(ft_printf_itoa_base(\
+							va_arg(ap, unsigned int), 10, 'a')));
+		if (format[0] == 'U')
+			return (ft_printf_putlstr(ft_printf_itoa_base(\
+							va_arg(ap, long unsigned int), 10, 'a')));
 	}
 	return (0);
 }
