@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/23 09:01:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/27 12:09:46 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/29 16:30:18 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,34 +18,38 @@ int			ft_printf_xX(char const*format, va_list ap,\
 	int		lenght;
 
 	lenght = 0;
-	(void)fg;
-	if ((format[0] == 'x' || format[0] == 'X') && fg->hfound == 1)
-		lenght += ft_printf("0%c", format[0]);
-	if (format[0] == 'x')
-		lenght += ft_printf_putlstr(ft_printf_itoa_base(va_arg(ap, uintmax_t),\
-					16, 'a'));
-	if (format[0] == 'X')
-		lenght += ft_printf_putlstr(ft_printf_itoa_base(va_arg(ap, uintmax_t),\
-					16, 'A'));
-	*skip = (lenght > 0) ? (*skip + 3) : *skip;
+	if (format[0] == 'x' || format[0] == 'X')
+	{
+		if (fg->hfound == 1)
+			lenght += ft_printf("0%c", format[1]);
+		if (format[0] == 'x')
+			lenght += ft_printf_putlstr(ft_printf_itoa_base(\
+						va_arg(ap, uintmax_t), 16, format[0]));
+		if (format[0] == 'X')
+			lenght += ft_printf_putlstr(ft_printf_itoa_base(\
+						va_arg(ap, uintmax_t), 16, format[0]));
+		*skip += 2;
+	}
 	return (lenght);
 }
 
-int			ft_printf_hashtag_oO(char const*format, va_list ap,\
+int			ft_printf_oO(char const*format, va_list ap,\
 		int *skip, t_arg *fg)
 {
 	int		lenght;
 
 	lenght = 0;
-	(void)fg;
-	if ((format[0] == 'o' || format[0] == 'O'))
-		lenght += ft_printf("0");
-	if (format[0] == 'o')
-		lenght += ft_printf_putlstr(ft_printf_itoa_base(va_arg(ap, uintmax_t),\
-					8, 'a'));
-	if (format[0] == 'O')
-		lenght += ft_printf_putlstr(ft_printf_itoa_base(va_arg(ap, uintmax_t),\
-					8, 'A'));
-	*skip = (lenght > 0) ? (*skip + 3) : *skip;
+	if (format[0] == 'o' || format[0] == 'O')
+	{
+		if (fg->hfound == 1)
+			lenght += ft_printf("0");
+		if (format[0] == 'o')
+			lenght += ft_printf_putlstr(ft_printf_itoa_base(\
+						va_arg(ap, uintmax_t), 8, format[0]));
+		if (format[0] == 'O')
+			lenght += ft_printf_putlstr(ft_printf_itoa_base(\
+						va_arg(ap, uintmax_t), 8, format[0]));
+		*skip = (lenght > 0) ? (*skip + 3) : *skip;
+	}
 	return (lenght);
 }

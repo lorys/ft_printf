@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/19 10:52:06 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/27 16:48:02 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/29 16:40:26 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int			ft_printf_s(char const*format, va_list ap, int *skip, t_arg *fg)
 	char	*str;
 
 	(void)fg;
-	if (format[1] == 's')
+	if (format[0] == 's')
 	{
 		str = va_arg(ap, char *);
 		*skip += 2;
@@ -29,7 +29,7 @@ int			ft_printf_s(char const*format, va_list ap, int *skip, t_arg *fg)
 int			ft_printf_c(char const*format, va_list ap, int *skip, t_arg *fg)
 {
 	(void)fg;
-	if (format[1] == 'c')
+	if (format[0] == 'c')
 	{
 		*skip += 2;
 		ft_putchar(va_arg(ap, int));
@@ -41,50 +41,31 @@ int			ft_printf_c(char const*format, va_list ap, int *skip, t_arg *fg)
 int			ft_printf_flags(char const*format, int *skip, t_arg *fg)
 {
 	int		lenght;
-	int		flag_lenght;
 
-	flag_lenght = 0;
-	lenght = *skip;
-	fg->noflags = 1;
-	while (ft_strchr("sSpdDioOuUxXcC", format[flag_lenght]) == NULL\
-			&& format[flag_lenght])
+	lenght = 0;
+	while (ft_strchr("sSpdDioOuUxXcC", format[lenght]) == NULL\
+			&& format[lenght])
 	{
-		if (format[flag_lenght] == '#')
+		if (fg->hfound == 0 && format[lenght] == '#' && ++*skip)
 			fg->hfound = 1;
-		if (format[flag_lenght] == '0')
+		if (fg->zero == 0 && format[lenght] == '0' && ++*skip)
 			fg->zero = 1;
-		if (format[flag_lenght] == '-')
-		{
-			printf("\n- : %c\n", format[flag_lenght]);
+		if (fg->moins == 0 && format[lenght] == '-' && ++*skip)
 			fg->moins = 1;
-		}
-		if (format[flag_lenght] == '+')
+		if (fg->plus == 0 && format[lenght] == '+' && ++*skip)
 			fg->plus = 1;
-		if (format[flag_lenght] == ' ')
+		if (fg->space == 0 && format[lenght] == ' ' && ++*skip)
 			fg->space = 1;
-		flag_lenght++;
+		lenght++;
 	}
-
-	printf("\n-----------\nhfound = %d\nplus = %d\nmoins = %d\nspace = %d\nzero = %d\n", fg->hfound, fg->plus, fg->moins, fg->space, fg->zero);
-	return (*skip - lenght);
-}
-
-int			ft_printf_o(char const*format, va_list ap, int *skip, t_arg *fg)
-{
-	(void)fg;
-	if (format[1] == 'o')
-	{
-		*skip += 2;
-		return (ft_printf_putlstr(ft_printf_itoa_base(va_arg(ap, uintmax_t), 8,\
-						'a')));
-	}
+	//printf("\n-----------\nhfound = %d\nplus = %d\nmoins = %d\nspace = %d\nzero = %d\n", fg->hfound, fg->plus, fg->moins, fg->space, fg->zero);
 	return (0);
 }
 
 int			ft_printf_u(char const*format, va_list ap, int *skip, t_arg *fg)
 {
 	(void)fg;
-	if (format[1] == 'u')
+	if (format[0] == 'u')
 	{
 		*skip += 2;
 		return (ft_printf_putlstr(ft_printf_itoa_base(va_arg(ap, unsigned int),\
@@ -98,7 +79,7 @@ int			ft_printf_i(char const*format, va_list ap, int *skip, t_arg *fg)
 	int		nb;
 
 	(void)fg;
-	if (format[1] == 'i')
+	if (format[0] == 'i')
 	{
 		*skip += 2;
 		nb = va_arg(ap, int);
@@ -125,5 +106,4 @@ void		ft_initialize_struct(t_arg *fg)
 	fg->plus = 0;
 	fg->space = 0;
 	fg->zero = 0;
-	fg->noflags = 0;
 }

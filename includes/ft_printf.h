@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:39:39 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/27 16:48:00 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/29 16:20:48 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ typedef struct		s_arg
 	int				plus;
 	int				space;
 	int				zero;
-	int				noflags;
 }					t_arg;
 
 int					ft_printf(const char*format, ...);
-int					ft_printf_s(const char*format, va_list ap, int *skip, t_arg *fg);
+int					ft_printf_s(const char*format, va_list ap,\
+		int *skip, t_arg *fg);
 int					ft_printf_putlstr(char *str);
 int					ft_printf_p(const char *format, va_list ap,\
 		int *skip, t_arg *fg);
@@ -52,7 +52,7 @@ int				ft_printf_xX(char const* format, va_list ap,\
 		int *skip, t_arg *fg);
 int				ft_printf_oO(char const* format, va_list ap,\
 		int *skip, t_arg *fg);
-int				ft_printf_o(char const*format, va_list ap, int *skip,\
+int				ft_printf_oO(char const*format, va_list ap, int *skip,\
 		t_arg *fg);
 int				ft_printf_u(char const*format, va_list ap, int *skip,\
 		t_arg *fg);

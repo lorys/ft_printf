@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 21:40:01 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/27 12:09:20 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/29 16:22:39 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ char			*ft_printf_itoa_base(uintmax_t nb, unsigned int base,\
 		return (ft_strdup("0"));
 	while (nb > 0 && i > 0)
 	{
-		if (type == 'A')
+		if (type >= 'A' && type <= 'Z')
 			str[i] = "0123456789ABCDEF"[nb % base];
-		else
+		else if (type >= 'a' && type <= 'z')
 			str[i] = "0123456789abcdef"[nb % base];
 		nb /= base;
 		--i;
@@ -39,7 +39,7 @@ int					ft_printf_p(const char *format, va_list ap,\
 	int		i;
 
 	(void)fg;
-	if (format[1] == 'p')
+	if (format[0] == 'p')
 	{
 		*skip += 2;
 		i = ft_printf_putlstr("0x");
@@ -72,7 +72,7 @@ int					ft_printf_d(const char* format, va_list ap, int *skip, t_arg *fg)
 
 	lenght = 0;
 	(void)fg;
-	if (format[1] == 'd')
+	if (format[0] == 'd')
 	{
 		nb = va_arg(ap, int);
 		*skip += 2;
