@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/23 09:01:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/29 17:44:37 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/30 18:30:28 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,9 @@ int			ft_printf_xX(char const*format, va_list ap,\
 	if (format[0] == 'x' || format[0] == 'X')
 	{
 		if (fg->hfound == 1)
-			lenght += ft_printf("0%c", format[1]);
-		if (format[0] == 'x')
-			lenght += ft_printf_putlstr(ft_printf_itoa_base(\
-						va_arg(ap, uintmax_t), 16, format[0]));
-		if (format[0] == 'X')
-			lenght += ft_printf_putlstr(ft_printf_itoa_base(\
-						va_arg(ap, uintmax_t), 16, format[0]));
+			lenght += ft_printf("0%c", format[0]);
+		lenght += ft_printf_putlstr(ft_printf_itoa_base(\
+					va_arg(ap, int), 16, format[0]));
 		*skip += 2;
 	}
 	return (lenght);

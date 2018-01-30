@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 21:40:01 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/29 17:26:51 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/30 18:40:49 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ int					ft_printf_d(const char* format, va_list ap, int *skip, t_arg *fg)
 	int		nb;
 
 	lenght = 0;
-	(void)fg;
 	if (format[0] == 'd')
 	{
+		if (fg->zero == 1)
 		nb = va_arg(ap, int);
 		*skip += 2;
 		lenght += ft_intlen(nb);

@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/19 10:52:06 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/29 18:04:24 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/30 15:21:22 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,15 @@ int			ft_printf_flags(char const*format, int *skip, t_arg *fg)
 	while (ft_strchr("sSpdDioOuUxXcC", format[lenght]) == NULL\
 			&& format[lenght])
 	{
-		if (fg->hfound == 0 && format[lenght] == '#' && ++*skip)
+		if (format[lenght] == '#' && ++*skip)
 			fg->hfound = 1;
-		if (fg->zero == 0 && format[lenght] == '0' && ++*skip)
+		if (format[lenght] == '0' && ++*skip)
 			fg->zero = 1;
-		if (fg->moins == 0 && format[lenght] == '-' && ++*skip)
+		if (format[lenght] == '-' && ++*skip)
 			fg->moins = 1;
-		if (fg->plus == 0 && format[lenght] == '+' && ++*skip)
+		if (format[lenght] == '+' && ++*skip)
 			fg->plus = 1;
-		if (fg->space == 0 && format[lenght] == ' ' && ++*skip)
+		if (format[lenght] == ' ' && ++*skip)
 			fg->space = 1;
 		lenght++;
 	}
