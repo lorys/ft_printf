@@ -6,7 +6,7 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/18 06:30:23 by llopez            #+#    #+#              #
-#    Updated: 2018/01/27 16:48:04 by llopez           ###   ########.fr        #
+#    Updated: 2018/01/31 20:56:08 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,6 @@ fclean: clean
 
 re: fclean all
 
-test:
-	gcc  main.c src/dec_to_hexa.c src/handle_hashtag.c src/ft_printf.c src/handle.c -I libft -I includes -Llibft -lft $(FLAGS)
+test: $(NAME)
+	gcc main.c -I libft/ libftprintf.a -fsanitize=address
 	@echo "ft_printf_test generated !"

@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/19 10:52:06 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/30 15:21:22 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/31 20:11:15 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,18 @@ int			ft_printf_c(char const*format, va_list ap, int *skip, t_arg *fg)
 int			ft_printf_flags(char const*format, int *skip, t_arg *fg)
 {
 	int		lenght;
+	int		first_width;
 
 	lenght = 0;
+	first_width = 0;
 	while (ft_strchr("sSpdDioOuUxXcC", format[lenght]) == NULL\
 			&& format[lenght])
 	{
+		first_width = (ft_isdigit(format[lenght])\
+				&& first_width == 0 && format[lenght] != '0')? lenght+1 : 0;
 		if (format[lenght] == '#' && ++*skip)
 			fg->hfound = 1;
-		if (format[lenght] == '0' && ++*skip)
+		if (format[lenght] == '0' && ++*skip && !ft_isdigit(format[lenght - 1]))
 			fg->zero = 1;
 		if (format[lenght] == '-' && ++*skip)
 			fg->moins = 1;
@@ -58,7 +62,10 @@ int			ft_printf_flags(char const*format, int *skip, t_arg *fg)
 			fg->space = 1;
 		lenght++;
 	}
-	//printf("\n-----------\nhfound = %d\nplus = %d\nmoins = %d\nspace = %d\nzero = %d\n", fg->hfound, fg->plus, fg->moins, fg->space, fg->zero);
+		if (fg->width == 0)
+			fg->width = ft_atoi(ft_strndup(&format[first_width], lenght));
+		*skip += ft_intlen(fg->width) - 1;
+	//printf("\n-----------\nwidth = %d\nhfound = %d\nplus = %d\nmoins = %d\nspace= %d\nzero = %d\n", fg->width, fg->hfound, fg->plus, fg->moins, fg->space, fg->zero);
 	return (lenght);
 }
 

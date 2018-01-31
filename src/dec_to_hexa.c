@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 21:40:01 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/30 18:40:49 by llopez           ###   ########.fr       */
+/*   Updated: 2018/01/31 20:10:11 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,25 @@ int					ft_printf_d(const char* format, va_list ap, int *skip, t_arg *fg)
 	int		nb;
 
 	lenght = 0;
+	nb = 0;
 	if (format[0] == 'd')
 	{
-		if (fg->zero == 1)
 		nb = va_arg(ap, int);
+		fg->width = (fg->width > 0) ? fg->width - ft_intlen(nb) : fg->width;
+		if (fg->space && fg->zero && fg->width > 0 && fg->width--)
+			lenght += ft_printf_putlstr(" ");
+		while (fg->width > 0)
+		{
+			if (fg->zero)
+				lenght += ft_printf_putlstr("0");
+			else if (fg->space)
+				lenght += ft_printf_putlstr(" ");
+			--fg->width;
+		}
 		*skip += 2;
 		lenght += ft_intlen(nb);
 		ft_putnbr(nb);
+		ft_initialize_struct(fg);
 	}
 	return (lenght);
 }
