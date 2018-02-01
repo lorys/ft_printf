@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/19 10:52:06 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/31 20:11:15 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/01 17:47:38 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,20 @@ int			ft_printf_flags(char const*format, int *skip, t_arg *fg)
 {
 	int		lenght;
 	int		first_width;
+	int		last_width;
+	char	*width_nb;
 
 	lenght = 0;
 	first_width = 0;
+	last_width = 0;
 	while (ft_strchr("sSpdDioOuUxXcC", format[lenght]) == NULL\
 			&& format[lenght])
 	{
 		first_width = (ft_isdigit(format[lenght])\
-				&& first_width == 0 && format[lenght] != '0')? lenght+1 : 0;
+				&& first_width == 0 && format[lenght] != '0')?\
+					  lenght : first_width;
+		last_width = (ft_isdigit(format[lenght])\
+				&& first_width > 0) ? last_width + 1 : last_width;
 		if (format[lenght] == '#' && ++*skip)
 			fg->hfound = 1;
 		if (format[lenght] == '0' && ++*skip && !ft_isdigit(format[lenght - 1]))
@@ -60,12 +66,30 @@ int			ft_printf_flags(char const*format, int *skip, t_arg *fg)
 			fg->plus = 1;
 		if (format[lenght] == ' ' && ++*skip)
 			fg->space = 1;
+		if (format[lenght] == 'h' && format[lenght + 1] == 'h'\
+				&& ft_add(skip, 2))
+			fg->hh = 1;
+		if (format[lenght] == 'l' && format[lenght + 1] == 'l')
+			fg->ll = 1;
+		if (fg->hh == 0 && format[lenght] == 'h')
+			fg->h = 1;
+		if (fg->ll == 0 && format[lenght] == 'l')
+			fg->l = 1;
+		if (format[lenght] == 'j')
+			fg->j = 1;
+		if (format[lenght] == 'z')
+			fg->z = 1;
 		lenght++;
 	}
-		if (fg->width == 0)
-			fg->width = ft_atoi(ft_strndup(&format[first_width], lenght));
-		*skip += ft_intlen(fg->width) - 1;
-	//printf("\n-----------\nwidth = %d\nhfound = %d\nplus = %d\nmoins = %d\nspace= %d\nzero = %d\n", fg->width, fg->hfound, fg->plus, fg->moins, fg->space, fg->zero);
+		if (first_width > 0)
+		{
+
+			width_nb = ft_strndup(&format[first_width], last_width);
+			printf("width_nb = %s\n", width_nb);
+			fg->width = ft_atoi(width_nb);
+			ft_add(skip, (int)ft_strlen(width_nb));
+		}
+		printf("\n-----------\nwidth = %d\nhfound = %d\nplus = %d\nmoins = %d\nspace= %d\nzero = %d\nh= %d\nhh= %d\nl= %d\nll= %d\nj= %d\nz= %d\n", fg->width, fg->hfound, fg->plus, fg->moins, fg->space, fg->zero, fg->h, fg->hh, fg->l, fg->ll, fg->j, fg->z);
 	return (lenght);
 }
 

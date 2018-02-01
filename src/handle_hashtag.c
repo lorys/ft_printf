@@ -6,11 +6,17 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/23 09:01:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/30 18:30:28 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/01 12:15:29 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+int			ft_add(int *nb, int plus)
+{
+	*nb += plus;
+	return (1);
+}
 
 int			ft_printf_xX(char const*format, va_list ap,\
 		int *skip, t_arg *fg)
