@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/23 09:01:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/01 12:15:29 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/02 20:02:04 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,20 @@ int			ft_printf_oO(char const*format, va_list ap,\
 		*skip += 2;
 	}
 	return (lenght);
+}
+
+int			ft_printf_width(t_arg *fg, int r)
+{
+	int lenght;
+
+	lenght = 0;
+	while (fg->width > 0 && fg->moins == r)
+	{
+		if (fg->zero)
+			lenght += ft_printf_putlstr("0");
+		else
+			lenght += ft_printf_putlstr(" ");
+		--fg->width;
+	}
+	return (0);
 }

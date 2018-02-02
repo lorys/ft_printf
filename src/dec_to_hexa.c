@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 21:40:01 by llopez            #+#    #+#             */
-/*   Updated: 2018/01/31 20:10:11 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/02 20:07:09 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,22 @@ int					ft_printf_p(const char *format, va_list ap,\
 		int *skip, t_arg *fg)
 {
 	int		i;
+	void 	*nb;
+	char	*conv;
 
-	(void)fg;
+	i = 0;
 	if (format[0] == 'p')
 	{
+		nb = va_arg(ap, void *);
+		conv = ft_printf_itoa_base((uintmax_t)nb, 16, 'a');
 		*skip += 2;
-		i = ft_printf_putlstr("0x");
-		i += ft_printf_putlstr(ft_printf_itoa_base(\
-					(uintmax_t)va_arg(ap, void *), 16, 'a'));
-		return (i);
+		fg->width = (fg->width > 0 && fg->width > (int)ft_strlen(conv))?fg->width-(int)ft_strlen(conv)-2:0;
+		i += ft_printf_width(fg, 0);
+		i += ft_printf_putlstr("0x");
+		i += ft_printf_putlstr(conv);
+		i += ft_printf_width(fg, 1);
 	}
-	return (0);
+	return (i);
 }
 
 int					ft_printf_putnbr_base(long nb, unsigned int base)
@@ -78,17 +83,11 @@ int					ft_printf_d(const char* format, va_list ap, int *skip, t_arg *fg)
 		fg->width = (fg->width > 0) ? fg->width - ft_intlen(nb) : fg->width;
 		if (fg->space && fg->zero && fg->width > 0 && fg->width--)
 			lenght += ft_printf_putlstr(" ");
-		while (fg->width > 0)
-		{
-			if (fg->zero)
-				lenght += ft_printf_putlstr("0");
-			else if (fg->space)
-				lenght += ft_printf_putlstr(" ");
-			--fg->width;
-		}
 		*skip += 2;
+		ft_printf_width(fg, 1);
 		lenght += ft_intlen(nb);
 		ft_putnbr(nb);
+		ft_printf_width(fg, 0);
 		ft_initialize_struct(fg);
 	}
 	return (lenght);

@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/19 10:52:06 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/01 17:47:38 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/02 20:15:33 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ int			ft_printf_s(char const*format, va_list ap, int *skip, t_arg *fg)
 
 int			ft_printf_c(char const*format, va_list ap, int *skip, t_arg *fg)
 {
-	(void)fg;
 	if (format[0] == 'c')
 	{
 		*skip += 2;
+		fg->width = (fg->width > 0)?fg->width - 1:fg->width;
+		ft_printf_width(fg, 0);
 		ft_putchar(va_arg(ap, int));
+		ft_printf_width(fg, 1);
 		return (1);
 	}
 	return (0);
@@ -46,28 +48,31 @@ int			ft_printf_flags(char const*format, int *skip, t_arg *fg)
 	char	*width_nb;
 
 	lenght = 0;
-	first_width = 0;
+	first_width = -1;
 	last_width = 0;
 	while (ft_strchr("sSpdDioOuUxXcC", format[lenght]) == NULL\
 			&& format[lenght])
 	{
+		*skip = (ft_strchr("#0-+ hljz", format[lenght]))? *skip + 1 : *skip;
+		*skip = ((format[lenght] == 'h' && format[lenght + 1] == 'h') ||\
+				(format[lenght] == 'l' && format[lenght + 1] == 'l'))?*skip+3:\
+				*skip;
 		first_width = (ft_isdigit(format[lenght])\
-				&& first_width == 0 && format[lenght] != '0')?\
+				&& format[lenght] != '0' && first_width == -1 && ++*skip)?\
 					  lenght : first_width;
 		last_width = (ft_isdigit(format[lenght])\
-				&& first_width > 0) ? last_width + 1 : last_width;
-		if (format[lenght] == '#' && ++*skip)
+				&& first_width > -1) ? last_width + 1 : last_width;
+		if (format[lenght] == '#')
 			fg->hfound = 1;
-		if (format[lenght] == '0' && ++*skip && !ft_isdigit(format[lenght - 1]))
+		if (format[lenght] == '0' && !ft_isdigit(format[lenght - 1]))
 			fg->zero = 1;
-		if (format[lenght] == '-' && ++*skip)
+		if (format[lenght] == '-')
 			fg->moins = 1;
-		if (format[lenght] == '+' && ++*skip)
+		if (format[lenght] == '+')
 			fg->plus = 1;
-		if (format[lenght] == ' ' && ++*skip)
+		if (format[lenght] == ' ')
 			fg->space = 1;
-		if (format[lenght] == 'h' && format[lenght + 1] == 'h'\
-				&& ft_add(skip, 2))
+		if (format[lenght] == 'h' && format[lenght + 1] == 'h')
 			fg->hh = 1;
 		if (format[lenght] == 'l' && format[lenght + 1] == 'l')
 			fg->ll = 1;
@@ -81,15 +86,12 @@ int			ft_printf_flags(char const*format, int *skip, t_arg *fg)
 			fg->z = 1;
 		lenght++;
 	}
-		if (first_width > 0)
+		if (first_width > -1)
 		{
-
 			width_nb = ft_strndup(&format[first_width], last_width);
-			printf("width_nb = %s\n", width_nb);
 			fg->width = ft_atoi(width_nb);
-			ft_add(skip, (int)ft_strlen(width_nb));
 		}
-		printf("\n-----------\nwidth = %d\nhfound = %d\nplus = %d\nmoins = %d\nspace= %d\nzero = %d\nh= %d\nhh= %d\nl= %d\nll= %d\nj= %d\nz= %d\n", fg->width, fg->hfound, fg->plus, fg->moins, fg->space, fg->zero, fg->h, fg->hh, fg->l, fg->ll, fg->j, fg->z);
+		//printf("\n-----------\nwidth = %d\nhfound = %d\nplus = %d\nmoins = %d\nspace= %d\nzero = %d\nh= %d\nhh= %d\nl= %d\nll= %d\nj= %d\nz= %d\n", fg->width, fg->hfound, fg->plus, fg->moins, fg->space, fg->zero, fg->h, fg->hh, fg->l, fg->ll, fg->j, fg->z);
 	return (lenght);
 }
 
