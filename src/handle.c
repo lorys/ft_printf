@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/19 10:52:06 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/02 20:15:33 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/05 18:11:40 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,33 @@
 int			ft_printf_s(char const*format, va_list ap, int *skip, t_arg *fg)
 {
 	char	*str;
+	int		len_str;
 
-	(void)fg;
+	len_str = 0;
 	if (format[0] == 's')
 	{
 		str = va_arg(ap, char *);
+		fg->width = (fg->width > 0)? fg->width - ft_strlen(str) : fg->width;
 		*skip += 2;
-		return (ft_printf_putlstr(str));
+		len_str = ft_printf_width(fg, 0) + ft_printf_putlstr(str) +\
+		ft_printf_width(fg, 1);
 	}
-	return (0);
+	return (len_str);
 }
 
 int			ft_printf_c(char const*format, va_list ap, int *skip, t_arg *fg)
 {
+	int	len;
+
+	len = 0;
 	if (format[0] == 'c')
 	{
 		*skip += 2;
 		fg->width = (fg->width > 0)?fg->width - 1:fg->width;
-		ft_printf_width(fg, 0);
+		len = ft_printf_width(fg, 0) + ft_printf_width(fg, 1) + 1;
 		ft_putchar(va_arg(ap, int));
-		ft_printf_width(fg, 1);
-		return (1);
 	}
-	return (0);
+	return (len);
 }
 
 int			ft_printf_flags(char const*format, int *skip, t_arg *fg)
