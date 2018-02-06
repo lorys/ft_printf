@@ -27,7 +27,7 @@ int			ft_printf_s(char const*format, va_list ap, int *skip, t_arg *fg)
 			free(str);
 			str = ft_strdup("(null)");
 		}
-		fg->width = (fg->width > 0)? fg->width - ft_strlen(str) : fg->width;
+		fg->width = (fg->width > 0)? fg->width - (int)ft_strlen(str) : fg->width;
 		len_str = ft_printf_width(fg, 0) + ft_printf_putlstr(str) +\
 		ft_printf_width(fg, 1);
 	}

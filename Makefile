@@ -28,34 +28,34 @@ VPATH = $(shell find src -type d)
 OBJDIR = obj/
 
 $(OBJDIR)%.o: %.c
-	make -C libft/
-	mkdir -p $(OBJDIR)
-	gcc -o $@ $(FLAGS) -c $< -I includes/ -I libft
+	@make -C libft/
+	@mkdir -p $(OBJDIR)
+	@gcc -o $@ $(FLAGS) -c $< -I includes/ -I libft
 	@echo "\t\t$@ created."
 
 $(NAME): $(OBJ) ft_printf.c
 	@echo "libft made."
-	ar rc printf.a $(OBJ)
-	libtool -static -o $(NAME) printf.a libft/libft.a
-	rm -rf printf.a
-	ranlib $(NAME)
+	@ar rc printf.a $(OBJ)
+	@libtool -static -o $(NAME) printf.a libft/libft.a
+	@rm -rf printf.a
+	@ranlib $(NAME)
 	@echo "$(NAME) created !"
 
 all: $(NAME)
 
 clean:
 	@echo "Cleaning libft..."
-	make -C libft clean
+	@make -C libft clean
 	@echo "libft cleaned."
-	rm -rf obj/
+	@rm -rf obj/
 	@echo "objects dir deleted."
 
 fclean: clean
-	make -C libft fclean
-	rm -rf libftprintf.a
+	@make -C libft fclean
+	@rm -rf libftprintf.a
 
 re: fclean all
 
 test: $(NAME)
-	gcc main.c -I libft/ libftprintf.a -fsanitize=address
+	@gcc main.c -I libft/ libftprintf.a -fsanitize=address
 	@echo "ft_printf_test generated !"

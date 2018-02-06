@@ -15,6 +15,7 @@
 # include <unistd.h>
 # include <stdarg.h>
 # include <stdio.h>
+# include <stdint.h>
 # include "libft.h"
 
 typedef struct		s_arg

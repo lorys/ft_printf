@@ -31,14 +31,12 @@ static int		*ft_format(const char *str, va_list ap, int *lenght)
 {
 	int		i;
 	int		bfore;
-	int		bfore_skip;
 	int		*skip;
 	t_arg	fg;
 
 	skip = (int *)malloc(sizeof(int) * 2);
 	i = 0;
 	skip[1] = 0;
-	bfore_skip = skip[1];
 	bfore = *lenght;
 	if (str[i] == '%' && ++i)
 	{
