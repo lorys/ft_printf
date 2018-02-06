@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 04:20:35 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/06 11:24:47 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/06 16:13:33 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int		*ft_format(const char *str, va_list ap, int *lenght)
 	skip = (int *)malloc(sizeof(int) * 2);
 	i = 0;
 	skip[1] = 0;
-	before_skip = skip[1];
+	bfore_skip = skip[1];
 	bfore = *lenght;
 	if (str[i] == '%' && ++i)
 	{
@@ -72,13 +72,12 @@ int				ft_printf(const char *format, ...)
 	while (format[i])
 	{
 		retrn = ft_format(&format[i], ap, &lenght);
-		if (retrn[0] == -1 && ++lenght)
+		if (retrn[1] == 0 && ++lenght)
 		{
 			ft_putchar(format[i]);
-			i += 1;
+			i++;
 		}
-		else
-			i += retrn[1];
+		i += retrn[1];
 		free(retrn);
 	}
 	va_end(ap);

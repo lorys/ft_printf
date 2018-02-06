@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/19 10:52:06 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/06 11:24:47 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/06 16:34:00 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int			ft_printf_flags(char const*format, int *skip, t_arg *fg)
 	int		lenght;
 	int		first_width;
 	int		last_width;
-	char	*width_nb;
 
 	lenght = 0;
 	first_width = -1;
@@ -62,7 +61,7 @@ int			ft_printf_flags(char const*format, int *skip, t_arg *fg)
 	while (ft_strchr("sSpdDioOuUxXcC", format[lenght]) == NULL\
 			&& format[lenght])
 	{
-		*skip = (ft_strchr("#0-+ hljz", format[lenght]))? *skip + 1 : *skip;
+		*skip = (ft_strchr("#0-+ hljz.", format[lenght]))? *skip + 1 : *skip;
 		*skip = ((format[lenght] == 'h' && format[lenght + 1] == 'h') ||\
 				(format[lenght] == 'l' && format[lenght + 1] == 'l'))?*skip+3:\
 				*skip;
@@ -93,14 +92,13 @@ int			ft_printf_flags(char const*format, int *skip, t_arg *fg)
 			fg->j = 1;
 		if (format[lenght] == 'z')
 			fg->z = 1;
+		if (format[lenght] == '.' && format[lenght + 1])
+			fg->precision = 2;
 		lenght++;
 	}
-		if (first_width > -1)
-		{
-			width_nb = ft_strndup(&format[first_width], last_width);
-			fg->width = ft_atoi(width_nb);
-		}
-		//printf("\n-----------\nwidth = %d\nhfound = %d\nplus = %d\nmoins = %d\nspace= %d\nzero = %d\nh= %d\nhh= %d\nl= %d\nll= %d\nj= %d\nz= %d\n", fg->width, fg->hfound, fg->plus, fg->moins, fg->space, fg->zero, fg->h, fg->hh, fg->l, fg->ll, fg->j, fg->z);
+	if (first_width > -1)
+		fg->width = ft_atoi(ft_strndup(&format[first_width], last_width));
+	//printf("\n-----------\nwidth = %d\nhfound = %d\nplus = %d\nmoins = %d\nspace= %d\nzero = %d\nh= %d\nhh= %d\nl= %d\nll= %d\nj= %d\nz= %d\n", fg->width, fg->hfound, fg->plus, fg->moins, fg->space, fg->zero, fg->h, fg->hh, fg->l, fg->ll, fg->j, fg->z);
 	return (lenght);
 }
 
