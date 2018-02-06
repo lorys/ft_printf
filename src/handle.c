@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/19 10:52:06 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/05 18:11:40 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/06 11:24:47 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,14 @@ int			ft_printf_s(char const*format, va_list ap, int *skip, t_arg *fg)
 	len_str = 0;
 	if (format[0] == 's')
 	{
-		str = va_arg(ap, char *);
-		fg->width = (fg->width > 0)? fg->width - ft_strlen(str) : fg->width;
 		*skip += 2;
+		str = va_arg(ap, char *);
+		if (str == NULL)
+		{
+			free(str);
+			str = ft_strdup("(null)");
+		}
+		fg->width = (fg->width > 0)? fg->width - ft_strlen(str) : fg->width;
 		len_str = ft_printf_width(fg, 0) + ft_printf_putlstr(str) +\
 		ft_printf_width(fg, 1);
 	}
