@@ -6,7 +6,7 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/18 06:30:23 by llopez            #+#    #+#              #
-#    Updated: 2018/02/06 10:38:40 by llopez           ###   ########.fr        #
+#    Updated: 2018/02/08 16:35:34 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,5 +57,5 @@ fclean: clean
 re: fclean all
 
 test: $(NAME)
-	@gcc main.c -I libft/ libftprintf.a -fsanitize=address
+	@gcc main.c -I libft/ libftprintf.a
 	@echo "ft_printf_test generated !"

@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 21:40:01 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/06 16:04:46 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/08 19:13:23 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,30 @@ int					ft_printf_d(const char* format, va_list ap, int *skip, t_arg *fg)
 		ft_initialize_struct(fg);
 	}
 	return (lenght);
+}
+
+int					ft_get_precision(const char *str)
+{
+	int		i;
+
+	i = 1;
+	while (ft_isdigit(str[i]))
+		i++;
+	return (ft_atoi(ft_strndup(&str[1], i-1)));
+}
+
+int					ft_get_width(const char *str)
+{
+	int		i;
+	int		b;
+
+	b = 0;
+	while (ft_strchr("#0-+ hljz", str[b]))
+		b++;
+	i = b;
+	while (ft_isdigit(str[i]))
+		i++;
+	if (i == 0)
+		return (0);
+	return (ft_atoi(ft_strndup(&str[b], i)));
 }

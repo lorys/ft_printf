@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 04:20:35 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/06 16:13:33 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/08 19:26:54 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,13 @@ static int		*ft_format(const char *str, va_list ap, int *lenght)
 	{
 		ft_initialize_struct(&fg);
 		i += ft_printf_flags(&str[i], &skip[1], &fg);
+		*lenght += ft_printf_percent(&str[i], &skip[1], &fg);
 		*lenght += ft_printf_s(&str[i], ap, &skip[1], &fg);
 		*lenght += ft_printf_p(&str[i], ap, &skip[1], &fg);
 		*lenght += ft_printf_d(&str[i], ap, &skip[1], &fg);
 		*lenght += ft_printf_c(&str[i], ap, &skip[1], &fg);
 		*lenght += ft_printf_oO(&str[i], ap, &skip[1], &fg);
-		*lenght += ft_printf_uU(&str[i], ap, &skip[1], &fg);
+		*lenght += ft_printf_uu(&str[i], ap, &skip[1], &fg);
 		*lenght += ft_printf_i(&str[i], ap, &skip[1], &fg);
 		*lenght += ft_printf_xX(&str[i], ap, &skip[1], &fg);
 	}
