@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 04:20:35 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/08 19:26:54 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/09 15:25:41 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ static int		*ft_format(const char *str, va_list ap, int *lenght)
 		*lenght += ft_printf_s(&str[i], ap, &skip[1], &fg);
 		*lenght += ft_printf_p(&str[i], ap, &skip[1], &fg);
 		*lenght += ft_printf_d(&str[i], ap, &skip[1], &fg);
+		*lenght += ft_printf_ld(&str[i], ap, &skip[1], &fg);
 		*lenght += ft_printf_c(&str[i], ap, &skip[1], &fg);
 		*lenght += ft_printf_oO(&str[i], ap, &skip[1], &fg);
 		*lenght += ft_printf_uu(&str[i], ap, &skip[1], &fg);
-		*lenght += ft_printf_i(&str[i], ap, &skip[1], &fg);
 		*lenght += ft_printf_xX(&str[i], ap, &skip[1], &fg);
 	}
 	skip[0] = (*lenght - bfore);

@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/19 10:52:06 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/08 19:26:15 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/09 16:40:14 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,8 @@ int			ft_printf_flags(char const*format, int *skip, t_arg *fg)
 	while (ft_strchr("sSpdDioOuUxXcC%", format[lenght]) == NULL\
 			&& format[lenght])
 	{
-		*skip = (ft_strchr("#0-+ hljz.123456789", format[lenght]))? *skip + 1 : *skip;
-		*skip = ((format[lenght] == 'h' && format[lenght + 1] == 'h') ||\
-				(format[lenght] == 'l' && format[lenght + 1] == 'l'))?*skip+3:\
-				*skip;
+		*skip = (ft_strchr("#0-+ hljz.123456789", format[lenght]))?\
+				*skip + 1 : *skip;
 		first_width = (ft_isdigit(format[lenght])\
 				&& format[lenght] != '0' && first_width == -1)?\
 					  lenght : first_width;
@@ -157,21 +155,6 @@ int			ft_printf_uu(char const*format, va_list ap, int *skip, t_arg *fg)
 		if (format[0] == 'U')
 			return (ft_printf_putlstr(ft_printf_itoa_base(\
 							va_arg(ap, long int), 10, 'a')));
-	}
-	return (0);
-}
-
-int			ft_printf_i(char const*format, va_list ap, int *skip, t_arg *fg)
-{
-	int		nb;
-
-	(void)fg;
-	if (format[0] == 'i')
-	{
-		*skip += 2;
-		nb = va_arg(ap, int);
-		ft_putnbr(nb);
-		return ((int)ft_strlen(ft_itoa(nb)));
 	}
 	return (0);
 }

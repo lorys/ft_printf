@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 21:40:01 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/08 19:13:23 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/09 19:04:14 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int					ft_printf_p(const char *format, va_list ap,\
 		nb = va_arg(ap, void *);
 		conv = ft_printf_itoa_base((uintmax_t)nb, 16, 'a');
 		*skip += 2;
-		fg->width = (fg->width > 0 && fg->width > (int)ft_strlen(conv))?fg->width-(int)ft_strlen(conv)-2:0;
+		fg->width = (fg->width > 0 && fg->width > (int)ft_strlen(conv))?\
+					fg->width-(int)ft_strlen(conv)-2:0;
 		i += ft_printf_width(fg, 0);
 		i += ft_printf_putlstr("0x");
 		i += ft_printf_putlstr(conv);
@@ -70,23 +71,59 @@ int					ft_printf_putnbr_base(long nb, unsigned int base)
 	return (i);
 }
 
-int					ft_printf_d(const char* format, va_list ap, int *skip, t_arg *fg)
+int					ft_printf_ld(const char* format, va_list ap, int *skip,\
+		t_arg *fg)
 {
 	int		lenght;
-	int		nb;
+	long	nb;
+	char	*str;
 
 	lenght = 0;
 	nb = 0;
-	if (format[0] == 'd')
+	if (format[0] == 'D')
 	{
 		*skip += 2;
-		nb = va_arg(ap, int);
-		fg->width = (fg->width > 0) ? fg->width - ft_intlen(nb) : fg->width;
+		nb = va_arg(ap, long);
+		str = ft_printf_itoa_base((nb < 0)?nb * -1:nb, 10, 'a');
+		fg->width = (fg->width > 0) ? fg->width - ft_strlen(str) : fg->width;
 		fg->width = (fg->width > 0 && nb < 0) ? fg->width - 1 : fg->width;
-		lenght += (nb < 0)?ft_intlen(nb * -1):ft_intlen(nb);
+		if (fg->space == 1 && fg->width == 0)
+			lenght += ft_printf_putlstr(" ");
+		if (fg->plus && nb >= 0)
+			lenght += ft_printf_putlstr("+");
 		lenght += ft_printf_width(fg, 0);
-		lenght += (nb < 0);
-		ft_putnbr(nb);
+		lenght += (nb < 0)?ft_printf_putlstr("-"):0;
+		lenght += ft_printf_putlstr(str);
+		lenght += ft_printf_width(fg, 1);
+		ft_initialize_struct(fg);
+	}
+	return (lenght);
+}
+int					ft_printf_d(const char* format, va_list ap, int *skip,\
+		t_arg *fg)
+{
+	int				lenght;
+	intmax_t		nb;
+	char			*str;
+
+	lenght = 0;
+	nb = 0;
+	if (format[0] == 'd' || format[0] == 'i')
+	{
+		if (fg->l)
+			return (ft_printf_ld("D", ap, skip, fg));
+		*skip += 2;
+		nb = ft_printf_signed(ap, fg);
+		str = ft_printf_itoa_base((nb < 0)?nb * -1:nb, 10, 'a');
+		fg->width = (fg->width > 0) ? fg->width - ft_strlen(str) : fg->width;
+		fg->width = (fg->width > 0 && nb < 0) ? fg->width - 1 : fg->width;
+		if (fg->space == 1 && fg->width == 0)
+			lenght += ft_printf_putlstr(" ");
+		if (fg->plus && nb >= 0)
+			lenght += ft_printf_putlstr("+");
+		lenght += ft_printf_width(fg, 0);
+		lenght += (nb < 0)?ft_printf_putlstr("-"):0;
+		lenght += ft_printf_putlstr(str);
 		lenght += ft_printf_width(fg, 1);
 		ft_initialize_struct(fg);
 	}
