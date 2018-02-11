@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 21:40:01 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/09 19:04:14 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/11 06:43:55 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,34 +71,6 @@ int					ft_printf_putnbr_base(long nb, unsigned int base)
 	return (i);
 }
 
-int					ft_printf_ld(const char* format, va_list ap, int *skip,\
-		t_arg *fg)
-{
-	int		lenght;
-	long	nb;
-	char	*str;
-
-	lenght = 0;
-	nb = 0;
-	if (format[0] == 'D')
-	{
-		*skip += 2;
-		nb = va_arg(ap, long);
-		str = ft_printf_itoa_base((nb < 0)?nb * -1:nb, 10, 'a');
-		fg->width = (fg->width > 0) ? fg->width - ft_strlen(str) : fg->width;
-		fg->width = (fg->width > 0 && nb < 0) ? fg->width - 1 : fg->width;
-		if (fg->space == 1 && fg->width == 0)
-			lenght += ft_printf_putlstr(" ");
-		if (fg->plus && nb >= 0)
-			lenght += ft_printf_putlstr("+");
-		lenght += ft_printf_width(fg, 0);
-		lenght += (nb < 0)?ft_printf_putlstr("-"):0;
-		lenght += ft_printf_putlstr(str);
-		lenght += ft_printf_width(fg, 1);
-		ft_initialize_struct(fg);
-	}
-	return (lenght);
-}
 int					ft_printf_d(const char* format, va_list ap, int *skip,\
 		t_arg *fg)
 {
@@ -108,21 +80,26 @@ int					ft_printf_d(const char* format, va_list ap, int *skip,\
 
 	lenght = 0;
 	nb = 0;
-	if (format[0] == 'd' || format[0] == 'i')
+	if (format[0] == 'd' || format[0] == 'D' || format[0] == 'i')
 	{
-		if (fg->l)
-			return (ft_printf_ld("D", ap, skip, fg));
+		fg->l = (fg->l ==  0 && format[0] == 'D')?1:fg->l;
 		*skip += 2;
 		nb = ft_printf_signed(ap, fg);
 		str = ft_printf_itoa_base((nb < 0)?nb * -1:nb, 10, 'a');
-		fg->width = (fg->width > 0) ? fg->width - ft_strlen(str) : fg->width;
-		fg->width = (fg->width > 0 && nb < 0) ? fg->width - 1 : fg->width;
-		if (fg->space == 1 && fg->width == 0)
-			lenght += ft_printf_putlstr(" ");
-		if (fg->plus && nb >= 0)
-			lenght += ft_printf_putlstr("+");
-		lenght += ft_printf_width(fg, 0);
+		fg->zero = (fg->precision > 0)?0:fg->zero;
+		fg->width = (fg->width > 0)?fg->width - (int)ft_strlen(str):fg->width;
+		fg->width = (fg->width > 0 && fg->precision > 0)\
+				?fg->width - (fg->precision-(int)ft_strlen(str)):fg->width;
+		fg->width = (fg->width > 0 && (nb < 0 || fg->plus)\
+				&& fg->precision < fg->width) ?fg->width - 1 : fg->width;
+		fg->width = (fg->width > 0 && fg->space && fg->zero)?fg->width-1:fg->width;
+		lenght += (fg->space && fg->zero && fg->width > 0)?ft_printf_putlstr(" "):0;
+		lenght += (fg->space && fg->width == 0 && fg->width > fg->precision)?ft_printf_putlstr(" "):0;
+		lenght += (fg->plus && nb >= 0 && fg->width == 0)?ft_printf_putlstr("+"):0;
+		lenght += (!fg->zero)?ft_printf_width(fg, 0):0;
+		lenght += (fg->plus && nb >= 0 && fg->width > 0)?ft_printf_putlstr("+"):0;
 		lenght += (nb < 0)?ft_printf_putlstr("-"):0;
+		lenght += (fg->zero && fg->width > 0)?ft_printf_width(fg, 0):ft_printf_precision(fg, (int)ft_strlen(str));
 		lenght += ft_printf_putlstr(str);
 		lenght += ft_printf_width(fg, 1);
 		ft_initialize_struct(fg);

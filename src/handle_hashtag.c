@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/23 09:01:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/09 19:08:00 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/11 06:34:55 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,17 @@ int			ft_printf_oO(char const*format, va_list ap,\
 int			ft_printf_width(t_arg *fg, int r)
 {
 	int lenght;
+	int	width;
 
+	width = fg->width;
 	lenght = 0;
-	while (fg->width > 0 && fg->moins == r)
+	while (width > 0 && fg->moins == r)
 	{
 		if (fg->zero)
 			lenght += ft_printf_putlstr("0");
 		else
 			lenght += ft_printf_putlstr(" ");
-		--fg->width;
+		--width;
 	}
 	return (lenght);
 }
@@ -102,4 +104,18 @@ uintmax_t	ft_printf_unsigned(va_list ap, t_arg *fg)
 	if (fg->ll)
 		return (va_arg(ap, unsigned long long));
 	return (va_arg(ap, unsigned int));
+}
+
+int			ft_printf_precision(t_arg *fg, int width)
+{
+	int lenght;
+
+	lenght = 0;
+	fg->precision = fg->precision - width;
+	while (fg->precision > 0)
+	{
+		lenght += ft_printf_putlstr("0");
+		fg->precision--;
+	}
+	return (lenght);
 }
