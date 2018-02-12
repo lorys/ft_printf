@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/23 09:01:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/11 06:34:55 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/12 21:30:04 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,28 @@ uintmax_t	ft_printf_unsigned(va_list ap, t_arg *fg)
 int			ft_printf_precision(t_arg *fg, int width)
 {
 	int lenght;
+	int	precision;
 
+	precision = fg->precision - width;
 	lenght = 0;
-	fg->precision = fg->precision - width;
-	while (fg->precision > 0)
+	if (fg->precision < 1)
+		return (0);
+	while (precision > 0)
 	{
 		lenght += ft_printf_putlstr("0");
-		fg->precision--;
+		precision--;
 	}
 	return (lenght);
+}
+
+int			ft_printf_putspace(t_arg *fg, char *str)
+{
+	(void)str;
+	if (fg->space && (fg->precision > -1 && fg->width_used &&\
+				(fg->precision == 0 || fg->width == 0)))
+		return (0);
+	if (!fg->space)
+		return (0);
+	ft_printf_putlstr(" ");
+	return (1);
 }

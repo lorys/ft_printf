@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:39:39 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/11 02:45:31 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/12 21:26:19 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct		s_arg
 	int				plus;
 	int				space;
 	int				zero;
+	int				width_used;
 }					t_arg;
 
 int					ft_printf(const char*format, ...);
@@ -62,10 +63,11 @@ void				ft_initialize_struct(t_arg *fg);
 int					ft_add(int *nb, int plus);
 int					ft_printf_width(t_arg *fg, int r);
 int					ft_get_precision(const char *str);
-int					ft_get_width(const char *str);
+int					ft_get_width(const char *str, t_arg *fg);
 int					ft_printf_percent(char const*format, int *skip, t_arg *fg);
 intmax_t			ft_printf_signed(va_list ap, t_arg *fg);
 uintmax_t			ft_printf_unsigned(va_list ap, t_arg *fg);
 int					ft_printf_precision(t_arg *fg, int width);
+int					ft_printf_putspace(t_arg *fg, char *str);
 
 #endif

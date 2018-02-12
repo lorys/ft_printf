@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/19 10:52:06 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/11 04:59:40 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/12 21:29:51 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,9 @@ int			ft_printf_flags(char const*format, int *skip, t_arg *fg)
 	int		lenght;
 	int		first_width;
 	int		last_width;
+	int		pass_precision;
 
+	pass_precision = 0;
 	lenght = 0;
 	first_width = -1;
 	last_width = 0;
@@ -95,7 +97,8 @@ int			ft_printf_flags(char const*format, int *skip, t_arg *fg)
 				&& first_width > -1) ? last_width + 1 : last_width;
 		if (format[lenght] == '#')
 			fg->hfound = 1;
-		if (format[lenght] == '0' && !ft_isdigit(format[lenght - 1]))
+		if (format[lenght] == '0' && !ft_isdigit(format[lenght - 1])\
+				&& !pass_precision)
 			fg->zero = 1;
 		if (format[lenght] == '-')
 			fg->moins = 1;
@@ -115,11 +118,11 @@ int			ft_printf_flags(char const*format, int *skip, t_arg *fg)
 			fg->j = 1;
 		if (format[lenght] == 'z')
 			fg->z = 1;
-		if (format[lenght] == '.' && format[lenght + 1])
+		if (format[lenght] == '.' && ++pass_precision)
 			fg->precision = ft_get_precision(&format[lenght]);
 		lenght++;
 	}
-		fg->width = ft_get_width(&format[0]);
+		fg->width = ft_get_width(&format[0], fg);
 	//printf("\n-----------\nprecision = %d\nwidth = %d\nhfound = %d\nplus = %d\nmoins = %d\nspace= %d\nzero = %d\nh= %d\nhh= %d\nl= %d\nll= %d\nj= %d\nz= %d\n", fg->precision, fg->width, fg->hfound, fg->plus, fg->moins, fg->space, fg->zero, fg->h, fg->hh, fg->l, fg->ll, fg->j, fg->z);
 	return (lenght);
 }
@@ -176,4 +179,5 @@ void		ft_initialize_struct(t_arg *fg)
 	fg->plus = 0;
 	fg->space = 0;
 	fg->zero = 0;
+	fg->width_used = 0;
 }

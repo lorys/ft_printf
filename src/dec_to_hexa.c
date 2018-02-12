@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 21:40:01 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/11 06:43:55 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/12 21:30:23 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,14 +93,13 @@ int					ft_printf_d(const char* format, va_list ap, int *skip,\
 		fg->width = (fg->width > 0 && (nb < 0 || fg->plus)\
 				&& fg->precision < fg->width) ?fg->width - 1 : fg->width;
 		fg->width = (fg->width > 0 && fg->space && fg->zero)?fg->width-1:fg->width;
-		lenght += (fg->space && fg->zero && fg->width > 0)?ft_printf_putlstr(" "):0;
-		lenght += (fg->space && fg->width == 0 && fg->width > fg->precision)?ft_printf_putlstr(" "):0;
+		lenght += ft_printf_putspace(fg, str);
 		lenght += (fg->plus && nb >= 0 && fg->width == 0)?ft_printf_putlstr("+"):0;
 		lenght += (!fg->zero)?ft_printf_width(fg, 0):0;
 		lenght += (fg->plus && nb >= 0 && fg->width > 0)?ft_printf_putlstr("+"):0;
 		lenght += (nb < 0)?ft_printf_putlstr("-"):0;
 		lenght += (fg->zero && fg->width > 0)?ft_printf_width(fg, 0):ft_printf_precision(fg, (int)ft_strlen(str));
-		lenght += ft_printf_putlstr(str);
+		lenght += (nb == 0 && fg->precision == 0)?0:ft_printf_putlstr(str);
 		lenght += ft_printf_width(fg, 1);
 		ft_initialize_struct(fg);
 	}
@@ -112,12 +111,14 @@ int					ft_get_precision(const char *str)
 	int		i;
 
 	i = 1;
+	if (!ft_isdigit(str[i]))
+		return (0);
 	while (ft_isdigit(str[i]))
 		i++;
 	return (ft_atoi(ft_strndup(&str[1], i-1)));
 }
 
-int					ft_get_width(const char *str)
+int					ft_get_width(const char *str, t_arg *fg)
 {
 	int		i;
 	int		b;
@@ -130,5 +131,6 @@ int					ft_get_width(const char *str)
 		i++;
 	if (i == 0)
 		return (0);
+	fg->width_used = 1;
 	return (ft_atoi(ft_strndup(&str[b], i)));
 }
