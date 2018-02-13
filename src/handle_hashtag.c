@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/23 09:01:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/12 21:30:04 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/13 08:52:29 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,18 @@ int			ft_printf_oO(char const*format, va_list ap,\
 	return (lenght);
 }
 
-int			ft_printf_width(t_arg *fg, int r)
+int			ft_printf_width(t_arg *fg, int r, char *str)
 {
 	int lenght;
 	int	width;
 
 	width = fg->width;
+	width = (width > 0)?width - (int)ft_strlen(str):width;
+	width = (width > 0 && fg->precision > 0)\
+			?width - (fg->precision-(int)ft_strlen(str)):width;
+	width = (width > 0 && (nb < 0 || fg->plus)\
+			&& fg->precision < width) ?width - 1 : width;
+	width = (width > 0 && fg->space && fg->zero)?width-1:width;
 	lenght = 0;
 	while (width > 0 && fg->moins == r)
 	{
@@ -125,9 +131,9 @@ int			ft_printf_precision(t_arg *fg, int width)
 
 int			ft_printf_putspace(t_arg *fg, char *str)
 {
-	(void)str;
 	if (fg->space && (fg->precision > -1 && fg->width_used &&\
-				(fg->precision == 0 || fg->width == 0)))
+				((fg->precision == 0 || fg->width == 0) ||\
+				 (fg->precision + fg->width <= (int)ft_strlen(str)))))
 		return (0);
 	if (!fg->space)
 		return (0);

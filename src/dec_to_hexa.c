@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 21:40:01 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/12 21:30:23 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/13 08:49:00 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,6 @@ int					ft_printf_d(const char* format, va_list ap, int *skip,\
 		nb = ft_printf_signed(ap, fg);
 		str = ft_printf_itoa_base((nb < 0)?nb * -1:nb, 10, 'a');
 		fg->zero = (fg->precision > 0)?0:fg->zero;
-		fg->width = (fg->width > 0)?fg->width - (int)ft_strlen(str):fg->width;
-		fg->width = (fg->width > 0 && fg->precision > 0)\
-				?fg->width - (fg->precision-(int)ft_strlen(str)):fg->width;
-		fg->width = (fg->width > 0 && (nb < 0 || fg->plus)\
-				&& fg->precision < fg->width) ?fg->width - 1 : fg->width;
-		fg->width = (fg->width > 0 && fg->space && fg->zero)?fg->width-1:fg->width;
 		lenght += ft_printf_putspace(fg, str);
 		lenght += (fg->plus && nb >= 0 && fg->width == 0)?ft_printf_putlstr("+"):0;
 		lenght += (!fg->zero)?ft_printf_width(fg, 0):0;
