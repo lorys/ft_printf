@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/19 10:52:06 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/13 08:46:53 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/14 19:46:30 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,34 @@ int			ft_printf_percent(char const*format, int *skip, t_arg *fg)
 	{
 		str = ft_strdup("%");
 		*skip += 2;
-		fg->width = (fg->width > 0)? fg->width - 1 : fg->width;
-		len_str = ft_printf_width(fg, 0) + ft_printf_putlstr(str) +\
-		ft_printf_width(fg, 1);
+		len_str = ft_printf_width_str(fg, 0, str) + ft_printf_putlstr(str) +\
+		ft_printf_width_str(fg, 1, str);
+	}
+	return (len_str);
+}
+
+int			ft_printf_width_str(t_arg *fg, int r, char *str)
+{
+	int		len_str;
+	int		width;
+
+	width = fg->width;
+	len_str = 0;
+	if (fg->width_used && r == fg->moins)
+	{
+		if ((fg->flag == 'u' || fg->flag == 'U') && fg->moins\
+				&& fg->precision > fg->width)
+			return (0);
+		fg->precision = (fg->moins)?0:fg->precision;
+		width = width - (int)ft_strlen(str);
+		if (!fg->moins && fg->precision > (int)ft_strlen(str) &&\
+				width-(fg->precision-(int)ft_strlen(str)) >= 0)
+			width = width - (fg->precision-(int)ft_strlen(str));
+		while (width > 0)
+		{
+			len_str += ft_printf_putlstr((fg->zero)?"0":" ");
+			--width;
+		}
 	}
 	return (len_str);
 }
@@ -51,9 +76,9 @@ int			ft_printf_s(char const*format, va_list ap, int *skip, t_arg *fg)
 			str = ft_strdup(str_new);
 			free(str_new);
 		}
-		fg->width = (fg->width > 0)? fg->width - (int)ft_strlen(str) : fg->width;
-		len_str = ft_printf_width(fg, 0) + ft_printf_putlstr(str) +\
-		ft_printf_width(fg, 1);
+
+		len_str = ft_printf_width_str(fg, 0, str) + ft_printf_putlstr(str) +\
+		ft_printf_width_str(fg, 1, str);
 	}
 	return (len_str);
 }
@@ -66,10 +91,9 @@ int			ft_printf_c(char const*format, va_list ap, int *skip, t_arg *fg)
 	if (format[0] == 'c')
 	{
 		*skip += 2;
-		fg->width = (fg->width > 0)?fg->width - 1:fg->width;
-		len += ft_printf_width(fg, 0);
+		len += ft_printf_width_str(fg, 0, "0");
 		ft_putchar(va_arg(ap, int));
-		len += ft_printf_width(fg, 1) + 1;  
+		len += ft_printf_width_str(fg, 1, "0") + 1;  
 	}
 	return (len);
 }
@@ -122,44 +146,29 @@ int			ft_printf_flags(char const*format, int *skip, t_arg *fg)
 			fg->precision = ft_get_precision(&format[lenght]);
 		lenght++;
 	}
-		fg->width = ft_get_width(&format[0], fg);
-	//printf("\n-----------\nprecision = %d\nwidth = %d\nhfound = %d\nplus = %d\nmoins = %d\nspace= %d\nzero = %d\nh= %d\nhh= %d\nl= %d\nll= %d\nj= %d\nz= %d\n", fg->precision, fg->width, fg->hfound, fg->plus, fg->moins, fg->space, fg->zero, fg->h, fg->hh, fg->l, fg->ll, fg->j, fg->z);
+	fg->flag = format[lenght];
+	fg->width = ft_get_width(&format[0], fg);
+	//printf("\n-----------\nwidth_used = %d\nprecision = %d\nwidth = %d\nhfound = %d\nplus = %d\nmoins = %d\nspace= %d\nzero = %d\nh= %d\nhh= %d\nl= %d\nll= %d\nj= %d\nz= %d\n", fg->width_used, fg->precision, fg->width, fg->hfound, fg->plus, fg->moins, fg->space, fg->zero, fg->h, fg->hh, fg->l, fg->ll, fg->j, fg->z);
 	return (lenght);
 }
 
 int			ft_printf_uu(char const*format, va_list ap, int *skip, t_arg *fg)
 {
+	int		len;
+	char	*str;
+
+	len = 0;
 	if (format[0] == 'u' || format[0] == 'U')
 	{
+		str = ft_printf_itoa_base(ft_printf_unsigned(ap, fg), 10, 'a');
 		*skip += 2;
-		if (format[0] == 'u')
-		{
-			if (fg->ll)
-			{
-				return (ft_printf_putlstr(ft_printf_itoa_base(\
-							va_arg(ap, unsigned long long), 10, 'a')));
-			}
-			else if (fg->l)
-			{
-				return (ft_printf_putlstr(ft_printf_itoa_base(\
-							va_arg(ap, unsigned long), 10, 'a')));
-			}
-			else if (fg->hh)
-			{
-				return (ft_printf_putlstr(ft_printf_itoa_base(\
-							va_arg(ap, unsigned int), 10, 'a')));	
-			}
-			else
-			{
-				return (ft_printf_putlstr(ft_printf_itoa_base(\
-							va_arg(ap, unsigned int), 10, 'a')));	
-			}
-		}
-		if (format[0] == 'U')
-			return (ft_printf_putlstr(ft_printf_itoa_base(\
-							va_arg(ap, long int), 10, 'a')));
+		fg->zero = (fg->precision > -1)?0:fg->zero;	
+		len += ft_printf_width_str(fg, 0, str);
+		len += ft_printf_precision(fg, (int)ft_strlen(str));
+		len += (str[0] == '0' && fg->precision == 0)?0:ft_printf_putlstr(str);
+		len += ft_printf_width_str(fg, 1, str);
 	}
-	return (0);
+	return (len);
 }
 
 void		ft_initialize_struct(t_arg *fg)
@@ -180,4 +189,5 @@ void		ft_initialize_struct(t_arg *fg)
 	fg->space = 0;
 	fg->zero = 0;
 	fg->width_used = 0;
+	fg->flag = 0;
 }

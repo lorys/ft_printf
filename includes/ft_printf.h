@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:39:39 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/12 21:26:19 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/14 18:54:49 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef struct		s_arg
 	int				space;
 	int				zero;
 	int				width_used;
+	int				flag;
 }					t_arg;
 
 int					ft_printf(const char*format, ...);
@@ -53,7 +54,7 @@ char				*ft_printf_itoa_base(uintmax_t nb, unsigned int base,\
 int					ft_printf_flags(char const*format, int *skip, t_arg *fg);
 int					ft_printf_xX(char const* format, va_list ap,\
 						int *skip, t_arg *fg);
-int					ft_printf_oO(char const* format, va_list ap,\
+int					ft_printf_oo(char const* format, va_list ap,\
 						int *skip, t_arg *fg);
 int					ft_printf_oO(char const*format, va_list ap, int *skip,\
 						t_arg *fg);
@@ -61,7 +62,7 @@ int					ft_printf_uu(char const*format, va_list ap, int *skip,\
 						t_arg *fg);
 void				ft_initialize_struct(t_arg *fg);
 int					ft_add(int *nb, int plus);
-int					ft_printf_width(t_arg *fg, int r);
+int					ft_printf_width(t_arg *fg, int r, char *str);
 int					ft_get_precision(const char *str);
 int					ft_get_width(const char *str, t_arg *fg);
 int					ft_printf_percent(char const*format, int *skip, t_arg *fg);
@@ -69,5 +70,6 @@ intmax_t			ft_printf_signed(va_list ap, t_arg *fg);
 uintmax_t			ft_printf_unsigned(va_list ap, t_arg *fg);
 int					ft_printf_precision(t_arg *fg, int width);
 int					ft_printf_putspace(t_arg *fg, char *str);
+int					ft_printf_width_str(t_arg *fg, int r, char *str);
 
 #endif
