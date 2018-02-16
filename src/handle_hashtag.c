@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/23 09:01:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/14 19:49:30 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/16 15:28:08 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,33 +41,45 @@ int			ft_printf_xX(char const*format, va_list ap,\
 int			ft_printf_oo(char const*format, va_list ap,\
 		int *skip, t_arg *fg)
 {
+	int		nb;
 	int		lenght;
 	char	*str;
+	int		zero_init;
 
 	lenght = 0;
 	if (format[0] == 'o' || format[0] == 'O')
 	{
+		zero_init = fg->zero;
 		fg->zero = (fg->precision > -1)?0:fg->zero;
-		str = ft_printf_itoa_base(ft_printf_unsigned(ap, fg), 8, format[0]);
-		lenght += ft_printf_width_str(fg, 0, str);
-		lenght += ft_printf_precision(fg, (int)ft_strlen(str));
-		lenght += ft_printf_putlstr("0");
-		lenght += ft_printf_putlstr(str);
-		lenght += ft_printf_width_str(fg, 1, str);
+		nb = ft_printf_unsigned(ap, fg);
+		str = ft_printf_itoa_base(nb, 8, format[0]);
+		lenght += ft_printf_width(fg, 0, NULL, (int)ft_strlen(str));
+		fg->precision = (fg->hfound || zero_init)?fg->precision - 1:fg->precision;
+		fg->width = (fg->precision > -1)?fg->width-fg->precision:fg->width;
+		while (fg->precision > 0)
+		{
+			lenght += ft_printf_putlstr("0");
+			fg->precision--;
+		}
+		lenght += (fg->hfound)?ft_printf_putlstr("0"):0;
+		lenght += (nb == 0 && (fg->hfound || zero_init))?0:ft_printf_putlstr(str);
+		lenght += ft_printf_width(fg, 1, NULL, (int)ft_strlen(str));
 		*skip += 2;
 	}
 	return (lenght);
 }
 
-int			ft_printf_width(t_arg *fg, int r, char *str)
+int			ft_printf_width(t_arg *fg, int r, char *str, int len)
 {
 	int lenght;
 	int	width;
+	int	strlen;
 
+	strlen = (str == NULL)?len:(int)ft_strlen(str);
 	width = fg->width;
-	width = (fg->width_used)?width - (int)ft_strlen(str):width;
+	width = (fg->width_used)?width - strlen:width;
 	width = (fg->width_used && fg->precision > 0)\
-			?width - (fg->precision-(int)ft_strlen(str)):width;
+			?width - (fg->precision-strlen):width;
 	width = (width > 0 && fg->space && fg->zero)?width-1:width;
 	lenght = 0;
 	while (width > 0 && fg->moins == r)
@@ -121,7 +133,10 @@ int			ft_printf_precision(t_arg *fg, int width)
 		return (0);
 	while (precision > 0)
 	{
-		lenght += ft_printf_putlstr("0");
+		if (ft_strchr("oOxX", fg->flag) && (fg->hfound || fg->moins))
+			lenght += ft_printf_putlstr(" ");
+		else
+			lenght += ft_printf_putlstr("0");
 		precision--;
 	}
 	return (lenght);

@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:39:39 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/14 18:54:49 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/16 09:59:52 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int					ft_printf_uu(char const*format, va_list ap, int *skip,\
 						t_arg *fg);
 void				ft_initialize_struct(t_arg *fg);
 int					ft_add(int *nb, int plus);
-int					ft_printf_width(t_arg *fg, int r, char *str);
+int					ft_printf_width(t_arg *fg, int r, char *str, int len);
 int					ft_get_precision(const char *str);
 int					ft_get_width(const char *str, t_arg *fg);
 int					ft_printf_percent(char const*format, int *skip, t_arg *fg);

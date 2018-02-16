@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 21:40:01 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/13 13:19:19 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/16 11:01:27 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,12 +90,12 @@ int					ft_printf_d(const char* format, va_list ap, int *skip,\
 			&& fg->precision < fg->width) ?fg->width - 1 : fg->width;
 		lenght += ft_printf_putspace(fg, str);
 		lenght += (fg->plus && nb >= 0 && fg->width == 0)?ft_printf_putlstr("+"):0;
-		lenght += (!fg->zero)?ft_printf_width(fg, 0, str):0;
+		lenght += (!fg->zero)?ft_printf_width(fg, 0, str, 0):0;
 		lenght += (fg->plus && nb >= 0 && fg->width > 0)?ft_printf_putlstr("+"):0;
 		lenght += (nb < 0)?ft_printf_putlstr("-"):0;
-		lenght += (fg->zero && fg->width > 0)?ft_printf_width(fg, 0, str):ft_printf_precision(fg, (int)ft_strlen(str));
+		lenght += (fg->zero && fg->width > 0)?ft_printf_width(fg, 0, str, 0):ft_printf_precision(fg, (int)ft_strlen(str));
 		lenght += (nb == 0 && fg->precision == 0)?0:ft_printf_putlstr(str);
-		lenght += ft_printf_width(fg, 1, str);
+		lenght += ft_printf_width(fg, 1, str, 0);
 		ft_initialize_struct(fg);
 	}
 	return (lenght);
