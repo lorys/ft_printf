@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/23 09:01:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/16 15:28:08 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/19 13:29:46 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,22 @@ int			ft_printf_xX(char const*format, va_list ap,\
 int			ft_printf_oo(char const*format, va_list ap,\
 		int *skip, t_arg *fg)
 {
-	int		nb;
-	int		lenght;
-	char	*str;
-	int		zero_init;
+	uintmax_t	nb;
+	int			lenght;
+	char		*str;
+	int			preci;
 
 	lenght = 0;
 	if (format[0] == 'o' || format[0] == 'O')
 	{
-		zero_init = fg->zero;
-		fg->zero = (fg->precision > -1)?0:fg->zero;
+		preci = fg->precision;
+		fg->zero = (fg->precision > -1 || fg->hfound)?0:fg->zero;
 		nb = ft_printf_unsigned(ap, fg);
 		str = ft_printf_itoa_base(nb, 8, format[0]);
 		lenght += ft_printf_width(fg, 0, NULL, (int)ft_strlen(str));
-		fg->precision = (fg->hfound || zero_init)?fg->precision - 1:fg->precision;
+		fg->precision = (fg->precision > -1)?\
+						fg->precision - (int)ft_strlen(str):fg->precision;
+		fg->precision = (fg->hfound)?fg->precision-1:fg->precision;
 		fg->width = (fg->precision > -1)?fg->width-fg->precision:fg->width;
 		while (fg->precision > 0)
 		{
@@ -62,7 +64,7 @@ int			ft_printf_oo(char const*format, va_list ap,\
 			fg->precision--;
 		}
 		lenght += (fg->hfound)?ft_printf_putlstr("0"):0;
-		lenght += (nb == 0 && (fg->hfound || zero_init))?0:ft_printf_putlstr(str);
+		lenght += (nb == 0 && fg->hfound)?0:ft_printf_putlstr(str);
 		lenght += ft_printf_width(fg, 1, NULL, (int)ft_strlen(str));
 		*skip += 2;
 	}
@@ -115,7 +117,7 @@ uintmax_t	ft_printf_unsigned(va_list ap, t_arg *fg)
 		return (va_arg(ap, uintmax_t));
 	if (fg->z)
 		return (va_arg(ap, size_t));
-	if (fg->l)
+	if (fg->l || fg->flag == 'O')
 		return (va_arg(ap, unsigned long));
 	if (fg->ll)
 		return (va_arg(ap, unsigned long long));
