@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/23 09:01:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/21 22:50:28 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/23 10:48:36 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ int			ft_printf_xX(char const*format, va_list ap,\
 		lenght += ft_printf_width_str(fg, 0, str);
 		if (fg->hfound == 1 && nb != 0)
 		{
-			ft_putchar("0");
+			ft_putchar('0');
 			ft_putchar(format[0]);
 			lenght += 2;
 		}
 		lenght += ft_printf_precision(fg, (int)ft_strlen(str));
-		lenght += ft_printf_putlstr(str);
+		lenght += (fg->precision == 0 && nb == 0)?0:ft_printf_putlstr(str);
 		lenght += ft_printf_width_str(fg, 1, str);
 		*skip += 2;
 	}
@@ -154,7 +154,6 @@ int			ft_printf_precision(t_arg *fg, int width)
 int			ft_printf_putspace(t_arg *fg, char *str)
 {
 	(void)str;
-	printf("");
 	if (!fg->space)
 		return (0);
 	if (fg->space && fg->width_used && fg->precision > -1)
@@ -162,6 +161,8 @@ int			ft_printf_putspace(t_arg *fg, char *str)
 	if (fg->space && fg->width_used && fg->width <= fg->precision)
 		return (0);
 	if (fg->space && fg->width_used && fg->width <= (int)ft_strlen(str))
+		return (0);
+	if (fg->space && fg->plus)
 		return (0);
 	ft_printf_putlstr(" ");
 	return (1);
