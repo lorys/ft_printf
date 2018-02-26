@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:51:44 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/23 10:46:56 by llopez           ###   ########.fr       */
+/*   Updated: 2018/02/26 16:45:14 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,10 @@ int		main(int argc, char **argv)
 	printf("\nftprintf = return (%d)\n", ret2);
 	printf("% ++d", -42);
 	ft_printf("% ++d", -42);
+	printf("\n\n\n");
+	printf("test%-10.6x et %01hhX !!\n", 0xaabb, (unsigned char)0);
+	ft_printf("test%-10.6x et %01hhX !!", 0xaabb, (unsigned char)0);
+	ft_printf("\nt%#7.5X|%0006.2x et %lX!", 0xab, 0x876, 0xff11ff11ff1);
+	   printf("\nt%#7.5X|%0006.2x et %lX!", 0xab, 0x876, 0xff11ff11ff1);
 	return (0);
 }

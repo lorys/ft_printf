@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/23 09:01:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/23 10:48:36 by llopez           ###   ########.fr       */
+/*   Created: 2018/02/26 12:20:16 by llopez            #+#    #+#             */
+/*   Updated: 2018/02/26 17:23:58 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,12 @@ int			ft_printf_xX(char const*format, va_list ap,\
 	lenght = 0;
 	if (format[0] == 'x' || format[0] == 'X')
 	{
+		fg->zero = (fg->precision > -1)?0:fg->zero;
 		nb = ft_printf_unsigned(ap, fg);
 		str = ft_printf_itoa_base(nb, 16, format[0]);
-		lenght += ft_printf_width_str(fg, 0, str);
+				printf("\nlen send : %d\n", ((int)ft_strlen(str)));
+		lenght += ft_printf_width(fg, 0, NULL, ((int)ft_strlen(str)));
+		fg->width = (fg->hfound == 1)?fg->width-2:fg->width;
 		if (fg->hfound == 1 && nb != 0)
 		{
 			ft_putchar('0');
@@ -39,7 +42,7 @@ int			ft_printf_xX(char const*format, va_list ap,\
 		}
 		lenght += ft_printf_precision(fg, (int)ft_strlen(str));
 		lenght += (fg->precision == 0 && nb == 0)?0:ft_printf_putlstr(str);
-		lenght += ft_printf_width_str(fg, 1, str);
+		lenght += ft_printf_width(fg, 1, NULL, ((int)ft_strlen(str)));
 		*skip += 2;
 	}
 	return (lenght);
@@ -72,7 +75,8 @@ int			ft_printf_oo(char const*format, va_list ap,\
 		}
 		lenght += (fg->hfound && nb != 0)?ft_printf_putlstr("0"):0;
 		lenght += ft_printf_putlstr(str);
-		lenght += ft_printf_width(fg, 1, NULL, (int)ft_strlen(str)+(nb != 0?fg->hfound:0));
+		lenght += ft_printf_width(fg, 1, NULL, (int)ft_strlen(str)+\
+				(nb != 0?fg->hfound:0));
 		*skip += 2;
 	}
 	return (lenght);
@@ -86,14 +90,20 @@ int			ft_printf_width(t_arg *fg, int r, char *str, int len)
 
 	strlen = (str == NULL)?len:(int)ft_strlen(str);
 	width = fg->width;
+	printf("\n------------------\nwidth = %d\n", width);
 	width = (fg->width_used)?width - strlen:width;
-	width = (fg->width_used && fg->precision > 0)\
-			?width - (fg->precision-strlen):width;
+	printf("\nwidth - strlen = %d\n", width);
+		if (fg->width_used && fg->precision > -1)
+	printf("\n\n%d-(%d-%d) = %d-%d = %d\n\n", width, fg->precision, strlen, width, fg->precision-strlen, width-(fg->precision-strlen));
+	width = (fg->width_used && fg->precision > -1)\
+			?width-(fg->precision-strlen):width;
+	printf("\nwidth - precision(%d) = %d\n", fg->precision, width);
 	width = (width > 0 && fg->space && fg->zero)?width-1:width;
 	lenght = 0;
+	printf("\nwidth = %d\n", width);
 	while (width > 0 && fg->moins == r)
 	{
-		lenght += ft_printf_putlstr((fg->zero)?"0":" ");
+		lenght += ft_printf_putlstr((fg->zero)?"0":"P");
 		--width;
 	}
 	return (lenght);
@@ -142,7 +152,7 @@ int			ft_printf_precision(t_arg *fg, int width)
 		return (0);
 	while (precision > 0)
 	{
-		if (ft_strchr("oOxX", fg->flag) && (fg->hfound || fg->moins))
+		if (ft_strchr("oOxX", fg->flag) && !fg->zero && !fg->hfound)
 			lenght += ft_printf_putlstr(" ");
 		else
 			lenght += ft_printf_putlstr("0");
