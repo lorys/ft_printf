@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 21:40:01 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/05 16:43:29 by llopez           ###   ########.fr       */
+/*   Updated: 2018/03/05 19:47:45 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int					ft_printf_d(const char* format, va_list ap, int *skip,\
 		lenght += (fg->plus && nb >= 0 && fg->width > 0)?\
 					ft_printf_putlstr("+"):0;
 		lenght += (nb < 0)?ft_printf_putlstr("-"):0;
-		lenght += (fg->zero)?ft_printf_putlstr("Z"):0;
+		lenght += (fg->zero)?ft_printf_putlstr("0"):0;
 		lenght += (fg->zero && fg->width > 0)?\
 				  ft_printf_width(fg, 0, str, 0):
 				  ft_printf_precision(fg, (int)ft_strlen(str));

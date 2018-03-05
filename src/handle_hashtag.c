@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 12:20:16 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/05 16:36:43 by llopez           ###   ########.fr       */
+/*   Updated: 2018/03/05 19:47:27 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,7 +170,7 @@ int			ft_printf_putspace(t_arg *fg, char *str)
 	(void)str;
 	if (!fg->space)
 		return (0);
-	if (fg->space && fg->width_used && fg->precision > -1)
+	if (fg->space && fg->width_used)
 		return (0);
 	if (fg->space && fg->width_used && fg->width <= fg->precision)
 		return (0);
@@ -178,6 +178,6 @@ int			ft_printf_putspace(t_arg *fg, char *str)
 		return (0);
 	if (fg->space && fg->plus)
 		return (0);
-	ft_printf_putlstr(" ");
+	ft_putchar(' ');
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:51:44 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/05 18:25:09 by llopez           ###   ########.fr       */
+/*   Updated: 2018/03/05 20:09:33 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,19 @@ int		main(int argc, char **argv)
 	ret = printf("|%015.5x|%1x|%0x|%x|%5.7x|\n", 5, 5, 5, 5, 5);
 	ret2 = ft_printf("|%015.5x|%1x|%0x|%x|%5.7x|\n", 5, 5, 5, 5, 5);
 	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
-	ret = printf("% 20.12ld et % 05D% 4.8hi !\n", 0x11ffaa147, 24, (short)-2345);
-	ret2 = ft_printf("% 20.12ld et % 05D% 4.8hi !\n", 0x11ffaa147, 24, (short)-2345);
+	ret = printf("% 20.12ld et%5D% 4.8hi !\n", 0x11ffaa147, 24, (short)-2345);
+	ret2 = ft_printf("% 20.12ld et%5D% 4.8hi !\n", 0x11ffaa147, 24, (short)-2345);
 	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
 	ret = printf("%08i\n", -71);
 	ret2 = ft_printf("%08i\n", -71);
 	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
 
+	ret = printf("% 5D|% 5d|\n", 24, 24);
+	ret2 = ft_printf("% 5D|% 5d|\n", 24, 24);
+	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
+	ret = printf("%.2o|\n", 24);
+	ret2 = ft_printf("%.2o|\n", 24);
+	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
 	
 	
 	return (0);
