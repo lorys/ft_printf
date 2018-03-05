@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 21:40:01 by llopez            #+#    #+#             */
-/*   Updated: 2018/02/23 10:18:48 by llopez           ###   ########.fr       */
+/*   Updated: 2018/03/05 16:43:29 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,16 +84,23 @@ int					ft_printf_d(const char* format, va_list ap, int *skip,\
 		fg->l = (fg->l ==  0 && format[0] == 'D')?1:fg->l;
 		*skip += 2;
 		nb = ft_printf_signed(ap, fg);
+		fg->space = (nb < 0)?0:fg->space;
 		str = ft_printf_itoa_base((nb < 0)?nb * -1:nb, 10, 'a');
-		fg->zero = (fg->precision > 0)?0:fg->zero;
+		fg->zero = (fg->precision > -1)?0:fg->zero;
+		fg->width = fg->width-fg->zero;
 		fg->width = (fg->width_used && (nb < 0 || fg->plus)\
 			&& fg->precision < fg->width) ?fg->width - 1 : fg->width;
 		lenght += ft_printf_putspace(fg, str);
-		lenght += (fg->plus && nb >= 0 && fg->width == 0)?ft_printf_putlstr("+"):0;
+		lenght += (fg->plus && nb >= 0 && fg->width == 0)?\
+				  ft_printf_putlstr("+"):0;
 		lenght += (!fg->zero)?ft_printf_width(fg, 0, str, 0):0;
-		lenght += (fg->plus && nb >= 0 && fg->width > 0)?ft_printf_putlstr("+"):0;
+		lenght += (fg->plus && nb >= 0 && fg->width > 0)?\
+					ft_printf_putlstr("+"):0;
 		lenght += (nb < 0)?ft_printf_putlstr("-"):0;
-		lenght += (fg->zero && fg->width > 0)?ft_printf_width(fg, 0, str, 0):ft_printf_precision(fg, (int)ft_strlen(str));
+		lenght += (fg->zero)?ft_printf_putlstr("Z"):0;
+		lenght += (fg->zero && fg->width > 0)?\
+				  ft_printf_width(fg, 0, str, 0):
+				  ft_printf_precision(fg, (int)ft_strlen(str));
 		lenght += (nb == 0 && fg->precision == 0)?0:ft_printf_putlstr(str);
 		lenght += ft_printf_width(fg, 1, str, 0);
 		ft_initialize_struct(fg);
