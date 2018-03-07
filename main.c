@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:51:44 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/05 20:09:33 by llopez           ###   ########.fr       */
+/*   Updated: 2018/03/07 18:22:00 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int		main(int argc, char **argv)
 	ret = printf("|%015.5x|%1x|%0x|%x|%5.7x|\n", 5, 5, 5, 5, 5);
 	ret2 = ft_printf("|%015.5x|%1x|%0x|%x|%5.7x|\n", 5, 5, 5, 5, 5);
 	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
-	ret = printf("% 20.12ld et%5D% 4.8hi !\n", 0x11ffaa147, 24, (short)-2345);
-	ret2 = ft_printf("% 20.12ld et%5D% 4.8hi !\n", 0x11ffaa147, 24, (short)-2345);
+	ret = printf("% 20.12ld et% 05D% 4.8hi !\n", 0x11ffaa147, 24, (short)-2345);
+	ret2 = ft_printf("% 20.12ld et% 05D% 4.8hi !\n", 0x11ffaa147, 24, (short)-2345);
 	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
 	ret = printf("%08i\n", -71);
 	ret2 = ft_printf("%08i\n", -71);
@@ -53,7 +53,29 @@ int		main(int argc, char **argv)
 	ret = printf("%.2o|\n", 24);
 	ret2 = ft_printf("%.2o|\n", 24);
 	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
+	ret = printf("%0d|\n", 579);
+	ret2 = ft_printf("%0d|\n", 579);
+	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
 	
-	
+	ret = printf("coco et %-#-#--24O titi%#012o\n", 12, -874);
+	ret2 = ft_printf("coco et %-#-#--24O titi%#012o\n", 12, -874);
+	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
+
+	ret = printf("t %#7.5X%0006.2x et %lX!\n", 0xab, 0x876, 0xff11ff11ff1);	
+	ret2 = ft_printf("t %#7.5X%0006.2x et %lX!", 0xab, 0x876, 0xff11ff11ff1);	
+	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
+
+	ret = printf("cc%#.4X et %#0012x %#04hX !!\n", 0xaef, 0xe, (unsigned short)0);
+	ret2 = ft_printf("cc%#.4X et %#0012x %#04hX !!", 0xaef, 0xe, (unsigned short)0);
+	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
+	ret = printf("%0#10.0x %0#x\n", 12345, 0);
+	ret2 = ft_printf("%0#10.0x %0#x\n", 12345, 0);
+	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
+	ret = printf("%#-08x\n", 42);
+	ret2 = ft_printf("%#-08x\n", 42);
+	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
+	ret = printf("|@moulitest: %5.x %5.0x|\n", 0, 0);
+	ret2 = ft_printf("|@moulitest: %5.x %5.0x|\n", 0, 0);
+	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
 	return (0);
 }

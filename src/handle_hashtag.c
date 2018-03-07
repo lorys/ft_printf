@@ -6,19 +6,27 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 12:20:16 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/05 19:47:27 by llopez           ###   ########.fr       */
+/*   Updated: 2018/03/07 18:21:37 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int			ft_add(int *nb, int plus)
+int			ft_p_details_x(t_arg *fg, intmax_t nb, char const* format)
 {
-	*nb += plus;
-	return (1);
+	int	lenght;
+
+	lenght = 0;
+	if (fg->hfound == 1 && nb != 0)
+	{
+		ft_putchar('0');
+		ft_putchar(format[0]);
+		lenght += 2;
+	}
+	return (lenght);
 }
 
-int			ft_printf_xX(char const*format, va_list ap,\
+int			ft_printf_xx(char const*format, va_list ap,\
 		int *skip, t_arg *fg)
 {
 	int			lenght;
@@ -30,26 +38,23 @@ int			ft_printf_xX(char const*format, va_list ap,\
 	preci = fg->precision;
 	if (format[0] == 'x' || format[0] == 'X')
 	{
-		fg->zero = (fg->precision > -1)?0:fg->zero;
+		fg->zero = (fg->precision > -1 || fg->moins)?0:fg->zero;
 		nb = ft_printf_unsigned(ap, fg);
+		fg->hfound = (nb == 0)?0:fg->hfound;
 		str = ft_printf_itoa_base(nb, 16, format[0]);
-		lenght += ft_printf_width(fg, 0, NULL, ((int)ft_strlen(str)\
-					+(fg->hfound*2)));
-		if (fg->hfound == 1 && nb != 0)
-		{
-			ft_putchar('0');
-			ft_putchar(format[0]);
-			lenght += 2;
-		}
-		preci = preci-((int)ft_strlen(str)+(fg->hfound*2));
+		lenght += (fg->zero)?ft_p_details_x(fg, nb, format):0;
+		lenght += ft_printf_width(fg, 0, NULL, ((fg->hfound*2)+\
+((fg->precision > (int)ft_strlen(str)) ? fg->precision : (int)ft_strlen(str))));
+		lenght += (!fg->zero)?ft_p_details_x(fg, nb, format):0;
+		preci = preci-((int)ft_strlen(str));
 		while (preci > 0)
 		{
 			lenght += ft_printf_putlstr("0");
 			preci--;
 		}
-		lenght += (fg->precision == 0 && nb == 0)?0:ft_printf_putlstr(str);
-		lenght += ft_printf_width(fg, 1, NULL, ((int)ft_strlen(str)\
-					+(fg->hfound*2)));
+		lenght += (fg->precision == 0 && nb == 0) ? 0 : ft_printf_putlstr(str);
+		lenght += ft_printf_width(fg, 1, NULL, ((fg->hfound*2)+\
+((fg->precision > (int)ft_strlen(str)) ? fg->precision : (int)ft_strlen(str))));
 		*skip += 2;
 	}
 	return (lenght);
@@ -70,18 +75,18 @@ int			ft_printf_oo(char const*format, va_list ap,\
 		fg->zero = (fg->precision > -1 || fg->hfound)?0:fg->zero;
 		nb = ft_printf_unsigned(ap, fg);
 		str = ft_printf_itoa_base(nb, 8, format[0]);
-		fg->width = (fg->width > 0 && fg->space && fg->zero && nb != 0)?\
-					fg->width-1:fg->width;
-		preci = (preci > -1 && preci > (int)ft_strlen(str))?\
-				preci - (int)ft_strlen(str):preci;
-		preci = (fg->hfound && nb != 0)?preci-1:preci;
+		fg->width = (fg->width > 0 && fg->space && fg->zero && nb != 0) ? \
+					fg->width-1 : fg->width;
+		preci = (preci > -1) ? preci - (int)ft_strlen(str) : preci;
+		preci = (fg->hfound && nb != 0) ? preci-1 : preci;
+		fg->width = (fg->hfound && nb != 0) ? fg->width-1 : fg->width;
 		lenght += ft_printf_width(fg, 0, NULL, (int)ft_strlen(str));
 		while (preci > 0)
 		{
 			lenght += ft_printf_putlstr("0");
 			preci--;
 		}
-		lenght += (fg->hfound && nb != 0)?ft_printf_putlstr("0"):0;
+		lenght += (fg->hfound && nb != 0) ? ft_printf_putlstr("0") : 0;
 		lenght += ft_printf_putlstr(str);
 		lenght += ft_printf_width(fg, 1, NULL, (int)ft_strlen(str));
 		*skip += 2;
@@ -95,7 +100,7 @@ int			ft_printf_width(t_arg *fg, int r, char *str, int len)
 	int	width;
 	int	strlen;
 
-	strlen = (str == NULL)?len:(int)ft_strlen(str);
+	strlen = (str == NULL) ? len : (int)ft_strlen(str);
 	width = fg->width;
 	lenght = 0;
 	if (fg->width_used && fg->moins == r)
@@ -171,6 +176,23 @@ int			ft_printf_putspace(t_arg *fg, char *str)
 	if (!fg->space)
 		return (0);
 	if (fg->space && fg->width_used)
+		return (0);
+	if (fg->space && fg->width_used && fg->width <= fg->precision)
+		return (0);
+	if (fg->space && fg->width_used && fg->width <= (int)ft_strlen(str))
+		return (0);
+	if (fg->space && fg->plus)
+		return (0);
+	ft_putchar(' ');
+	return (1);
+}
+
+int			ft_printf_putspace_d(t_arg *fg, char *str)
+{
+	(void)str;
+	if (!fg->space)
+		return (0);
+	if (fg->space && fg->width_used && !fg->zero)
 		return (0);
 	if (fg->space && fg->width_used && fg->width <= fg->precision)
 		return (0);

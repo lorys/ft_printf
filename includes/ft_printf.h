@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:39:39 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/02 17:57:01 by llopez           ###   ########.fr       */
+/*   Updated: 2018/03/07 17:27:02 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,9 @@ int					ft_printf_c(char const* format, va_list ap,\
 char				*ft_printf_itoa_base(uintmax_t nb, unsigned int base,\
 						int	type);
 int					ft_printf_flags(char const*format, int *skip, t_arg *fg);
-int					ft_printf_xX(char const* format, va_list ap,\
+int					ft_printf_xx(char const* format, va_list ap,\
 						int *skip, t_arg *fg);
-int					ft_printf_oo(char const* format, va_list ap,\
-						int *skip, t_arg *fg);
-int					ft_printf_oO(char const*format, va_list ap, int *skip,\
+int					ft_printf_oo(char const*format, va_list ap, int *skip,\
 						t_arg *fg);
 int					ft_printf_uu(char const*format, va_list ap, int *skip,\
 						t_arg *fg);
@@ -69,6 +67,7 @@ int					ft_printf_percent(char const*format, int *skip, t_arg *fg);
 intmax_t			ft_printf_signed(va_list ap, t_arg *fg);
 uintmax_t			ft_printf_unsigned(va_list ap, t_arg *fg);
 int					ft_printf_precision(t_arg *fg, int width);
+int					ft_printf_putspace_d(t_arg *fg, char *str);
 int					ft_printf_putspace(t_arg *fg, char *str);
 int					ft_printf_width_str(t_arg *fg, int r, char *str);
 
