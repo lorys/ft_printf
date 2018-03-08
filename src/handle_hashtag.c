@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 12:20:16 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/07 18:21:37 by llopez           ###   ########.fr       */
+/*   Updated: 2018/03/08 15:46:46 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,23 @@ int			ft_printf_xx(char const*format, va_list ap,\
 	char		*str;
 	uintmax_t	nb;
 	int			preci;
+	int			calc_length;
 
 	lenght = 0;
 	preci = fg->precision;
+	calc_length = 0;
 	if (format[0] == 'x' || format[0] == 'X')
 	{
 		fg->zero = (fg->precision > -1 || fg->moins)?0:fg->zero;
 		nb = ft_printf_unsigned(ap, fg);
 		fg->hfound = (nb == 0)?0:fg->hfound;
 		str = ft_printf_itoa_base(nb, 16, format[0]);
+		calc_length += (fg->precision == 0 && nb == 0)?0:(int)ft_strlen(str);
 		lenght += (fg->zero)?ft_p_details_x(fg, nb, format):0;
-		lenght += ft_printf_width(fg, 0, NULL, ((fg->hfound*2)+\
-((fg->precision > (int)ft_strlen(str)) ? fg->precision : (int)ft_strlen(str))));
+		calc_length += (fg->hfound == 1 && nb != 0)?2:0;
+		calc_length += (fg->precision > calc_length\
+				&& nb != 0)?(fg->precision-(int)ft_strlen(str)):0;
+		lenght += ft_printf_width(fg, 0, NULL, calc_length);
 		lenght += (!fg->zero)?ft_p_details_x(fg, nb, format):0;
 		preci = preci-((int)ft_strlen(str));
 		while (preci > 0)
@@ -53,8 +58,7 @@ int			ft_printf_xx(char const*format, va_list ap,\
 			preci--;
 		}
 		lenght += (fg->precision == 0 && nb == 0) ? 0 : ft_printf_putlstr(str);
-		lenght += ft_printf_width(fg, 1, NULL, ((fg->hfound*2)+\
-((fg->precision > (int)ft_strlen(str)) ? fg->precision : (int)ft_strlen(str))));
+		lenght += ft_printf_width(fg, 1, NULL, calc_length);
 		*skip += 2;
 	}
 	return (lenght);
