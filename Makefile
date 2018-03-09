@@ -6,7 +6,7 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/18 06:30:23 by llopez            #+#    #+#              #
-#    Updated: 2018/02/08 16:35:34 by llopez           ###   ########.fr        #
+#    Updated: 2018/03/08 23:49:51 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ FLAGS = -Wall -Werror -Wextra
 NAMES = 	ft_printf.c \
 			dec_to_hexa.c \
 			handle.c \
-			handle_hashtag.c
+			handle_hashtag.c \
+			bigs.c
 
 CFILES = $(addprefix src/, $(NAMES))
 

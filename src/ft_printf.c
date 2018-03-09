@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 04:20:35 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/07 17:27:13 by llopez           ###   ########.fr       */
+/*   Updated: 2018/03/08 23:47:53 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static int		*ft_format(const char *str, va_list ap, int *lenght)
 		*lenght += ft_printf_oo(&str[i], ap, &skip[1], &fg);
 		*lenght += ft_printf_uu(&str[i], ap, &skip[1], &fg);
 		*lenght += ft_printf_xx(&str[i], ap, &skip[1], &fg);
+		*lenght += ft_printf_bigc(&str[i], ap, &skip[1], &fg);
 	}
 	skip[0] = (*lenght - bfore);
 	return (skip);

@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:51:44 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/07 18:22:00 by llopez           ###   ########.fr       */
+/*   Updated: 2018/03/09 00:43:21 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,14 @@ int		main(int argc, char **argv)
 	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
 	ret = printf("|@moulitest: %5.x %5.0x|\n", 0, 0);
 	ret2 = ft_printf("|@moulitest: %5.x %5.0x|\n", 0, 0);
+	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
+	ret = printf("%--.4u et %#O|%#012O|%1lc|\n", -12, 0, 0, 95);
+	ret2 = ft_printf("%--.4u et %#O|%#012O|%1lc|\n", -12, 0, 0, 95);
+	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
+
+
+	ret = printf("\n\n\n|%C|\n", 0x6f);
+	ret2 = ft_printf("|%C|\n", 0x6f);
 	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
 	return (0);
 }

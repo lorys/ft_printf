@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 12:20:16 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/08 15:46:46 by llopez           ###   ########.fr       */
+/*   Updated: 2018/03/08 23:35:47 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int			ft_printf_oo(char const*format, va_list ap,\
 	if (format[0] == 'o' || format[0] == 'O')
 	{
 		preci = fg->precision;
-		fg->zero = (fg->precision > -1 || fg->hfound)?0:fg->zero;
+		fg->zero = (fg->precision > -1)?0:fg->zero;
 		nb = ft_printf_unsigned(ap, fg);
 		str = ft_printf_itoa_base(nb, 8, format[0]);
 		fg->width = (fg->width > 0 && fg->space && fg->zero && nb != 0) ? \
