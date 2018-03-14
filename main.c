@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:51:44 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/09 17:14:09 by llopez           ###   ########.fr       */
+/*   Updated: 2018/03/14 16:51:22 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ int		main(int argc, char **argv)
 	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
 
 
-	ret = printf("\n\n\n|%C|\n", 0x6f);
-	ret2 = ft_printf("|%C|\n", 0x6f);
+	ret = printf("\n\n\n|%C|\n", 167800);
+	ret2 = ft_printf("|%C|\n", 167800);
 	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
 	return (0);
 }
