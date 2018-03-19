@@ -1,0 +1,6 @@
+[submodule "libft_link"]
+	path = libft_link
+	url = git://github.com/lorys/libft.git
+[submodule "libft_src"]
+	path = libft_src
+	url = git://github.com/lorys/libft.git
