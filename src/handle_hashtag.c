@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/26 12:20:16 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/08 23:35:47 by llopez           ###   ########.fr       */
+/*   Updated: 2018/03/19 15:37:29 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,14 @@ int			ft_printf_oo(char const*format, va_list ap,\
 	int			lenght;
 	char		*str;
 	int			preci;
+	int			str_len;
 
 	lenght = 0;
+	str_len = 0;
 	if (format[0] == 'o' || format[0] == 'O')
 	{
 		preci = fg->precision;
-		fg->zero = (fg->precision > -1)?0:fg->zero;
+		fg->zero = (fg->precision > -1 || fg->moins)?0:fg->zero;
 		nb = ft_printf_unsigned(ap, fg);
 		str = ft_printf_itoa_base(nb, 8, format[0]);
 		fg->width = (fg->width > 0 && fg->space && fg->zero && nb != 0) ? \
@@ -84,15 +86,18 @@ int			ft_printf_oo(char const*format, va_list ap,\
 		preci = (preci > -1) ? preci - (int)ft_strlen(str) : preci;
 		preci = (fg->hfound && nb != 0) ? preci-1 : preci;
 		fg->width = (fg->hfound && nb != 0) ? fg->width-1 : fg->width;
-		lenght += ft_printf_width(fg, 0, NULL, (int)ft_strlen(str));
+		str_len = (fg->precision == 0 && nb == 0 && !fg->hfound) ? \
+				  0 : (int)ft_strlen(str);
+		lenght += ft_printf_width(fg, 0, NULL, str_len);
 		while (preci > 0)
 		{
 			lenght += ft_printf_putlstr("0");
 			preci--;
 		}
 		lenght += (fg->hfound && nb != 0) ? ft_printf_putlstr("0") : 0;
-		lenght += ft_printf_putlstr(str);
-		lenght += ft_printf_width(fg, 1, NULL, (int)ft_strlen(str));
+		lenght += (fg->precision == 0 && nb == 0 && !fg->hfound) ?\
+				  0 : ft_printf_putlstr(str);
+		lenght += ft_printf_width(fg, 1, NULL, str_len);
 		*skip += 2;
 	}
 	return (lenght);
@@ -124,6 +129,8 @@ int			ft_printf_width(t_arg *fg, int r, char *str, int len)
 
 intmax_t	ft_printf_signed(va_list ap, t_arg *fg)
 {
+	if (fg->z)
+		return (va_arg(ap, ssize_t));
 	if (fg->hh)
 		return ((char)va_arg(ap, int));
 	if (fg->h)

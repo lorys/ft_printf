@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/19 10:52:06 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/08 21:32:31 by llopez           ###   ########.fr       */
+/*   Updated: 2018/03/19 15:52:23 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,15 @@ int			ft_printf_s(char const*format, va_list ap, int *skip, t_arg *fg)
 			str = ft_strdup(str_new);
 			free(str_new);
 		}
-
-		len_str = ft_printf_width_str(fg, 0, str) + ft_printf_putlstr(str) +\
-		ft_printf_width_str(fg, 1, str);
+		len_str = ft_printf_width_str(fg, 0, str);
+		while (fg->precision > 0 && fg->precision > (int)ft_strlen(str)\
+				&& fg->width_used && !fg->moins)
+		{
+			len_str++;
+			ft_putchar(' ');
+			fg->precision--;
+		}
+		len_str += ft_printf_putlstr(str) +	ft_printf_width_str(fg, 1, str);
 	}
 	return (len_str);
 }
@@ -160,7 +166,10 @@ int			ft_printf_uu(char const*format, va_list ap, int *skip, t_arg *fg)
 	len = 0;
 	if (format[0] == 'u' || format[0] == 'U')
 	{
-		str = ft_printf_itoa_base(ft_printf_unsigned(ap, fg), 10, 'a');
+		if (format[0] == 'U')
+			str = ft_printf_itoa_base(va_arg(ap, unsigned long int), 10, 'a');
+		else
+			str = ft_printf_itoa_base(ft_printf_unsigned(ap, fg), 10, 'a');
 		*skip += 2;
 		fg->zero = (fg->precision > -1)?0:fg->zero;	
 		len += ft_printf_width_str(fg, 0, str);

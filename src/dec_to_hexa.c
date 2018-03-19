@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/06 21:40:01 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/07 17:30:19 by llopez           ###   ########.fr       */
+/*   Updated: 2018/03/19 15:51:45 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,11 @@ int					ft_printf_d(const char* format, va_list ap, int *skip,\
 	int				lenght;
 	intmax_t		nb;
 	char			*str;
+	int				str_len;
 
 	lenght = 0;
 	nb = 0;
+	str_len = 0;
 	if (format[0] == 'd' || format[0] == 'D' || format[0] == 'i')
 	{
 		fg->l = (fg->l ==  0 && format[0] == 'D')?1:fg->l;
@@ -86,7 +88,8 @@ int					ft_printf_d(const char* format, va_list ap, int *skip,\
 		nb = ft_printf_signed(ap, fg);
 		fg->space = (nb < 0)?0:fg->space;
 		str = ft_printf_itoa_base((nb < 0)?nb * -1:nb, 10, 'a');
-		fg->zero = (fg->precision > -1 || !fg->width_used)?0:fg->zero;
+		fg->zero = (fg->precision > -1 || !fg->width_used || fg->moins)?\
+			0:fg->zero;
 		fg->width = fg->width-fg->zero;
 		fg->width = (fg->space && fg->width_used && fg->zero)\
 					 ? fg->width-1 : fg->width;
@@ -95,7 +98,8 @@ int					ft_printf_d(const char* format, va_list ap, int *skip,\
 		lenght += ft_printf_putspace_d(fg, str);
 		lenght += (fg->plus && nb >= 0 && fg->width == 0)?\
 				  ft_printf_putlstr("+"):0;
-		lenght += (!fg->zero)?ft_printf_width(fg, 0, str, 0):0;
+		str_len = (nb == 0 && fg->precision == 0) ? 0 : (int)ft_strlen(str);
+		lenght += (!fg->zero)?ft_printf_width(fg, 0, NULL, str_len):0;
 		lenght += (fg->plus && nb >= 0 && fg->width > 0)?\
 					ft_printf_putlstr("+"):0;
 		lenght += (nb < 0) ? ft_printf_putlstr("-") : 0;
@@ -104,7 +108,7 @@ int					ft_printf_d(const char* format, va_list ap, int *skip,\
 				  ft_printf_width(fg, 0, str, 0) : 0;
 		lenght += ft_printf_precision(fg, (int)ft_strlen(str));
 		lenght += (nb == 0 && fg->precision == 0) ? 0 : ft_printf_putlstr(str);
-		lenght += ft_printf_width(fg, 1, str, 0);
+		lenght += ft_printf_width(fg, 1, NULL, str_len);
 		ft_initialize_struct(fg);
 	}
 	return (lenght);

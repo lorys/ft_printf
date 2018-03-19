@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:51:44 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/14 16:51:22 by llopez           ###   ########.fr       */
+/*   Updated: 2018/03/19 15:46:59 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,58 @@ int		main(int argc, char **argv)
 	ret = printf("|@moulitest: %5.x %5.0x|\n", 0, 0);
 	ret2 = ft_printf("|@moulitest: %5.x %5.0x|\n", 0, 0);
 	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
-	ret = printf("%--.4u et %#O|%#012O|%1lc|\n", -12, 0, 0, 95);
-	ret2 = ft_printf("%--.4u et %#O|%#012O|%1lc|\n", -12, 0, 0, 95);
+	
+	ret = printf("%5.2s is a string\n", "");
+	ret2 = ft_printf("%5.2s is a string\n", "");
 	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
 
-
-	ret = printf("\n\n\n|%C|\n", 167800);
-	ret2 = ft_printf("|%C|\n", 167800);
+	ret = printf("%.2s is a string\n", "");
+	ret2 = ft_printf("%.2s is a string\n", "");
 	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
+	
+	ret = printf("%5.2s is a string\n", "this");
+	ret2 = ft_printf("%5.2s is a string\n", "this");
+	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
+	
+	ret = printf("%.2s is a string", "this");
+	ret2 = ft_printf("%.2s is a string\n", "this");
+	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
+	
+	ret = printf("%-5.2s is a string\n", "");
+	ret2 = ft_printf("%-5.2s is a string\n", "");
+	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
+	
+	ret = printf("%-.2s is a string\n", "this");
+	ret2 = ft_printf("%-.2s is a string\n", "this");
+	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
+	
+	ret = printf("%-05o\n", 2500);
+	ret2 = ft_printf("%-05o\n", 2500);
+	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
+	
+	ret = printf("@moulitest: %.o %.0o\n", 0, 0);
+	ret2 = ft_printf("@moulitest: %.o %.0o\n", 0, 0);
+	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
+	
+	ret = printf("toto %###.0o%#.O et %#.1o !\n", 0, 0, 0);
+	ret2 = ft_printf("toto %###.0o%#.O et %#.1o !\n", 0, 0, 0);
+	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
+	
+	ret = printf("@moulitest: %5.o %5.0o|\n", 0, 0);
+	ret2 = ft_printf("@moulitest: %5.o %5.0o|\n", 0, 0);
+	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
+	
+	ret = printf("%-05d\n", 42);
+	ret2 = ft_printf("%-05d\n", 42);
+	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
+	
+	ret = printf("%zd\n", 4294967295);
+	ret2 = ft_printf("%zd\n", 4294967295);
+	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
+	
+	ret = printf("%hU\n", 4294967296);
+	ret2 = ft_printf("%hU\n", 4294967296);
+	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
+
 	return (0);
 }
