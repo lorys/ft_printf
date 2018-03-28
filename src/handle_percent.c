@@ -1,23 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putlnbr.c                                       :+:      :+:    :+:   */
+/*   handle_percent.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/17 16:02:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/28 18:23:11 by llopez           ###   ########.fr       */
+/*   Created: 2018/03/19 17:11:22 by llopez            #+#    #+#             */
+/*   Updated: 2018/03/19 17:11:40 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_putlnbr(unsigned int n)
+int			ft_printf_percent(char const*format, int *skip, t_arg *fg)
 {
-	if (n == 2147483648)
-		return (ft_printf_putlstr("2147483648"));
-	if (n >= 10)
-		ft_putlnbr(n / 10);
-	ft_putchar((n % 10) + '0');
-	return (0);
+	char	*str;
+	int		len_str;
+
+	len_str = 0;
+	if (format[0] == '%')
+	{
+		str = ft_strdup("%");
+		*skip += 2;
+		len_str = ft_printf_width_str(fg, 0, str) + ft_printf_putlstr(str) +\
+		ft_printf_width_str(fg, 1, str);
+	}
+	return (len_str);
 }

@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putlnbr.c                                       :+:      :+:    :+:   */
+/*   itoa_base.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/17 16:02:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/28 18:23:11 by llopez           ###   ########.fr       */
+/*   Created: 2018/03/19 17:06:53 by llopez            #+#    #+#             */
+/*   Updated: 2018/03/19 17:07:30 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_putlnbr(unsigned int n)
+char			*ft_printf_itoa_base(uintmax_t nb, unsigned int base,\
+		int type)
 {
-	if (n == 2147483648)
-		return (ft_printf_putlstr("2147483648"));
-	if (n >= 10)
-		ft_putlnbr(n / 10);
-	ft_putchar((n % 10) + '0');
-	return (0);
+	int				i;
+	static char		str[64];
+
+	i = 62;
+	if (nb == 0)
+		return (ft_strdup("0"));
+	while (nb > 0 && i > 0)
+	{
+		if (type >= 'A' && type <= 'Z')
+			str[i] = "0123456789ABCDEF"[nb % base];
+		else if (type >= 'a' && type <= 'z')
+			str[i] = "0123456789abcdef"[nb % base];
+		nb /= base;
+		--i;
+	}
+	return (str + i + 1);
 }

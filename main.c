@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:51:44 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/19 15:46:59 by llopez           ###   ########.fr       */
+/*   Updated: 2018/03/28 17:13:39 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,10 @@ int		main(int argc, char **argv)
 	
 	ret = printf("%hU\n", 4294967296);
 	ret2 = ft_printf("%hU\n", 4294967296);
+	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
+	
+	ret = printf("%C\n", 0x1234);
+	ret2 = ft_printf("%C\n", 0x1234);
 	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
 
 	return (0);

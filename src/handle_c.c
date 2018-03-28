@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putlnbr.c                                       :+:      :+:    :+:   */
+/*   handle_c.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/17 16:02:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/28 18:23:11 by llopez           ###   ########.fr       */
+/*   Created: 2018/03/19 17:13:18 by llopez            #+#    #+#             */
+/*   Updated: 2018/03/28 18:26:25 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_putlnbr(unsigned int n)
+int			ft_printf_c(char const *format, va_list ap, int *skip, t_arg *fg)
 {
-	if (n == 2147483648)
-		return (ft_printf_putlstr("2147483648"));
-	if (n >= 10)
-		ft_putlnbr(n / 10);
-	ft_putchar((n % 10) + '0');
-	return (0);
+	int	len;
+
+	len = 0;
+	if (format[0] == 'c')
+	{
+		*skip += 2;
+		len += ft_printf_width_str(fg, 0, "0");
+		ft_putchar(va_arg(ap, int));
+		len += ft_printf_width_str(fg, 1, "0") + 1;
+	}
+	return (len);
 }

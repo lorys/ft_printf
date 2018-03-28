@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:39:39 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/08 23:27:38 by llopez           ###   ########.fr       */
+/*   Updated: 2018/03/28 19:12:36 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ int					ft_printf_bigc(const char *format, va_list ap,\
 int					ft_printf_d(const char *format, va_list ap,\
 						int *skip, t_arg *fg);
 int					ft_printf_c(char const* format, va_list ap,\
-						int *skip, t_arg *fg);
+						int* skip, t_arg* fg);
 char				*ft_printf_itoa_base(uintmax_t nb, unsigned int base,\
 						int	type);
 int					ft_printf_flags(char const*format, int *skip, t_arg *fg);
-int					ft_printf_xx(char const* format, va_list ap,\
+int					ft_printf_xx(char const *format, va_list ap,\
 						int *skip, t_arg *fg);
 int					ft_printf_oo(char const*format, va_list ap, int *skip,\
 						t_arg *fg);
@@ -72,5 +72,11 @@ int					ft_printf_precision(t_arg *fg, int width);
 int					ft_printf_putspace_d(t_arg *fg, char *str);
 int					ft_printf_putspace(t_arg *fg, char *str);
 int					ft_printf_width_str(t_arg *fg, int r, char *str);
+int					ft_xx_calc_length(t_arg *fg, uintmax_t nb, char *str);
+int					ft_preci_xx(int preci, char *str);
+int					ft_preci_oo(t_arg *fg, char *str, int nb);
+int					ft_p_details_x(t_arg *fg, intmax_t nb, char const *format);
+void				ft_width_oo(t_arg *fg, int nb);
+void				ft_calc_fg_d(t_arg *fg, intmax_t nb);
 
 #endif

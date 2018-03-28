@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putlnbr.c                                       :+:      :+:    :+:   */
+/*   get_precision.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/17 16:02:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/28 18:23:11 by llopez           ###   ########.fr       */
+/*   Created: 2018/03/19 17:09:45 by llopez            #+#    #+#             */
+/*   Updated: 2018/03/28 18:25:03 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_putlnbr(unsigned int n)
+int					ft_get_precision(const char *str)
 {
-	if (n == 2147483648)
-		return (ft_printf_putlstr("2147483648"));
-	if (n >= 10)
-		ft_putlnbr(n / 10);
-	ft_putchar((n % 10) + '0');
-	return (0);
+	int		i;
+
+	i = 1;
+	if (!ft_isdigit(str[i]))
+		return (0);
+	while (ft_isdigit(str[i]))
+		i++;
+	return (ft_atoi(ft_strndup(&str[1], i - 1)));
 }

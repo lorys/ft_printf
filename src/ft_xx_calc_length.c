@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putlnbr.c                                       :+:      :+:    :+:   */
+/*   ft_xx_calc_length.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/17 16:02:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/28 18:23:11 by llopez           ###   ########.fr       */
+/*   Created: 2018/03/28 17:36:49 by llopez            #+#    #+#             */
+/*   Updated: 2018/03/28 18:25:38 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_putlnbr(unsigned int n)
+int			ft_xx_calc_length(t_arg *fg, uintmax_t nb, char *str)
 {
-	if (n == 2147483648)
-		return (ft_printf_putlstr("2147483648"));
-	if (n >= 10)
-		ft_putlnbr(n / 10);
-	ft_putchar((n % 10) + '0');
-	return (0);
+	int		calc_length;
+
+	calc_length = 0;
+	calc_length += (fg->precision == 0 && nb == 0) ? 0 : (int)ft_strlen(str);
+	calc_length += (fg->hfound == 1 && nb != 0) ? 2 : 0;
+	calc_length += (fg->precision > calc_length\
+			&& nb != 0) ? (fg->precision - (int)ft_strlen(str)) : 0;
+	return (calc_length);
 }

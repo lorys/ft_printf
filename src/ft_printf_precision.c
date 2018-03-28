@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putlnbr.c                                       :+:      :+:    :+:   */
+/*   ft_printf_precision.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/17 16:02:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/28 18:23:11 by llopez           ###   ########.fr       */
+/*   Created: 2018/03/28 18:18:38 by llopez            #+#    #+#             */
+/*   Updated: 2018/03/28 18:19:08 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_putlnbr(unsigned int n)
+int			ft_printf_precision(t_arg *fg, int width)
 {
-	if (n == 2147483648)
-		return (ft_printf_putlstr("2147483648"));
-	if (n >= 10)
-		ft_putlnbr(n / 10);
-	ft_putchar((n % 10) + '0');
-	return (0);
+	int lenght;
+	int	precision;
+
+	precision = fg->precision - width;
+	lenght = 0;
+	if (fg->precision < 1)
+		return (0);
+	while (precision > 0)
+	{
+		if (ft_strchr("oOxX", fg->flag) && !fg->zero && !fg->hfound)
+			lenght += ft_printf_putlstr(" ");
+		else
+			lenght += ft_printf_putlstr("0");
+		precision--;
+	}
+	return (lenght);
 }

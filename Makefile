@@ -6,7 +6,7 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/18 06:30:23 by llopez            #+#    #+#              #
-#    Updated: 2018/03/19 16:36:27 by llopez           ###   ########.fr        #
+#    Updated: 2018/03/28 19:09:50 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,10 +15,31 @@ NAME = libftprintf.a
 FLAGS = -Wall -Werror -Wextra
 
 NAMES = 	ft_printf.c \
-			dec_to_hexa.c \
-			handle.c \
+			bigs.c \
+			ft_putlnbr.c \
+			get_precision.c \
+			get_width.c \
+			handle_c.c \
+			handle_d.c \
+			handle_flags.c \
 			handle_hashtag.c \
-			bigs.c
+			handle_p.c \
+			handle_percent.c \
+			handle_s.c \
+			handle_uu.c \
+			init_struct.c \
+			itoa_base.c \
+			putnbr_base.c \
+			width_str.c \
+			ft_xx_calc_length.c \
+			ft_preci_xx.c \
+			ft_printf_xx.c \
+			ft_preci_oo.c \
+			ft_width_oo.c \
+			ft_printf_oo.c \
+			ft_calc_fg_d.c \
+			ft_p_details_x.c \
+			ft_printf_precision.c
 
 CFILES = $(addprefix src/, $(NAMES))
 

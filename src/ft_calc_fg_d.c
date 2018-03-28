@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putlnbr.c                                       :+:      :+:    :+:   */
+/*   ft_calc_fg_d.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/17 16:02:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/28 18:23:11 by llopez           ###   ########.fr       */
+/*   Created: 2018/03/28 18:30:51 by llopez            #+#    #+#             */
+/*   Updated: 2018/03/28 19:12:32 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_putlnbr(unsigned int n)
+void		ft_calc_fg_d(t_arg *fg, intmax_t nb)
 {
-	if (n == 2147483648)
-		return (ft_printf_putlstr("2147483648"));
-	if (n >= 10)
-		ft_putlnbr(n / 10);
-	ft_putchar((n % 10) + '0');
-	return (0);
+	fg->space = (nb < 0) ? 0 : fg->space;
+	fg->width = fg->width - fg->zero;
+	fg->width = (fg->space && fg->width_used && fg->zero)\
+		? fg->width - 1 : fg->width;
+	fg->width = (fg->width_used && (nb < 0 || fg->plus)\
+		&& fg->precision < fg->width) ? fg->width - 1 : fg->width;
+	fg->zero = (fg->precision > -1 || !fg->width_used || fg->moins) ? \
+		0 : fg->zero;
 }

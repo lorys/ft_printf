@@ -1,23 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putlnbr.c                                       :+:      :+:    :+:   */
+/*   handle_p.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/01/17 16:02:28 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/28 18:23:11 by llopez           ###   ########.fr       */
+/*   Created: 2018/03/19 17:07:44 by llopez            #+#    #+#             */
+/*   Updated: 2018/03/28 18:28:21 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_putlnbr(unsigned int n)
+int					ft_printf_p(const char *format, va_list ap,\
+		int *skip, t_arg *fg)
 {
-	if (n == 2147483648)
-		return (ft_printf_putlstr("2147483648"));
-	if (n >= 10)
-		ft_putlnbr(n / 10);
-	ft_putchar((n % 10) + '0');
-	return (0);
+	int		i;
+	void	*nb;
+	char	*conv;
+
+	i = 0;
+	if (format[0] == 'p')
+	{
+		nb = va_arg(ap, void *);
+		conv = ft_printf_itoa_base((uintmax_t)nb, 16, 'a');
+		conv = ft_strjoin("0x", conv);
+		free(conv);
+		*skip += 2;
+		i += ft_printf_width_str(fg, 0, conv);
+		i += ft_printf_putlstr(conv);
+		i += ft_printf_width_str(fg, 1, conv);
+	}
+	return (i);
 }
