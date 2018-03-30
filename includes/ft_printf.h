@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:39:39 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/28 19:12:36 by llopez           ###   ########.fr       */
+/*   Updated: 2018/03/29 15:32:05 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,7 @@ int					ft_preci_oo(t_arg *fg, char *str, int nb);
 int					ft_p_details_x(t_arg *fg, intmax_t nb, char const *format);
 void				ft_width_oo(t_arg *fg, int nb);
 void				ft_calc_fg_d(t_arg *fg, intmax_t nb);
+void				ft_printf_flags_detect(char const *format, t_arg *fg, \
+						int pass_precision,	int lenght);
 
 #endif

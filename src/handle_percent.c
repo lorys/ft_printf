@@ -6,13 +6,13 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 17:11:22 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/19 17:11:40 by llopez           ###   ########.fr       */
+/*   Updated: 2018/03/30 12:50:58 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int			ft_printf_percent(char const*format, int *skip, t_arg *fg)
+int			ft_printf_percent(char const *format, int *skip, t_arg *fg)
 {
 	char	*str;
 	int		len_str;

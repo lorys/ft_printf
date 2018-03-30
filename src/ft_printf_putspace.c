@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calc_fg_d.c                                     :+:      :+:    :+:   */
+/*   ft_printf_putspace.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/28 18:30:51 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/30 12:51:37 by llopez           ###   ########.fr       */
+/*   Created: 2018/03/30 12:13:58 by llopez            #+#    #+#             */
+/*   Updated: 2018/03/30 12:14:20 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-void		ft_calc_fg_d(t_arg *fg, intmax_t nb)
+int			ft_printf_putspace(t_arg *fg, char *str)
 {
-	fg->space = (nb < 0) ? 0 : fg->space;
-	fg->zero = (fg->precision > -1 || !fg->width_used || fg->moins) ? \
-		0 : fg->zero;
-	fg->width = fg->width - fg->zero;
-	fg->width = (fg->space && fg->width_used && fg->zero)\
-		? fg->width - 1 : fg->width;
-	fg->width = (fg->width_used && (nb < 0 || fg->plus)\
-		&& fg->precision < fg->width) ? fg->width - 1 : fg->width;
+	(void)str;
+	if (!fg->space)
+		return (0);
+	if (fg->space && fg->width_used)
+		return (0);
+	if (fg->space && fg->width_used && fg->width <= fg->precision)
+		return (0);
+	if (fg->space && fg->width_used && fg->width <= (int)ft_strlen(str))
+		return (0);
+	if (fg->space && fg->plus)
+		return (0);
+	ft_putchar(' ');
+	return (1);
 }

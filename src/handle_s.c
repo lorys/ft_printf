@@ -6,13 +6,29 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 17:12:47 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/19 17:13:05 by llopez           ###   ########.fr       */
+/*   Updated: 2018/03/30 14:15:26 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int			ft_printf_s(char const*format, va_list ap, int *skip, t_arg *fg)
+static int	ft_rest_s_flag(t_arg *fg, char *str)
+{
+	int len_str;
+
+	len_str = ft_printf_width_str(fg, 0, str);
+	while (fg->precision > 0 && fg->precision > (int)ft_strlen(str) \
+			&& fg->width_used && !fg->moins)
+	{
+		len_str++;
+		ft_putchar(' ');
+		fg->precision--;
+	}
+	len_str += (ft_printf_putlstr(str) + ft_printf_width_str(fg, 1, str));
+	return (len_str);
+}
+
+int			ft_printf_s(char const *format, va_list ap, int *skip, t_arg *fg)
 {
 	char	*str;
 	int		len_str;
@@ -34,15 +50,7 @@ int			ft_printf_s(char const*format, va_list ap, int *skip, t_arg *fg)
 			str = ft_strdup(str_new);
 			free(str_new);
 		}
-		len_str = ft_printf_width_str(fg, 0, str);
-		while (fg->precision > 0 && fg->precision > (int)ft_strlen(str)\
-				&& fg->width_used && !fg->moins)
-		{
-			len_str++;
-			ft_putchar(' ');
-			fg->precision--;
-		}
-		len_str += ft_printf_putlstr(str) +	ft_printf_width_str(fg, 1, str);
+		len_str += ft_rest_s_flag(fg, str);
 	}
 	return (len_str);
 }

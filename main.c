@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:51:44 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/28 17:13:39 by llopez           ###   ########.fr       */
+/*   Updated: 2018/03/29 15:50:09 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,14 @@ int		main(int argc, char **argv)
 {
 	int ret;
 	int ret2;
-
+	
+	ret = printf("%00+10.4d\n", 0);
+	ret2 = ft_printf("%00+10.4d\n", 0);
+	printf("\n\nprintf : %d - ft_printf : %d\n\n", ret, ret2);
+	ret = printf("%+12.5d\n", 140);
+	ret2 = ft_printf("%+12.5d\n", 140);
+	printf("\n\nprintf : %d - ft_printf : %d\n\n", ret, ret2);
+/*
 	ret = printf("|%d|% d|%8d|%d|%5.3d|\n", 5, 5, 5, 5, 5);
 	ret2 = ft_printf("|%d|% d|%8d|%#d|%5.3d|\n", 5, 5, 5, 5, 5);
 	printf("\n\nprintf : %d - ft_printf : %d\n\n", ret, ret2);
@@ -133,6 +140,6 @@ int		main(int argc, char **argv)
 	ret = printf("%C\n", 0x1234);
 	ret2 = ft_printf("%C\n", 0x1234);
 	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
-
+*/
 	return (0);
 }

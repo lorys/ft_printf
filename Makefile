@@ -6,7 +6,7 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/18 06:30:23 by llopez            #+#    #+#              #
-#    Updated: 2018/03/28 19:09:50 by llopez           ###   ########.fr        #
+#    Updated: 2018/03/30 14:04:37 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ NAMES = 	ft_printf.c \
 			handle_c.c \
 			handle_d.c \
 			handle_flags.c \
-			handle_hashtag.c \
+			get_cast.c \
 			handle_p.c \
 			handle_percent.c \
 			handle_s.c \
@@ -39,7 +39,10 @@ NAMES = 	ft_printf.c \
 			ft_printf_oo.c \
 			ft_calc_fg_d.c \
 			ft_p_details_x.c \
-			ft_printf_precision.c
+			ft_printf_precision.c \
+			ft_printf_flags_detect.c \
+			ft_printf_putspace_d.c \
+			ft_printf_width.c
 
 CFILES = $(addprefix src/, $(NAMES))
 
