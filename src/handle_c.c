@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 17:13:18 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/28 18:26:25 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/01 20:41:07 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int			ft_printf_c(char const *format, va_list ap, int *skip, t_arg *fg)
 	int	len;
 
 	len = 0;
-	if (format[0] == 'c')
+	if (format[0] == 'c' && !fg->l)
 	{
 		*skip += 2;
 		len += ft_printf_width_str(fg, 0, "0");
