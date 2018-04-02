@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:51:44 by llopez            #+#    #+#             */
-/*   Updated: 2018/04/01 20:33:25 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/02 20:12:51 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,22 @@ int		main(int argc, char **argv)
 {
 	int ret;
 	int ret2;
+	wchar_t c[4];
+
+	c[0] = '\0';
+	c[1] = 256;
+	c[2] = 'b';
+	c[3] = '\0';
 	
-	ret = printf("%C\n", 0x17777);
-	ret2 = ft_printf("%C\n", 0x17777);
+	ret = ft_printf("%9.6ls %S", c, (wchar_t *)'a');
+	//ret2 = printf("%9.6ls %S", c, (wchar_t *)'a');
 	printf("\n\nprintf : %d - ft_printf : %d\n\n", ret, ret2);
 
-/*
+/*	ret = printf("%S\n", c);
+	ret2 = ft_printf("%S\n", c);
+	printf("\n\nprintf : %d - ft_printf : %d\n\n", ret, ret2);
+
+
 	ret = printf("%00+10.4d\n", 0);
 	ret2 = ft_printf("%00+10.4d\n", 0);
 	printf("\n\nprintf : %d - ft_printf : %d\n\n", ret, ret2);
@@ -145,6 +155,5 @@ int		main(int argc, char **argv)
 	ret = printf("%C\n", 0x1234);
 	ret2 = ft_printf("%C\n", 0x1234);
 	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
-*/
-	return (0);
+*/	return (0);
 }

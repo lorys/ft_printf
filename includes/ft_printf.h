@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:39:39 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/29 15:32:05 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/02 20:40:31 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,9 @@ void				ft_width_oo(t_arg *fg, int nb);
 void				ft_calc_fg_d(t_arg *fg, intmax_t nb);
 void				ft_printf_flags_detect(char const *format, t_arg *fg, \
 						int pass_precision,	int lenght);
+int					ft_printf_bigs(const char *format, va_list ap, 	int *skip, \
+						t_arg *fg);
+int					ft_rest_s_flag(t_arg *fg, char *str);
+int					ft_wstrlen(wchar_t *c);
 
 #endif

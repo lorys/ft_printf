@@ -6,13 +6,13 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 17:12:47 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/30 14:15:26 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/02 20:44:25 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ft_rest_s_flag(t_arg *fg, char *str)
+int			ft_rest_s_flag(t_arg *fg, char *str)
 {
 	int len_str;
 
