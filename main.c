@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:51:44 by llopez            #+#    #+#             */
-/*   Updated: 2018/04/03 16:12:47 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/03 20:44:08 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,24 @@
 
 int		main(int argc, char **argv)
 {
-	int ret;
-	int ret2;
+	int		ret;
+	int		ret2;
 	wchar_t	i;
 
-	i = 39400;
-/*while (i < 0xFFFFFF)
-{*/
-	ft_printf("%C\n", (wchar_t)0xD800);
-/*	i++;
-}*/
-/*	ret = printf("%S\n", c);
-	ret2 = ft_printf("%S\n", c);
-	printf("\n\nprintf : %d - ft_printf : %d\n\n", ret, ret2);
-
+	setlocale(LC_ALL, "");
+	i = 0;
+	while (i < 0xFFFFFF)
+	{
+		ret2 = ft_printf("%C", i);
+		printf("\n");
+		ret = printf("%C", i);
+		printf("\n");
+		printf("\n\nprintf : %d - ft_printf : %d - %ld\n\n", ret, ret2, i);
+		if (ret2 != ret)
+			return (0);
+		i++;
+	}
+		/*
 
 	ret = printf("%00+10.4d\n", 0);
 	ret2 = ft_printf("%00+10.4d\n", 0);

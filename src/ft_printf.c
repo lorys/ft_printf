@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 04:20:35 by llopez            #+#    #+#             */
-/*   Updated: 2018/04/02 19:10:49 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/03 18:40:23 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,23 @@ static int		*ft_format(const char *str, va_list ap, int *lenght)
 	int		bfore;
 	int		*skip;
 	t_arg	fg;
+	int		tmp;
 
-	skip = (int *)malloc(sizeof(int) * 2);
+	skip = (int *)malloc(sizeof(int) * 3);
 	i = 0;
 	skip[1] = 0;
 	bfore = *lenght;
+	tmp = 0;
 	if (str[i] == '%' && ++i)
 	{
 		ft_initialize_struct(&fg);
 		i += ft_printf_flags(&str[i], &skip[1], &fg);
-		*lenght += ft_printf_bigs(&str[i], ap, &skip[1], &fg);
-		*lenght += ft_printf_bigc(&str[i], ap, &skip[1], &fg);
+		tmp = ft_printf_bigs(&str[i], ap, &skip[1], &fg);
+		*lenght += tmp;
+		skip[2] = (tmp == -1)?-1:skip[2];
+		tmp = ft_printf_bigc(&str[i], ap, &skip[1], &fg);
+		*lenght += tmp;
+		skip[2] = (tmp == -1)?-1:skip[2];
 		*lenght += ft_printf_percent(&str[i], &skip[1], &fg);
 		*lenght += ft_printf_s(&str[i], ap, &skip[1], &fg);
 		*lenght += ft_printf_p(&str[i], ap, &skip[1], &fg);
@@ -63,9 +69,11 @@ int				ft_printf(const char *format, ...)
 	int			i;
 	int			lenght;
 	int			*retrn;
+	int			error;
 
 	i = 0;
 	lenght = 0;
+	error = 0;
 	if (format == NULL)
 		return (0);
 	va_start(ap, format);
@@ -78,8 +86,9 @@ int				ft_printf(const char *format, ...)
 			i++;
 		}
 		i += retrn[1];
+		error = (retrn[2] == -1)?-1:0;
 		free(retrn);
 	}
 	va_end(ap);
-	return (lenght);
+	return ((error == -1)?-1:lenght);
 }

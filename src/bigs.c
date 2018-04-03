@@ -6,19 +6,17 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 23:36:01 by llopez            #+#    #+#             */
-/*   Updated: 2018/04/03 16:51:47 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/03 21:07:40 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <locale.h>
 
 void				ft_wchar_one_o(char *a, wchar_t c)
 {
 	a[0] = (c >> 6) + 0xC0;
 	a[1] = (c & 0x3F) + 0x80;
-	write(1, &a[0], 1);
-	write(1, &a[1], 1);
+	write(1, a, 2);
 }
 
 void				ft_wchar_two_o(char *a, wchar_t c)
@@ -26,7 +24,7 @@ void				ft_wchar_two_o(char *a, wchar_t c)
 	a[0] = (c >> 12) + 0xE0;
 	a[1] = ((c >> 6) & 0x3F) + 0x80;
 	a[2] = (c & 0x3F) + 0x80;
-	write(1, &a[0], 1);
+	write(1, a, 3);
 }
 
 void				ft_wchar_tree_o(char *a, wchar_t c)
@@ -35,10 +33,7 @@ void				ft_wchar_tree_o(char *a, wchar_t c)
 	a[1] = ((c >> 12) & 0x3F) + 0x80;
 	a[2] = ((c >> 6) & 0x3F) + 0x80;
 	a[3] = (c & 0x3F) + 0x80;
-	write(1, &a[0], 1);
-	write(1, &a[1], 1);
-	write(1, &a[2], 1);
-	write(1, &a[3], 1);
+	write(1, a, 4);
 }
 
 int					ft_wstrlen(wchar_t *c)
@@ -51,13 +46,13 @@ int					ft_wstrlen(wchar_t *c)
 	while (c[i])
 	{
 		if (c[i] <= 0x7F)
-			len += 1;
+			len = 1;
 		else if (c[i] > 0x7F && c[i] <= 0x7FF)
-			len += 2;
+			len = 2;
 		else if (c[i] > 0x7FF && c[i] <= 0xFFFF)
-			len += 3;
+			len = 3;
 		else
-			len += 4;
+			len = 4;
 		i++;
 	}
 	return (len);
@@ -65,10 +60,7 @@ int					ft_wstrlen(wchar_t *c)
 
 int					ft_valid_wchar(wchar_t c)
 {
-	if ((c >= 0xD800 && c <= 0xDFFF) || (c >= 0xFDD0 && c <= 0xFDEF) ||
-		(c >= 0xFFFE && c <= 0xFFFF) || (c >= 0x1FFFE && c <= 0x1FFFF) ||
-		(c >= 0x2FFFE && c <= 0x2FFFF) || (c >= 0xEFFFE && c <= 0xEFFFF) ||
-		(c >= 0xFFFFE && c <= 0xFFFFF) || (c >= 0x10FFFE && c <= 0x10FFFF))
+	if ((c >= 0xD800 && c <= 0xDFFF) || c >= 0x10FFFE || c < 0)
 		return (0);
 	return (1);
 }
@@ -103,17 +95,19 @@ int					ft_printf_bigc(const char *format, va_list ap, 	int *skip, \
 {
 	wchar_t c;
 	int		len;
+	int		tmp;
 
 	len = 0;
+	tmp = 0;
 	if (format[0] == 'C' || (format[0] == 'c' && fg->l))
 	{
 		*skip += 2;
-		setlocale(LC_ALL, "");
-		c = (wchar_t)ft_printf_unsigned(ap, fg);
+		c = va_arg(ap, wchar_t);
 		len += ft_printf_width_str(fg, 0, "0");
-		len += ft_putwchar(c);
+		tmp = ft_putwchar(c);
+		len += tmp;
 		len += ft_printf_width_str(fg, 1, "0");
-		return (len);
+		return ((tmp >= -1) ? len : tmp);
 	}
 	return (0);
 }
@@ -132,10 +126,11 @@ int				ft_printf_bigs(const char *format, va_list ap, 	int *skip, \
 	{
 		width = fg->width;
 		*skip += 2;
-		str = (wchar_t *)va_arg(ap, wchar_t *);	
+		str = (wchar_t *)va_arg(ap, wchar_t *);
+		if (str == NULL)
+			return (-1);
 		while (str[i] != '\0')
 		{
-			printf("\n%d\n", i);
 			len_str += ft_putwchar(str[i]);
 			i++;
 		}
