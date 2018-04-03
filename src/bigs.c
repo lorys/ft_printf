@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/08 23:36:01 by llopez            #+#    #+#             */
-/*   Updated: 2018/04/02 20:46:48 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/03 16:51:47 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ void				ft_wchar_two_o(char *a, wchar_t c)
 	a[1] = ((c >> 6) & 0x3F) + 0x80;
 	a[2] = (c & 0x3F) + 0x80;
 	write(1, &a[0], 1);
-	write(1, &a[1], 1);
-	write(1, &a[2], 1);
 }
 
 void				ft_wchar_tree_o(char *a, wchar_t c)
@@ -65,10 +63,22 @@ int					ft_wstrlen(wchar_t *c)
 	return (len);
 }
 
+int					ft_valid_wchar(wchar_t c)
+{
+	if ((c >= 0xD800 && c <= 0xDFFF) || (c >= 0xFDD0 && c <= 0xFDEF) ||
+		(c >= 0xFFFE && c <= 0xFFFF) || (c >= 0x1FFFE && c <= 0x1FFFF) ||
+		(c >= 0x2FFFE && c <= 0x2FFFF) || (c >= 0xEFFFE && c <= 0xEFFFF) ||
+		(c >= 0xFFFFE && c <= 0xFFFFF) || (c >= 0x10FFFE && c <= 0x10FFFF))
+		return (0);
+	return (1);
+}
+
 int					ft_putwchar(wchar_t c)
 {
 	char	a[4];
 
+	if (!ft_valid_wchar(c))
+		return (-1);
 	if (c <= 0x7F)
 		write(1, &c, 1);
 	else if (c > 0x7F && c <= 0x7FF)
@@ -92,14 +102,18 @@ int					ft_printf_bigc(const char *format, va_list ap, 	int *skip, \
 		t_arg *fg)
 {
 	wchar_t c;
+	int		len;
 
+	len = 0;
 	if (format[0] == 'C' || (format[0] == 'c' && fg->l))
 	{
 		*skip += 2;
 		setlocale(LC_ALL, "");
 		c = (wchar_t)ft_printf_unsigned(ap, fg);
-		return (ft_printf_width_str(fg, 0, "0") + ft_putwchar(c) + \
-				ft_printf_width_str(fg, 1, "0"));
+		len += ft_printf_width_str(fg, 0, "0");
+		len += ft_putwchar(c);
+		len += ft_printf_width_str(fg, 1, "0");
+		return (len);
 	}
 	return (0);
 }
@@ -119,14 +133,9 @@ int				ft_printf_bigs(const char *format, va_list ap, 	int *skip, \
 		width = fg->width;
 		*skip += 2;
 		str = (wchar_t *)va_arg(ap, wchar_t *);	
-		while ((width - ft_wstrlen(str) > 0) && !fg->moins)
-		{
-			len_str += ft_printf_putlstr(" ");
-			width--;
-		}
-
 		while (str[i] != '\0')
 		{
+			printf("\n%d\n", i);
 			len_str += ft_putwchar(str[i]);
 			i++;
 		}

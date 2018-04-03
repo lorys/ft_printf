@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:51:44 by llopez            #+#    #+#             */
-/*   Updated: 2018/04/02 20:12:51 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/03 16:12:47 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,14 @@ int		main(int argc, char **argv)
 {
 	int ret;
 	int ret2;
-	wchar_t c[4];
+	wchar_t	i;
 
-	c[0] = '\0';
-	c[1] = 256;
-	c[2] = 'b';
-	c[3] = '\0';
-	
-	ret = ft_printf("%9.6ls %S", c, (wchar_t *)'a');
-	//ret2 = printf("%9.6ls %S", c, (wchar_t *)'a');
-	printf("\n\nprintf : %d - ft_printf : %d\n\n", ret, ret2);
-
+	i = 39400;
+/*while (i < 0xFFFFFF)
+{*/
+	ft_printf("%C\n", (wchar_t)0xD800);
+/*	i++;
+}*/
 /*	ret = printf("%S\n", c);
 	ret2 = ft_printf("%S\n", c);
 	printf("\n\nprintf : %d - ft_printf : %d\n\n", ret, ret2);
