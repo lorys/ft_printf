@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 17:09:00 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/30 14:23:27 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/04 11:51:43 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,11 @@ static int			ft_printf_d_print(t_arg *fg, char *str, intmax_t nb, \
 
 	lenght = 0;
 	lenght += ft_printf_putspace_d(fg, str);
-	lenght += (fg->plus && nb >= 0 && fg->width == 0) ? \
-			ft_printf_putlstr("+") : 0;
 	lenght += (!fg->zero) ? ft_printf_width(fg, 0, NULL, str_len) : 0;
-	lenght += (fg->plus && nb >= 0 && fg->width > 0) ? \
+	lenght += (fg->plus && nb >= 0) ? \
 			ft_printf_putlstr("+") : 0;
 	lenght += (nb < 0) ? ft_printf_putlstr("-") : 0;
-	lenght += (fg->zero) ? ft_printf_putlstr("0") : 0;
+	lenght += (fg->zero && fg->width >= str_len) ? ft_printf_putlstr("0") : 0;
 	lenght += (fg->zero && fg->width > 0) ? \
 			ft_printf_width(fg, 0, NULL, str_len) : 0;
 	lenght += ft_printf_precision(fg, str_len);

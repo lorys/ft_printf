@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 04:20:35 by llopez            #+#    #+#             */
-/*   Updated: 2018/04/03 18:40:23 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/04 11:46:35 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 int				ft_printf_putlstr(char *str)
 {
-	ft_putstr(str);
-	return ((int)ft_strlen(str));
+	int		len;
+
+	len = (int)ft_strlen(str);
+	write(1, str, len);
+	return (len);
 }
 
 int				ft_printf_getnb(int nb, int n)

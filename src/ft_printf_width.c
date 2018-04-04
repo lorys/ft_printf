@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 12:05:11 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/30 12:05:40 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/04 10:00:55 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int			ft_printf_width(t_arg *fg, int r, char *str, int len)
 			width = fg->width - fg->precision;
 		else
 			width = width - strlen;
+		width = (fg->space && !fg->zero) ? width - 1 : width;
 		while (width > 0)
 		{
 			lenght += ft_printf_putlstr((fg->zero) ? "0" : " ");

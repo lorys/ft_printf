@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:51:44 by llopez            #+#    #+#             */
-/*   Updated: 2018/04/03 20:44:08 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/04 11:40:13 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		main(int argc, char **argv)
 {
 	int		ret;
 	int		ret2;
-	wchar_t	i;
+/*	wchar_t	i;
 
 	setlocale(LC_ALL, "");
 	i = 0;
@@ -33,7 +33,11 @@ int		main(int argc, char **argv)
 			return (0);
 		i++;
 	}
-		/*
+*/
+	ret = printf(">------------<%+.52zi>------------<\n", 0);
+	ret2 = ft_printf(">------------<%+.52zi>------------<\n", 0);
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+/*
 
 	ret = printf("%00+10.4d\n", 0);
 	ret2 = ft_printf("%00+10.4d\n", 0);
@@ -63,10 +67,10 @@ int		main(int argc, char **argv)
 	ret = printf("|%015.5x|%1x|%0x|%x|%5.7x|\n", 5, 5, 5, 5, 5);
 	ret2 = ft_printf("|%015.5x|%1x|%0x|%x|%5.7x|\n", 5, 5, 5, 5, 5);
 	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
-	ret = printf("% 20.12ld et% 05D% 4.8hi !\n", 0x11ffaa147, 24, (short)-2345);
+*/	ret = printf("% 20.12ld et% 05D% 4.8hi !\n", 0x11ffaa147, 24, (short)-2345);
 	ret2 = ft_printf("% 20.12ld et% 05D% 4.8hi !\n", 0x11ffaa147, 24, (short)-2345);
-	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
-	ret = printf("%08i\n", -71);
+	printf("\nprintf : %d - ft_printf : %d (%% 20.12ld et%% 05D%% 4.8hi !, 0x11ffaa147, 24, (short)-2345\n", ret, ret2);
+/*	ret = printf("%08i\n", -71);
 	ret2 = ft_printf("%08i\n", -71);
 	printf("\nprintf : %d - ft_printf : %d\n", ret, ret2);
 
