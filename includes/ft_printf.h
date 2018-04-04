@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:39:39 by llopez            #+#    #+#             */
-/*   Updated: 2018/04/03 20:17:20 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/04 21:41:17 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 # include <stdio.h>
 # include <stdint.h>
 # include <locale.h>
+# include <stddef.h>
+# include <wchar.h>
 # include "libft.h"
 
 typedef struct		s_arg
@@ -85,5 +87,11 @@ int					ft_printf_bigs(const char *format, va_list ap, 	int *skip, \
 						t_arg *fg);
 int					ft_rest_s_flag(t_arg *fg, char *str);
 int					ft_wstrlen(wchar_t *c);
+int					ft_printf_width_wchar(t_arg *fg, int r, wchar_t str);
+int					ft_wcharlen(wchar_t c);
+int					ft_putwstr(wchar_t *str);
+int					ft_putwchar(wchar_t c);
+int					ft_wstrlen_unit(wchar_t *c);
+
 
 #endif

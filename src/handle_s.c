@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 17:12:47 by llopez            #+#    #+#             */
-/*   Updated: 2018/04/02 20:44:25 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/04 21:00:02 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int			ft_printf_s(char const *format, va_list ap, int *skip, t_arg *fg)
 	char	*str_new;
 
 	len_str = 0;
-	if (format[0] == 's')
+	if (format[0] == 's' && !fg->l)
 	{
 		*skip += 2;
 		str = va_arg(ap, char *);

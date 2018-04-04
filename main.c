@@ -6,19 +6,32 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:51:44 by llopez            #+#    #+#             */
-/*   Updated: 2018/04/04 11:40:13 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/04 22:34:30 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/ft_printf.h"
 #include <stdio.h>
 #include <unistd.h>
+#include <limits.h>
 
 int		main(int argc, char **argv)
 {
 	int		ret;
 	int		ret2;
-/*	wchar_t	i;
+	int		free;
+	int		c;
+	setlocale(LC_ALL, "");
+/*	wchar_t	s[4];
+
+	s[0] = 0x53;
+		s[1] = 0xd800;
+			s[2] = 0x81000;
+				s[3] = '\0';
+
+	ret2 = ft_printf("%S\n", s);
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
 
 	setlocale(LC_ALL, "");
 	i = 0;
@@ -33,10 +46,120 @@ int		main(int argc, char **argv)
 			return (0);
 		i++;
 	}
-*/
-	ret = printf(">------------<%+.52zi>------------<\n", 0);
-	ret2 = ft_printf(">------------<%+.52zi>------------<\n", 0);
+
+	ret = printf("%C\n", 254);
+	ret2 = ft_printf("%lc\n", 254);
 	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("!%20.22zu!\n", 0);
+	ret2 = ft_printf("!%20.22zu!\n", 0);
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("\\!/%38.8zu\\!/\n", 0);
+	ret2 = ft_printf("\\!/%38.8zu\\!/\n", 0);
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("\\!/%16.23zu\\!/", 0);
+	ret2 = ft_printf("\\!/%16.23zu\\!/", 0);
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("\\!/%4.22zu\\!/\n", 0);
+	ret2 = ft_printf("\\!/%4.22zu\\!/\n", 0);
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf(">------------<%50.51zu>------------<\n", 0);
+	ret2 = ft_printf(">------------<%50.51zu>------------<\n", 0);
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("%-05%\n");
+	ret2 = ft_printf("%-05%\n");
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("%-34.2ju|\n", 0);
+	ret2 = ft_printf("%-34.2ju|\n", 0);
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("!%-13.2zu!");
+	ret2 = ft_printf("!%-13.2zu!");
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("^.^/%-13.2zu^.^/\n", -242403321);
+	ret2 = ft_printf("^.^/%-13.2zu^.^/\n", -242403321);
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("%");
+	ret2 = ft_printf("%");
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("^.^/%-13.2zu^.^/", -242403321);
+	ret2 = ft_printf("^.^/%-13.2zu^.^/", -242403321);
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("%-54.45zu", 0);
+	printf("\n");
+	ret2 = ft_printf("%-54.45zu", 0);
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("%-2.2zU\n", 0);
+	ret2 = ft_printf("%-2.2zU\n", 0);
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("^.^/%-16.2zU^.^/\n", 0);
+	ret2 = ft_printf("^.^/%-16.2zU^.^/\n", 0);
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("%017%\n");
+	ret2 = ft_printf("%017%\n");
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("!%-23.2zU!\n", 0);
+	ret2 = ft_printf("!%-23.2zU!\n", 0);
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("%-26.2zU|\n", 0);
+	ret2 = ft_printf("%-26.2zU|\n", 0);
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("%S|\n", L"þþþ");
+	ret2 = ft_printf("%S|\n", L"þþþ");
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("%5lc\n", 350);
+	ret2 = ft_printf("%5lc\n", 350);
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("\\!/%#42.2hhx\\!/\n", -692517628);
+	ret2 = ft_printf("\\!/%#42.2hhx\\!/\n", -692517628);
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("^.^/%#17.2zx^.^/\n", 397046228);
+	ret2 = ft_printf("^.^/%#17.2zx^.^/\n", 397046228);
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+*/	ret = printf("42%42.62ls42\n", L"");
+	ret2 = ft_printf("42%42.62ls42\n", L"");
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("%.p, %.0p\n", 0, 0);
+	ret2 = ft_printf("%.p, %.0p\n", 0, 0);
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("%s %C %d %p %x %% %S\n", "bonjour ", L'該', 42, &free, 42, L"لحم خنزي");
+	ret2 = ft_printf("%s %C %d %p %x %% %S", "bonjour ", L'該', 42, &free, 42, L"لحم خنزير");
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("%s%d%p%%%S%D%i%o%O%u%U%x%X%c%C\n","bonjour", 42, &c, L"暖炉", LONG_MAX, 42, 42, 42, 100000, ULONG_MAX, 42, 42, 'c', L'플');
+	ret2 = ft_printf("%s%d%p%%%S%D%i%o%O%u%U%x%X%c%C\n","bonjour", 42, &c, L"暖炉", LONG_MAX, 42, 42, 42, 100000, ULONG_MAX, 42, 42, 'c', L'플');
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("%hhS, %hhS\n", 0, L"米米");
+	ret2 = ft_printf("%hhS, %hhS\n", 0, L"米米");
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("!%22.7ls!\n", L"(null)");
+	ret2 = ft_printf("!%22.62ls!", L"(null)");
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
 /*
 
 	ret = printf("%00+10.4d\n", 0);

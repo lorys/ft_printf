@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 17:13:47 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/30 19:10:33 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/04 20:57:55 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int			ft_printf_flags(char const *format, int *skip, t_arg *fg)
 	lenght = 0;
 	first_width = -1;
 	last_width = 0;
-	while (ft_strchr("sSpdDioOuUxXcC%", format[lenght]) == NULL\
+	while (ft_strchr("sSpdDioOuUxXcC%*", format[lenght]) == NULL\
 			&& format[lenght])
 	{
 		*skip = (ft_strchr("#0-+ hljz.123456789", format[lenght])) ? \

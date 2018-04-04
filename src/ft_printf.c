@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 04:20:35 by llopez            #+#    #+#             */
-/*   Updated: 2018/04/04 11:46:35 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/04 20:57:00 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int		*ft_format(const char *str, va_list ap, int *lenght)
 	skip[1] = 0;
 	bfore = *lenght;
 	tmp = 0;
-	if (str[i] == '%' && ++i)
+	if (str[i] == '%' && str[i + 1] != '\0' && ++i)
 	{
 		ft_initialize_struct(&fg);
 		i += ft_printf_flags(&str[i], &skip[1], &fg);
@@ -85,6 +85,8 @@ int				ft_printf(const char *format, ...)
 		retrn = ft_format(&format[i], ap, &lenght);
 		if (retrn[1] == 0 && ++lenght)
 		{
+			if (format[i] == '%' && format[i + 1] == '\0')
+				return (0);
 			ft_putchar(format[i]);
 			i++;
 		}
