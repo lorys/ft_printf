@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 17:12:47 by llopez            #+#    #+#             */
-/*   Updated: 2018/04/05 02:50:50 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/05 03:02:51 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int			ft_printf_s(char const *format, va_list ap, int *skip, t_arg *fg)
 	{
 		*skip += 2;
 		str = va_arg(ap, char *);
-		fg->precision = (str != NULL && str[0] == '\0') ? 0 : fg->precision ;
+		fg->precision = (str != NULL && (str[0] == '\0' || \
+					(int)ft_strlen(str) < fg->precision)) ? -1 : fg->precision ;
 		if (str == NULL)
 			str_new = ft_strdup("(null)");
 		if (fg->precision > -1)
