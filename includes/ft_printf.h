@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:39:39 by llopez            #+#    #+#             */
-/*   Updated: 2018/04/04 21:41:17 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/04 23:08:16 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,9 @@ int					ft_wcharlen(wchar_t c);
 int					ft_putwstr(wchar_t *str);
 int					ft_putwchar(wchar_t c);
 int					ft_wstrlen_unit(wchar_t *c);
+int					ft_putsubwstr(wchar_t *str, int length);
+int					ft_subwstrlen_unit(wchar_t *str, int length);
+int					ft_subwstrlen(wchar_t *str, int length);
 
 
 #endif

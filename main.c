@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 06:51:44 by llopez            #+#    #+#             */
-/*   Updated: 2018/04/04 22:34:30 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/05 02:26:27 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,8 +156,44 @@ int		main(int argc, char **argv)
 	ret2 = ft_printf("%hhS, %hhS\n", 0, L"米米");
 	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
 	ret = 0;
-	ret = printf("!%22.7ls!\n", L"(null)");
+	ret = printf("!%22.62ls!\n", L"(null)");
 	ret2 = ft_printf("!%22.62ls!", L"(null)");
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("^.^/%31.10ls^.^/\n", L"こんにちは、私はprintf単体テストです");
+	ret2 = ft_printf("^.^/%31.10ls^.^/\n", L"こんにちは、私はprintf単体テストです");
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("%p", NULL);
+	ret2 = ft_printf("%p\n", NULL);
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("42%35.24ls42\n", L"(╯°Д°）╯︵ /(.□ . \)");
+	ret2 = ft_printf("42%35.24ls42\n", L"(╯°Д°）╯︵ /(.□ . \)");
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	//ret = printf("Coucou %.0s\n%s%---12s", "hi", "coco", NULL);
+	//ret2 = ft_printf("Coucou %.0s\n%s%---12s", "hi", "coco", NULL);
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("%---12s\n", NULL);
+	ret2 = ft_printf("%---12s\n", NULL);
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("%.15s\n", "coco");
+	ret2 = ft_printf("%.15s\n", "coco");
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("%.2s\n", NULL);
+	ret2 = ft_printf("%.2s\n", NULL);
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("42%6.48s42\n", "");
+	ret2 = ft_printf("42%6.48s42\n", "");
+	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
+	ret = 0;
+	ret = printf("% Zoooo\n");
+	ret2 = ft_printf("% Zoooo\n");
 	printf("\n\nprintf : %d | ft_printf : %d\n\n", ret, ret2);
 	ret = 0;
 /*

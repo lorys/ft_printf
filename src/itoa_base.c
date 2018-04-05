@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 17:06:53 by llopez            #+#    #+#             */
-/*   Updated: 2018/03/19 17:07:30 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/04 23:24:32 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char			*ft_printf_itoa_base(uintmax_t nb, unsigned int base,\
 
 	i = 62;
 	if (nb == 0)
-		return (ft_strdup("0"));
+		return ("0");
 	while (nb > 0 && i > 0)
 	{
 		if (type >= 'A' && type <= 'Z')

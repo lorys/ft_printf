@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 17:11:22 by llopez            #+#    #+#             */
-/*   Updated: 2018/04/04 18:31:13 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/05 01:39:58 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int			ft_printf_percent(char const *format, int *skip, t_arg *fg)
 		len_str = ft_printf_width_str(fg, 0, str);
 		len_str += ft_printf_putlstr(str);
 		len_str += ft_printf_width_str(fg, 1, str);
+		free(str);
 	}
 	return (len_str);
 }

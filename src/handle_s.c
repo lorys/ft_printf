@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 17:12:47 by llopez            #+#    #+#             */
-/*   Updated: 2018/04/04 21:00:02 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/05 02:50:50 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,32 @@ int			ft_printf_s(char const *format, va_list ap, int *skip, t_arg *fg)
 	char	*str;
 	int		len_str;
 	char	*str_new;
+	char	*str_tmp;
 
 	len_str = 0;
+	str_tmp = NULL;
+	str_new = NULL;
 	if (format[0] == 's' && !fg->l)
 	{
 		*skip += 2;
 		str = va_arg(ap, char *);
+		fg->precision = (str != NULL && str[0] == '\0') ? 0 : fg->precision ;
 		if (str == NULL)
-		{
-			free(str);
-			str = ft_strdup("(null)");
-		}
+			str_new = ft_strdup("(null)");
 		if (fg->precision > -1)
-		{
-			str_new = ft_strndup(&str[0], fg->precision);
-			str = ft_strdup(str_new);
+			str_tmp = ft_strndup((str == NULL) ? str_new : &str[0], \
+					fg->precision);
+		len_str += ((str != NULL && fg->precision > -1) || \
+					(str == NULL && fg->precision > -1)) ? \
+				   ft_rest_s_flag(fg, str_tmp) : 0;
+		len_str += (str == NULL && fg->precision == -1) ?\
+				   ft_rest_s_flag(fg, str_new) : 0;
+		len_str += (str != NULL && fg->precision == -1) ?\
+				   ft_rest_s_flag(fg, str) : 0;
+		if (str == NULL)
 			free(str_new);
-		}
-		len_str += ft_rest_s_flag(fg, str);
+		if (fg->precision > -1)
+			free(str_tmp);
 	}
 	return (len_str);
 }
