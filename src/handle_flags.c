@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/19 17:13:47 by llopez            #+#    #+#             */
-/*   Updated: 2018/04/05 02:46:30 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/05 02:53:47 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int			ft_printf_flags(char const *format, int *skip, t_arg *fg)
 	{
 		if (!ft_strchr("#0-+ hljz.123456789", format[lenght]))
 		{
-			*skip += lenght;
+			*skip += (lenght > 0) ? lenght : 1;
 			return (0);
 		}
 		*skip = (ft_strchr("#0-+ hljz.123456789", format[lenght])) ? \
