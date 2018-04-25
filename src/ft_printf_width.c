@@ -6,7 +6,7 @@
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/30 12:05:11 by llopez            #+#    #+#             */
-/*   Updated: 2018/04/04 21:53:38 by llopez           ###   ########.fr       */
+/*   Updated: 2018/04/25 15:59:24 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int			ft_printf_width(t_arg *fg, int r, char *str, int len)
 	int	strlen;
 
 	strlen = (str == NULL || fg->flag == 'x' || fg->flag == 'X') ? len :\
-			 (int)ft_strlen(str);
+			(int)ft_strlen(str);
 	width = fg->width;
 	lenght = 0;
 	if (fg->width_used && fg->moins == r)

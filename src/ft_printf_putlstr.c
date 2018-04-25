@@ -1,33 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_preci_oo.c                                      :+:      :+:    :+:   */
+/*   ft_printf_putlstr.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/28 18:01:23 by llopez            #+#    #+#             */
-/*   Updated: 2018/04/25 15:33:35 by llopez           ###   ########.fr       */
+/*   Created: 2018/04/25 14:25:02 by llopez            #+#    #+#             */
+/*   Updated: 2018/04/25 15:30:13 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int			ft_preci_oo(t_arg *fg, char *str, int nb)
+int				ft_printf_putlstr(char *str)
 {
-	int		lenght;
-	int		preci;
-	int		strlen;
+	int		len;
 
-	strlen = (fg->hfound && nb != 0) ? (int)ft_strlen(str) + 1 : \
-				(int)ft_strlen(str);
-	nb = 0;
-	preci = fg->precision;
-	lenght = 0;
-	preci = (preci > -1) ? preci - strlen : preci;
-	while (preci > 0)
-	{
-		lenght += ft_printf_putlstr("0");
-		preci--;
-	}
-	return (lenght);
+	len = (int)ft_strlen(str);
+	write(1, str, len);
+	return (len);
 }

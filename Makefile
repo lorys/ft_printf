@@ -6,7 +6,7 @@
 #    By: llopez <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/12/18 06:30:23 by llopez            #+#    #+#              #
-#    Updated: 2018/04/04 20:27:33 by llopez           ###   ########.fr        #
+#    Updated: 2018/04/25 16:28:53 by llopez           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,14 @@ NAMES = 	ft_printf.c \
 			ft_printf_flags_detect.c \
 			ft_printf_putspace_d.c \
 			ft_printf_width.c \
-			ft_putwstr.c
+			ft_printf_putlstr.c \
+			ft_printf_getnb.c \
+			ft_printf_width_wchar.c \
+			ft_fill_null.c \
+			ft_wlen.c \
+			ft_putwstr.c \
+			ft_wchar_one_o.c \
+			ft_putwchar.c
 
 CFILES = $(addprefix src/, $(NAMES))
 

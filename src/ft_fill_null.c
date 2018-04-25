@@ -1,33 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_preci_oo.c                                      :+:      :+:    :+:   */
+/*   ft_fill_null.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/28 18:01:23 by llopez            #+#    #+#             */
-/*   Updated: 2018/04/25 15:33:35 by llopez           ###   ########.fr       */
+/*   Created: 2018/04/25 16:04:36 by llopez            #+#    #+#             */
+/*   Updated: 2018/04/25 16:05:01 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int			ft_preci_oo(t_arg *fg, char *str, int nb)
+wchar_t			*ft_fill_null(wchar_t *str)
 {
-	int		lenght;
-	int		preci;
-	int		strlen;
-
-	strlen = (fg->hfound && nb != 0) ? (int)ft_strlen(str) + 1 : \
-				(int)ft_strlen(str);
-	nb = 0;
-	preci = fg->precision;
-	lenght = 0;
-	preci = (preci > -1) ? preci - strlen : preci;
-	while (preci > 0)
-	{
-		lenght += ft_printf_putlstr("0");
-		preci--;
-	}
-	return (lenght);
+	str = (wchar_t *)malloc(sizeof(wchar_t) * 7);
+	str[0] = '(';
+	str[1] = 'n';
+	str[2] = 'u';
+	str[3] = 'l';
+	str[4] = 'l';
+	str[5] = ')';
+	str[6] = '\0';
+	return (&str[0]);
 }

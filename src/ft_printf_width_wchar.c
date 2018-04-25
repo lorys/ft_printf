@@ -1,33 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_preci_oo.c                                      :+:      :+:    :+:   */
+/*   ft_printf_width_wchar.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: llopez <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/28 18:01:23 by llopez            #+#    #+#             */
-/*   Updated: 2018/04/25 15:33:35 by llopez           ###   ########.fr       */
+/*   Created: 2018/04/25 16:03:56 by llopez            #+#    #+#             */
+/*   Updated: 2018/04/25 16:04:14 by llopez           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int			ft_preci_oo(t_arg *fg, char *str, int nb)
+int					ft_printf_width_wchar(t_arg *fg, int where, wchar_t c)
 {
-	int		lenght;
-	int		preci;
-	int		strlen;
+	int		width;
 
-	strlen = (fg->hfound && nb != 0) ? (int)ft_strlen(str) + 1 : \
-				(int)ft_strlen(str);
-	nb = 0;
-	preci = fg->precision;
-	lenght = 0;
-	preci = (preci > -1) ? preci - strlen : preci;
-	while (preci > 0)
+	width = 0;
+	(void)c;
+	if (fg->width_used && fg->width > 0 && where == fg->moins)
 	{
-		lenght += ft_printf_putlstr("0");
-		preci--;
+		while (fg->width - ft_wcharlen(c) > width)
+		{
+			ft_putchar(' ');
+			width++;
+		}
+		return (fg->width);
 	}
-	return (lenght);
+	return (0);
 }
